@@ -1,0 +1,54 @@
+name: Supabase Keep Alive
+
+on:
+  # Ejecuta cada lunes a las 00:00 UTC. Ajusta el cron según las
+  # políticas de inactividad de tu plan en Supabase.
+  schedule:
+    - cron: '0 0 * * 1'
+  # Permite lanzarlo manualmente desde la pestaña "Actions".
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    name: Mantener Supabase activo (GET /rest/v1/)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping a la API pública de Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          # ============================================================================
+          # ⚠️ CONFIGURACIÓN REQUERIDA (una sola vez, por el líder del equipo)
+          # ----------------------------------------------------------------------------
+          # En GitHub: repo → Settings → Secrets and variables → Actions, crea:
+          #
+          #   VITE_SUPABASE_URL      → el mismo valor de tu archivo .env local
+          #   VITE_SUPABASE_ANON_KEY → el mismo valor de tu archivo .env local
+          #
+          # IMPORTANTE: usamos la anon_key (pública por diseño) y NUNCA la
+          # service_role_key. La service_role_key tiene permisos de
+          # administrador y jamás debe circular fuera de Supabase.
+          #
+          # Este job hace solo un GET ligero al endpoint REST de Supabase.
+          # Cualquier request hacia el proyecto impide que la base de datos
+          # del plan gratuito entre en modo de pausa por inactividad.
+          # ============================================================================
+          HTTP_CODE=$(curl --silent --max-time 30 \
+            --output /dev/null --write-out "%{http_code}" \
+            --header "apikey: ${SUPABASE_ANON_KEY}" \
+            --header "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            "${SUPABASE_URL}/rest/v1/")
+
+          echo "Supabase respondió con HTTP ${HTTP_CODE}"
+
+          # Si no se pudo contactar (código vacío/000) o faltan secrets,
+          # se marca el job como fallido y se indica cómo corregirlo.
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_ANON_KEY}" ]; then
+            echo "::error::Faltan los secrets VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY. Configúralos en Settings → Secrets."
+            exit 1
+          fi
+          if [ "${HTTP_CODE}" = "000" ]; then
+            echo "::error::No se pudo contactar Supabase. Revisa los secrets del repositorio."
+            exit 1
+          fi

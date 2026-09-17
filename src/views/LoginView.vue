@@ -5,6 +5,15 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>
         <p class="mt-2 text-center text-sm text-gray-600">Bienvenido de vuelta a MatchPet 🐾</p>
       </div>
+      <!-- Botón volver -->
+      <div class="flex justify-start">
+        <router-link
+          to="/"
+          class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
+        >
+          ← Volver al inicio
+        </router-link>
+      </div>
 
       <!-- ===================== FORMULARIO LOGIN ===================== -->
       <form v-if="!showReset" class="mt-8 space-y-6" @submit.prevent="handleLogin">
@@ -110,6 +119,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import { supabase } from '../services/supabaseClient'
+import { translateAuthError } from '../utils/errorMessages'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -121,7 +131,12 @@ const password = ref('')
 const handleLogin = async () => {
   const result = await authStore.login(email.value, password.value)
   if (result.success) {
-    router.push('/')
+    // Redirigir según el rol que acaba de cargar el store
+    if (authStore.userRole === 'refugio') {
+      router.push('/refugio/dashboard')
+    } else {
+      router.push('/adoptante/dashboard')
+    }
   }
 }
 
@@ -141,7 +156,7 @@ const handleReset = async () => {
     if (error) throw error
     resetMsg.value = '¡Correo enviado! Revisa tu bandeja de entrada (y spam).'
   } catch (err) {
-    resetError.value = 'No se pudo enviar el correo. Verifica el email.'
+    resetError.value = translateAuthError(err)
   }
 }
 </script>

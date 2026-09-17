@@ -7,6 +7,7 @@ const routes = [
   { path: '/login', name: 'Login', component: () => import('../views/LoginView.vue') },
   { path: '/registro', name: 'RegisterAdoptante', component: () => import('../views/RegisterAdoptanteView.vue') },
   { path: '/registro-refugio', name: 'RegisterRefugio', component: () => import('../views/RegisterRefugioView.vue') },
+  { path: '/reset-password', name: 'ResetPassword', component: () => import('../views/ResetPasswordView.vue') },
 
   // Rutas Protegidas: Adoptante
   { 
@@ -37,9 +38,15 @@ const router = createRouter({
 })
 
 // 🛡️ GUARD GLOBAL DE NAVEGACIÓN
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  
+
+  // 0. Restaurar la sesión desde localStorage de forma síncrona-aparente
+  //    ANTES de evaluar isAuthenticated. Sin esto, un F5 directo en una
+  //    ruta protegida expulsa al usuario porque la sesión aún no ha
+  //    sido restaurada por onAuthStateChange.
+  await authStore.getSession()
+
   // 1. Si la ruta requiere autenticación
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated) {

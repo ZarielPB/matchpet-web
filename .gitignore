@@ -17,6 +17,9 @@ dist
 dist-ssr
 *.local
 
+# Salida temporal del plugin PWA en desarrollo
+dev-dist
+
 # Env files
 .env
 .env.local

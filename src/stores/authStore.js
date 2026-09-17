@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { supabase } from '../services/supabaseClient'
+import { translateAuthError } from '../utils/errorMessages'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const profile = ref(null)
   const loading = ref(false)
   const errorMsg = ref('')
+  const sessionRestored = ref(false)
 
   const isAuthenticated = computed(() => !!user.value)
   const userRole = computed(() => profile.value?.role || 'guest')
@@ -29,6 +31,23 @@ export const useAuthStore = defineStore('auth', () => {
       .single()
     
     if (!error) profile.value = data
+  }
+
+  // Restaura la sesión desde localStorage ANTES de validar rutas.
+  // Evita que un recargado directo (F5) de una ruta protegida expulse
+  // al usuario mientras onAuthStateChange todavía no ha sincronizado.
+  async function getSession() {
+    if (sessionRestored.value) return user.value
+    sessionRestored.value = true
+
+    const { data } = await supabase.auth.getSession()
+    user.value = data.session?.user || null
+    if (data.session?.user) {
+      await fetchProfile(data.session.user.id)
+    } else {
+      profile.value = null
+    }
+    return user.value
   }
 
   // HU-01: Registro de Adoptante
@@ -55,8 +74,8 @@ export const useAuthStore = defineStore('auth', () => {
       }
       return { success: true }
     } catch (error) {
-      errorMsg.value = error.message
-      return { success: false, error: error.message }
+      errorMsg.value = translateAuthError(error)
+      return { success: false, error: errorMsg.value }
     } finally {
       loading.value = false
     }
@@ -87,24 +106,30 @@ export const useAuthStore = defineStore('auth', () => {
       }
       return { success: true }
     } catch (error) {
-      errorMsg.value = error.message
-      return { success: false, error: error.message }
+      errorMsg.value = translateAuthError(error)
+      return { success: false, error: errorMsg.value }
     } finally {
       loading.value = false
     }
   }
 
-  // HU-02: Login
+  // HU-02: Login (Modificado para cargar el perfil al instante)
   async function login(email, password) {
     loading.value = true
     errorMsg.value = ''
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) throw error
+      
+      // Cargar perfil inmediatamente después del login exitoso
+      if (data.user) {
+        await fetchProfile(data.user.id)
+      }
+      
       return { success: true }
     } catch (error) {
-      errorMsg.value = 'Credenciales incorrectas'
-      return { success: false }
+      errorMsg.value = translateAuthError(error)
+      return { success: false, error: errorMsg.value }
     } finally {
       loading.value = false
     }
@@ -117,7 +142,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return { 
-    user, profile, loading, errorMsg, isAuthenticated, userRole,
-    registerAdoptante, registerRefugio, login, logout 
+    user, profile, loading, errorMsg, sessionRestored, isAuthenticated, userRole,
+    getSession, fetchProfile, registerAdoptante, registerRefugio, login, logout 
   }
 })
