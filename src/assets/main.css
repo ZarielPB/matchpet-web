@@ -1,3 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Altura del navbar sticky: se usa para que los anchors #ancla
+       no queden ocultos debajo del header al navegar con scroll suave. */
+    --mp-nav-h: 80px;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    /* 80px (h-20 del header) + 16px de aire. Debe coincidir con --mp-nav-h. */
+    scroll-padding-top: calc(var(--mp-nav-h) + 16px);
+  }
+  body {
+    @apply bg-surface text-ink antialiased;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+  }
+  /* Foco visible consistente (accesibilidad) */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer components {
+  /* ── Sección a pantalla completa ──────────────────────────
+     min-height (no height): si el contenido es más alto que la
+     pantalla, la sección CRECE en vez de desbordar/recortar.
+     svh evita que en móvil la barra del navegador tape el final
+     de la sección (100vh en móvil incluye el área de la UI móvil).
+
+     `safe center` es CRÍTICO en secciones con overflow:hidden y contenido
+     más alto que la caja. Con `center` a secas, flex alinea el item
+     desbordado hacia arriba, sobre el borde del padding-box, y
+     overflow:hidden lo RECORTA (se perdían el badge y el H1 del hero).
+     `safe center` cae a `start` cuando no cabe. La primera declaración
+     es el fallback para navegadores sin soporte de `safe`. */
+  .mp-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: safe center;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+  /* Variante para items que deben poder llegar al borde (sin centrado) */
+  .mp-section-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .mp-label {
+    @apply block text-[13px] leading-[18px] font-semibold text-ink mb-1.5;
+  }
+  .mp-input {
+    @apply w-full h-12 pl-11 pr-4 bg-white border border-edge rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm;
+  }
+  .mp-input-pass {
+    @apply w-full h-12 pl-11 pr-12 bg-white border border-edge rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm;
+  }
+  .mp-input-soft {
+    @apply w-full h-12 pl-11 pr-4 bg-[#f7f5fd] border border-[#e2dbf3] rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(80,56,237,0.15)] transition-all duration-150;
+  }
+  .mp-input-soft-pass {
+    @apply w-full h-12 pl-11 pr-12 bg-[#f7f5fd] border border-[#e2dbf3] rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(80,56,237,0.15)] transition-all duration-150;
+  }
+  .mp-btn-primary {
+    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-primary text-white text-[15px] font-semibold tracking-wide shadow-btn-primary hover:bg-primary-hover hover:shadow-btn-primary-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .mp-btn-ghost {
+    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-white text-ink text-[15px] font-semibold border border-outline-soft hover:bg-surface-low transition-all duration-150 shadow-sm;
+  }
+  .mp-btn-green {
+    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 text-white text-[15px] font-semibold tracking-wide shadow-emerald-btn hover:bg-emerald-700 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .paw-pattern {
+    background-image: radial-gradient(#6d28d9 0.75px, transparent 0.75px), radial-gradient(#6d28d9 0.75px, #fbfaff 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    opacity: 0.05;
+  }
+  .hero-glow {
+    background: radial-gradient(circle at 60% 30%, rgba(139, 92, 246, 0.18) 0%, rgba(243, 232, 255, 0.4) 45%, rgba(255, 255, 255, 0) 70%);
+  }
+  .shadow-soft {
+    box-shadow: 0 14px 40px -10px rgba(55, 20, 87, 0.08);
+  }
+  .shadow-hover {
+    transition: all 0.25s ease;
+  }
+  .shadow-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -8px rgba(55, 20, 87, 0.12);
+  }
+
+  /* ── Textura / superficie ─────────────────────── */
+  .mp-grid-lines {
+    background-image: linear-gradient(rgba(91, 33, 182, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91, 33, 182, 0.055) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .mp-gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-purple-600 to-teal-500;
+  }
+  /* Borde con degradé para tarjetas Featured */
+  .mp-ring-brand {
+    position: relative;
+  }
+  .mp-ring-brand::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(91, 33, 182, 0.35), rgba(13, 148, 136, 0.35));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .mp-ring-brand:hover::before {
+    opacity: 1;
+  }
+
+  /* ── Animaciones de entrada al hacer scroll ─────
+     Se activan con la directiva `v-reveal` (IntersectionObserver
+     nativo, sin dependencias externas). El retardo se controla
+     con la variable `--mp-reveal-delay`. */
+  .mp-reveal {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--mp-reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .mp-reveal[data-reveal='left'] {
+    transform: translate3d(-34px, 0, 0);
+  }
+  .mp-reveal[data-reveal='right'] {
+    transform: translate3d(34px, 0, 0);
+  }
+  .mp-reveal[data-reveal='zoom'] {
+    transform: scale(0.94);
+  }
+  .mp-reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer utilities {
+  /* Accesibilidad: respeta la preferencia del sistema */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .mp-reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .shadow-hover:hover,
+    .mp-ring-brand:hover::before {
+      transform: none !important;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Gatito y perrito como compañeros de vida">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7ab7b4"/>
+      <stop offset="1" stop-color="#559b99"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg2)"/>
+  <circle cx="760" cy="60" r="150" fill="#ffffff" opacity="0.12"/>
+  <circle cx="50" cy="580" r="170" fill="#82f5c1" opacity="0.16"/>
+  <circle cx="640" cy="520" r="80" fill="#ffffff" opacity="0.1"/>
+
+  <g opacity="0.5" fill="#ffffff">
+    <circle cx="140" cy="130" r="6"/>
+    <circle cx="176" cy="92" r="4"/>
+    <circle cx="700" cy="220" r="5"/>
+  </g>
+
+  <g>
+    <ellipse cx="328" cy="440" rx="150" ry="110" fill="#ffffff" opacity="0.25"/>
+  </g>
+
+  <g>
+    <ellipse cx="280" cy="470" rx="120" ry="95" fill="#f5b261"/>
+    <ellipse cx="246" cy="495" rx="80" ry="70" fill="#ffe3bd"/>
+    <path d="M386 400 q60 -24 50 -82" stroke="#f5b261" stroke-width="28" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <g>
+    <rect x="338" y="512" width="42" height="66" rx="21" fill="#e39b4a"/>
+    <rect x="196" y="512" width="42" height="66" rx="21" fill="#e39b4a"/>
+  </g>
+
+  <g>
+    <ellipse cx="210" cy="330" rx="78" ry="80" fill="#f5b261"/>
+    <ellipse cx="184" cy="388" rx="44" ry="48" fill="#ffe3bd"/>
+    <g transform="rotate(-18 140 292)">
+      <ellipse cx="140" cy="292" rx="28" ry="62" fill="#8a5234"/>
+    </g>
+    <g transform="rotate(15 288 286)">
+      <ellipse cx="288" cy="286" rx="28" ry="62" fill="#8a5234"/>
+    </g>
+    <circle cx="188" cy="322" r="14" fill="#241509"/>
+    <circle cx="244" cy="320" r="14" fill="#241509"/>
+    <circle cx="192" cy="316" r="5" fill="#ffffff"/>
+    <circle cx="248" cy="314" r="5" fill="#ffffff"/>
+    <ellipse cx="230" cy="362" rx="34" ry="24" fill="#ffffff"/>
+    <ellipse cx="230" cy="350" rx="13" ry="10" fill="#3b2a1d"/>
+    <path d="M210 368 q20 14 40 0" stroke="#3b2a1d" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="540" cy="430" rx="120" ry="95" fill="#e8e4ef"/>
+    <ellipse cx="505" cy="456" rx="85" ry="74" fill="#ffffff"/>
+    <path d="M640 370 q64 -26 56 -88" stroke="#e8e4ef" stroke-width="28" stroke-linecap="round" fill="none"/>
+    <g transform="translate(586 370) rotate(-10)">
+      <ellipse cx="0" cy="40" rx="22" ry="58" fill="#c9c2d6"/>
+    </g>
+    <g transform="translate(586 370) rotate(-10)">
+      <ellipse cx="0" cy="-40" rx="22" ry="58" fill="#c9c2d6"/>
+    </g>
+  </g>
+
+  <g>
+    <circle cx="500" cy="300" r="55" fill="#e8e4ef"/>
+    <g transform="translate(478 232)">
+      <polygon points="12,10 30,-14 46,10" fill="#e8e4ef"/>
+      <polygon points="30,-14 26,-40 52,-26" fill="#e8e4ef"/>
+    </g>
+    <g transform="translate(512 234)">
+      <polygon points="0,10 16,-16 32,10" fill="#e8e4ef"/>
+      <polygon points="16,-16 14,-40 38,-28" fill="#e8e4ef"/>
+    </g>
+    <ellipse cx="484" cy="292" r="6" fill="#241509"/>
+    <ellipse cx="518" cy="292" r="6" fill="#241509"/>
+    <polygon points="484,308 500,296 516,308" fill="#241509"/>
+    <path d="M488 322 q14 10 28 -2" stroke="#241509" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <g stroke="#241509" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8">
+      <path d="M458 326 q-16 8 -26 4"/>
+      <path d="M452 338 q-22 10 -34 6"/>
+      <path d="M546 326 q16 8 26 4"/>
+      <path d="M552 338 q22 10 34 6"/>
+    </g>
+    <g stroke="#241509" stroke-width="3.5" fill="none" stroke-linecap="round">
+      <path d="M470 342 q-10 26 6 44"/>
+      <path d="M532 342 q10 26 -6 44"/>
+    </g>
+    <g fill="#241509" stroke="#ffffff" stroke-width="3">
+      <ellipse cx="462" cy="394" rx="9" ry="12"/>
+      <ellipse cx="540" cy="394" rx="9" ry="12"/>
+    </g>
+  </g>
+
+  <path d="M398 176 c-14-30 17-50 36-34 19-16 50 4 36 34 -10 18-36 24-36 24s-26-6-36-24z" fill="#ffffff" opacity="0.6"/>
+</svg>
