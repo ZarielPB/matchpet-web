@@ -7,9 +7,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
-      // El service worker en desarrollo servía un bundle viejo y hacía
-      // imposible validar los cambios del Sprint 2 durante la demo.
+      includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'ilustracion-login.svg', 'ilustracion-registro.svg', 'ilustracion-refugio.svg'],
       devOptions: {
         enabled: false
       },
@@ -17,7 +15,7 @@ export default defineConfig({
         name: 'MatchPet - Adopción Responsable',
         short_name: 'MatchPet',
         description: 'Encuentra a tu compañero ideal y adopta de forma responsable en Bolivia.',
-        theme_color: '#4F46E5', 
+        theme_color: '#3b0764', 
         background_color: '#ffffff',
         display: 'standalone',
         scope: './',
