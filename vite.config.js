@@ -8,9 +8,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
+      // El service worker en desarrollo servía un bundle viejo y hacía
+      // imposible validar los cambios del Sprint 2 durante la demo.
       devOptions: {
-              enabled: true
-            },
+        enabled: false
+      },
       manifest: {
         name: 'MatchPet - Adopción Responsable',
         short_name: 'MatchPet',

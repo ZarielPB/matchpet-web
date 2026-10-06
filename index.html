@@ -17,6 +17,14 @@
   </head>
   <body class="bg-gray-50 text-gray-900 antialiased">
     <div id="app"></div>
+
+    <!-- Splash estático: se muestra mientras Supabase restaura la sesión y el
+         guard de rutas decide (HU-09 CA#3: estado de carga, sin rebotes). -->
+    <div id="app-boot" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-50">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-200 border-t-indigo-600"></div>
+      <p class="mt-4 text-sm text-gray-500">Cargando MatchPet…</p>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

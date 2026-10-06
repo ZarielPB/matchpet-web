@@ -62,20 +62,33 @@ Resultado: el usuario logueado era expulsado al recargar.
 
 ### Solución aplicada
 
-1. En el store se agregó `getSession()` que llama explícitamente a `supabase.auth.getSession()` antes de cualquier validación, actualiza `user`/`profile` y marca `sessionRestored` para no repetir la consulta en cada navegación:
+1. En el store se agregó `getSession()` que llama explícitamente a `supabase.auth.getSession()` antes de cualquier validación, actualiza `user`/`profile` y comparte una **promesa única** para que navegaciones simultáneas esperen al mismo resultado en lugar de observar `user === null` a mitad:
 
 ```js
+let sessionPromise = null
+
 async function getSession() {
-  if (sessionRestored.value) return user.value
-  sessionRestored.value = true
-  const { data } = await supabase.auth.getSession()
-  user.value = data.session?.user || null
-  if (data.session?.user) {
-    await fetchProfile(data.session.user.id)
-  } else {
-    profile.value = null
+  if (sessionPromise) return sessionPromise
+  authLoading.value = true
+  sessionPromise = (async () => {
+    try {
+      const { data } = await supabase.auth.getSession()
+      user.value = data?.session?.user || null
+      if (user.value) {
+        await fetchProfile(user.value.id)
+      } else {
+        profile.value = null
+      }
+      return user.value
+    } finally {
+      authLoading.value = false
+    }
+  })()
+  try {
+    return await sessionPromise
+  } finally {
+    sessionPromise = null
   }
-  return user.value
 }
 ```
 
@@ -93,7 +106,8 @@ router.beforeEach(async (to, from, next) => {
 
 1. Inicia sesión como adoptante o refugio.
 2. Estando en `/adoptante/dashboard` (o `/refugio/dashboard`), presiona **F5** (recargar).
-3. Verifica que **permaneces** en el dashboard y no te redirige a `/login`.
+3. Verifica que aparece brevemente el splash "Cargando MatchPet…" y que **permaneces** en el dashboard, sin ir a `/login`.
+4. Como adoptante, navega a `/refugio/mascotas`: el guard debe redirigirte a tu panel con el aviso "Acceso denegado: no tienes permiso para ver esa página." (HU-08 CA#4).
 
 ---
 

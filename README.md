@@ -1,14 +1,15 @@
 # 🐾 MatchPet - Sistema Web de Adopción de Mascotas (PWA)
 
-Bienvenidos al repositorio oficial de MatchPet. Este proyecto es una Aplicación Web Progresiva (PWA) diseñada para conectar refugios de animales con adoptantes, utilizando un algoritmo de compatibilidad.
+Bienvenidos al repositorio oficial de **MatchPet**. Este proyecto es una Aplicación Web Progresiva (PWA) diseñada para conectar refugios de animales con adoptantes, utilizando un algoritmo de compatibilidad inteligente y seguimiento post-adopción.
 
 ## 🛠️ Stack Tecnológico
-- **Frontend:** Vue 3 (Composition API) + Vite
-- **Estilos:** TailwindCSS v3 (Mobile-First)
-- **Estado:** Pinia
-- **Backend / BaaS:** Supabase (PostgreSQL, Auth, Storage)
-- **Hosting:** Firebase Hosting
-- **Gestor de Paquetes:** pnpm (Obligatorio para todo el equipo)
+- **Frontend:** Vue 3.5 (Composition API, `<script setup>`) + Vite 8
+- **Estilos:** TailwindCSS v3 (Mobile-First) + PostCSS
+- **Estado Global:** Pinia 4
+- **Enrutamiento:** Vue Router 4 (con Guards de Auth y Roles)
+- **Backend / BaaS:** Supabase (PostgreSQL, Auth, Storage, RLS, Triggers)
+- **Hosting:** Firebase Hosting (CDN global)
+- **Gestor de Paquetes:** `pnpm` (v9 - Obligatorio para todo el equipo)
 
 ## ⚙️ Requisitos Previos
 Antes de comenzar, asegúrate de tener instalado en tu sistema (Windows o Linux):
@@ -22,7 +23,7 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema (Windows o Linux)
 	** instalacion y ejecucion local **
 	- PASO 1: Clonar el repositorio
 
-		git clone 
+		git clone https://github.com/ZarielPB/matchpet-web
 		cd matchpet-web
 
 	- PASO 2: Instalar dependencias
@@ -35,8 +36,8 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema (Windows o Linux)
 	Copialo y renombralo a .env
 	Llena las variables de entorn con las credenciales de Supabase (el lider de equipo puede proporcionarlas)
 
-		VITE_SUPABASE_URL=tu_url_aqui
-		VITE_SUPABASE_ANON_KEY=tu_llave_aqui
+		VITE_SUPABASE_URL=
+		VITE_SUPABASE_ANON_KEY=
 
 	OJO: NUNCA subir el archivo .env a github. Ya sta ignorado en el .gitignore
 
@@ -50,12 +51,12 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema (Windows o Linux)
 
 src/
 ├── assets/         # Estilos globales (Tailwind), fuentes, imágenes locales
-├── components/     # Componentes reutilizables (Botones, Cards, Inputs)
-├── views/          # Páginas principales (Home, Catalogo, Login, Paneles)
-├── router/         # Configuración de rutas (Vue Router) y guards
-├── stores/         # Estados globales (Pinia: auth, pets, etc.)
-├── services/       # Conexión con Supabase (supabaseClient.js)
-└── utils/          # Funciones auxiliares (algoritmo de match, fechas)
+├── components/     # Componentes reutilizables (Botones, Cards, Inputs, Modals)
+├── views/          # Páginas principales (Home, Catalogo, Login, Paneles de Refugio/Adoptante)
+├── router/         # Configuración de rutas (Vue Router) y Guards de seguridad
+├── stores/         # Estados globales (Pinia: auth, pets, favorites, etc.)
+├── services/       # Conexión con Supabase (supabaseClient.js) y llamadas a API
+└── utils/          # Funciones auxiliares (validaciones, algoritmo de match, fechas)
 
 ## FLUJO DE TRABAJO GIT
 1. Nunca trabajes directamente sobre la rama main.

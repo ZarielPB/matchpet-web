@@ -135,7 +135,7 @@ const handleLogin = async () => {
     if (authStore.userRole === 'refugio') {
       router.push('/refugio/dashboard')
     } else {
-      router.push('/adoptante/dashboard')
+      router.push('/catalogo')
     }
   }
 }
