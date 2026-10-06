@@ -34,7 +34,6 @@
             </span>
             <span class="text-[10px] font-semibold text-teal-600 tracking-wider uppercase -mt-1">Adopción Responsable</span>
           </div>
->>>>>>> origin/feature/frontend-auth
         </router-link>
 
         <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600" aria-label="Navegación principal">
