@@ -71,49 +71,49 @@
     @apply w-full h-12 pl-11 pr-12 bg-white border border-edge rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm;
   }
   .mp-input-soft {
-    @apply w-full h-12 pl-11 pr-4 bg-[#f7f5fd] border border-[#e2dbf3] rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(80,56,237,0.15)] transition-all duration-150;
+    @apply w-full h-12 pl-11 pr-4 bg-brand-bg-soft/40 border border-brand-neutral rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(186,140,113,0.20)] transition-all duration-150;
   }
   .mp-input-soft-pass {
-    @apply w-full h-12 pl-11 pr-12 bg-[#f7f5fd] border border-[#e2dbf3] rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(80,56,237,0.15)] transition-all duration-150;
+    @apply w-full h-12 pl-11 pr-12 bg-brand-bg-soft/40 border border-brand-neutral rounded-xl text-sm text-ink placeholder:text-outline focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(186,140,113,0.20)] transition-all duration-150;
   }
   .mp-btn-primary {
-    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-primary text-white text-[15px] font-semibold tracking-wide shadow-btn-primary hover:bg-primary-hover hover:shadow-btn-primary-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-brand-primary text-brand-dark text-[15px] font-bold tracking-wide shadow-btn-primary hover:bg-primary-hover hover:shadow-btn-primary-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .mp-btn-ghost {
     @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-white text-ink text-[15px] font-semibold border border-outline-soft hover:bg-surface-low transition-all duration-150 shadow-sm;
   }
   .mp-btn-green {
-    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 text-white text-[15px] font-semibold tracking-wide shadow-emerald-btn hover:bg-emerald-700 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-brand-secondary text-brand-dark text-[15px] font-bold tracking-wide shadow-emerald-btn hover:bg-brand-secondary/90 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .paw-pattern {
-    background-image: radial-gradient(#6d28d9 0.75px, transparent 0.75px), radial-gradient(#6d28d9 0.75px, #fbfaff 0.75px);
+    background-image: radial-gradient(#BA8C71 0.75px, transparent 0.75px), radial-gradient(#BA8C71 0.75px, #FCD8B8 0.75px);
     background-size: 30px 30px;
     background-position: 0 0, 15px 15px;
     opacity: 0.05;
   }
   .hero-glow {
-    background: radial-gradient(circle at 60% 30%, rgba(139, 92, 246, 0.18) 0%, rgba(243, 232, 255, 0.4) 45%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle at 60% 30%, rgba(186, 140, 113, 0.18) 0%, rgba(252, 216, 184, 0.50) 45%, rgba(255, 255, 255, 0) 70%);
   }
   .shadow-soft {
-    box-shadow: 0 14px 40px -10px rgba(55, 20, 87, 0.08);
+    box-shadow: 0 14px 40px -10px rgba(186, 140, 113, 0.10);
   }
   .shadow-hover {
     transition: all 0.25s ease;
   }
   .shadow-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 35px -8px rgba(55, 20, 87, 0.12);
+    box-shadow: 0 20px 35px -8px rgba(186, 140, 113, 0.16);
   }
 
   /* ── Textura / superficie ─────────────────────── */
   .mp-grid-lines {
-    background-image: linear-gradient(rgba(91, 33, 182, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(91, 33, 182, 0.055) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(186, 140, 113, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(186, 140, 113, 0.07) 1px, transparent 1px);
     background-size: 44px 44px;
   }
   .mp-gradient-text {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-purple-600 to-teal-500;
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-dark via-brand-primary to-brand-secondary;
   }
   /* Borde con degradé para tarjetas Featured */
   .mp-ring-brand {
@@ -125,7 +125,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(91, 33, 182, 0.35), rgba(13, 148, 136, 0.35));
+    background: linear-gradient(135deg, rgba(186, 140, 113, 0.45), rgba(225, 161, 108, 0.45));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -136,6 +136,85 @@
   }
   .mp-ring-brand:hover::before {
     opacity: 1;
+  }
+
+  /* ── Photocards estilo polaroid (galería PetDetailView) ─────────
+     --tilt se asigna por inline-style. Al pasar el cursor la tarjeta
+     se endereza, se eleva y la imagen hace un zoom leve. Todo con
+     transiciones CSS nativas (sin librerías externas). */
+  .photocard {
+    --tilt: 0deg;
+    @apply relative block bg-white rounded-2xl px-2.5 pt-2.5 pb-5;
+    border: 1px solid rgba(163, 174, 185, 0.3);
+    transform: rotate(var(--tilt));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 2px 4px rgba(4, 4, 4, 0.06),
+      0 18px 40px -12px rgba(186, 140, 113, 0.35);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .photocard:hover,
+  .photocard:focus-visible {
+    transform: rotate(0deg) translateY(-6px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 6px 12px rgba(4, 4, 4, 0.08),
+      0 28px 50px -14px rgba(186, 140, 113, 0.45);
+  }
+  .photocard-img {
+    @apply block w-full rounded-xl object-cover;
+    aspect-ratio: 4 / 5;
+    background-color: rgba(252, 216, 184, 0.4);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .photocard:hover .photocard-img,
+  .photocard:focus-visible .photocard-img {
+    transform: scale(1.05);
+  }
+  .photocard-caption {
+    @apply mt-2 truncate px-1 font-display text-sm font-bold text-[#040404];
+  }
+  /* Miniatura activa: anillo naranja + elevación (sin perder la sombra) */
+  .photocard--active {
+    border-color: #E1A16C;
+    box-shadow:
+      0 0 0 1px #E1A16C,
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 2px 4px rgba(4, 4, 4, 0.06),
+      0 18px 40px -12px rgba(186, 140, 113, 0.45);
+  }
+  /* Miniatura inactiva: atenuada hasta el hover */
+  .photocard--idle {
+    opacity: 0.7;
+  }
+  .photocard--idle:hover,
+  .photocard--idle:focus-visible {
+    opacity: 1;
+  }
+
+  /* ── Transiciones de Vue (Sprint 3): toast, modal y pasos ───── */
+  .mp-toast-enter-active, .mp-toast-leave-active { transition: opacity .3s ease, transform .3s ease; }
+  .mp-toast-enter-from, .mp-toast-leave-to { opacity: 0; transform: translate(-50%, -12px); }
+
+  .mp-modal-enter-active, .mp-modal-leave-active { transition: opacity .25s ease; }
+  .mp-modal-enter-active .mp-modal-panel, .mp-modal-leave-active .mp-modal-panel {
+    transition: transform .3s cubic-bezier(0.22, 1, 0.36, 1), opacity .25s ease;
+  }
+  .mp-modal-enter-from, .mp-modal-leave-to { opacity: 0; }
+  .mp-modal-enter-from .mp-modal-panel, .mp-modal-leave-to .mp-modal-panel { opacity: 0; transform: translateY(16px) scale(.96); }
+
+  .mp-step-enter-active, .mp-step-leave-active { transition: opacity .3s ease, transform .3s ease; }
+  .mp-step-enter-from { opacity: 0; transform: translateX(24px); }
+  .mp-step-leave-to { opacity: 0; transform: translateX(-24px); }
+
+  .mp-fade-up { animation: mp-fade-up .6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes mp-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .tape {
+    @apply pointer-events-none absolute left-1/2 -top-3 z-10 h-6 w-20 -translate-x-1/2 -rotate-3 rounded-[2px];
+    background: rgba(225, 161, 108, 0.55);
+    box-shadow: 0 1px 2px rgba(4, 4, 4, 0.12);
   }
 
   /* ── Animaciones de entrada al hacer scroll ─────
@@ -177,8 +256,19 @@
       transition: none !important;
     }
     .shadow-hover:hover,
-    .mp-ring-brand:hover::before {
+    .mp-ring-brand:hover::before,
+    .photocard,
+    .photocard:hover,
+    .photocard-img,
+    .photocard:hover .photocard-img {
       transform: none !important;
     }
+    .photocard,
+    .photocard-img {
+      transition: none !important;
+    }
+    .mp-toast-enter-active, .mp-toast-leave-active, .mp-modal-enter-active, .mp-modal-leave-active,
+    .mp-modal-panel, .mp-step-enter-active, .mp-step-leave-active { transition: none !important; }
+    .mp-fade-up { animation: none !important; }
   }
 }

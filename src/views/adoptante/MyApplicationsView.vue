@@ -1,70 +1,68 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-3xl mx-auto px-4 py-8">
-      <button
-        type="button"
-        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-2"
-        @click="router.push('/adoptante/dashboard')"
-      >
-        ← Volver al panel
-      </button>
-      <h1 class="text-2xl font-bold text-gray-900">Mis solicitudes</h1>
-      <p class="text-sm text-gray-500 mt-1 mb-6">Sigue el estado de tus solicitudes de adopción.</p>
+  <DashboardLayout role="adoptante" title="Mis solicitudes">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="font-display text-2xl font-black text-[#040404]">Mis solicitudes</h1>
+      <p class="mb-6 mt-1 text-sm text-ink-soft">Sigue el estado de tus solicitudes de adopción.</p>
 
-      <div v-if="flash" class="mb-4 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg">{{ flash }}</div>
-      <div v-if="actionError" class="mb-4 px-4 py-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg">{{ actionError }}</div>
+      <div v-if="flash" class="mp-fade-up mb-4 rounded-xl border border-[#E1A16C]/40 bg-[#FCD8B8]/40 px-4 py-3 text-sm font-medium text-[#040404]" role="status">✅ {{ flash }}</div>
+      <div v-if="actionError" class="mb-4 rounded-xl border border-alert/30 bg-alert-container px-4 py-3 text-sm text-alert" role="alert">{{ actionError }}</div>
 
       <div v-if="store.loading" class="space-y-4">
-        <div v-for="n in 3" :key="n" class="h-28 bg-gray-200 rounded-xl animate-pulse"></div>
+        <div v-for="n in 3" :key="n" class="h-28 animate-pulse rounded-2xl bg-[#A3AEB9]/20"></div>
       </div>
 
-      <div v-else-if="loadError" class="text-center py-12 bg-white rounded-xl shadow-sm text-red-500">{{ loadError }}</div>
+      <div v-else-if="loadError" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ loadError }}</div>
 
-      <div v-else-if="store.applications.length === 0" class="text-center py-16 bg-white rounded-xl shadow-sm">
-        <div class="text-5xl mb-3">📨</div>
-        <p class="text-gray-700 font-medium">Aún no has enviado solicitudes.</p>
-        <router-link to="/catalogo" class="inline-block mt-4 px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
+      <div v-else-if="store.applications.length === 0" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
+        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
+        <p class="mt-3 font-medium text-[#040404]">Aún no has enviado solicitudes.</p>
+        <router-link to="/catalogo" class="mt-5 inline-block rounded-xl bg-[#BA8C71] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#E1A16C]">
           Explorar catálogo
         </router-link>
       </div>
 
       <ul v-else class="space-y-4">
-        <li v-for="a in store.applications" :key="a.id" class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex gap-4">
+        <li
+          v-for="(a, idx) in store.applications"
+          :key="a.id"
+          class="mp-fade-up flex gap-4 rounded-2xl border border-[#A3AEB9]/20 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+          :style="{ animationDelay: `${Math.min(idx, 8) * 60}ms` }"
+        >
           <img
             v-if="photo(a)"
             :src="photo(a)"
             :alt="`Foto de ${a.pets?.name || 'la mascota'}`"
-            class="w-24 h-24 rounded-lg object-cover shrink-0"
+            class="h-24 w-24 shrink-0 rounded-xl object-cover"
             loading="lazy"
           />
-          <div v-else class="w-24 h-24 rounded-lg bg-gray-200 flex items-center justify-center text-3xl shrink-0">🐾</div>
+          <div v-else class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-[#A3AEB9]">🐾</div>
 
-          <div class="flex-1 min-w-0">
+          <div class="min-w-0 flex-1">
             <div class="flex items-start justify-between gap-2">
-              <router-link v-if="a.pets" :to="`/mascota/${a.pets.id}`" class="font-bold text-gray-900 hover:underline truncate">
+              <router-link v-if="a.pets" :to="`/mascota/${a.pets.id}`" class="truncate font-display font-bold text-[#040404] hover:underline">
                 {{ a.pets.name }}
               </router-link>
-              <span v-else class="font-bold text-gray-900">Mascota no disponible</span>
-              <span :class="badge(a.status).class" class="px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap">
+              <span v-else class="font-display font-bold text-[#040404]">Mascota no disponible</span>
+              <span :class="badge(a.status).class" class="whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-semibold">
                 {{ badge(a.status).label }}
               </span>
             </div>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-ink-soft">
               {{ a.pets?.shelters?.shelter_name || 'Refugio' }}<span v-if="a.pets?.shelters?.city"> · {{ a.pets.shelters.city }}</span>
             </p>
-            <p class="text-xs text-gray-400 mt-0.5">Enviada el {{ formatDate(a.created_at) }}</p>
+            <p class="mt-0.5 text-xs text-ink-soft">Enviada el {{ formatDate(a.created_at) }}</p>
 
             <p
               v-if="a.shelter_comments && (a.status === 'aprobada' || a.status === 'rechazada')"
-              class="mt-2 text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-700"
+              class="mt-2 rounded-xl border border-[#A3AEB9]/20 bg-[#FCD8B8]/20 px-3 py-2 text-sm text-[#040404]"
             >
-              <span class="font-medium">Comentario del refugio:</span> {{ a.shelter_comments }}
+              <span class="font-semibold">Comentario del refugio:</span> {{ a.shelter_comments }}
             </p>
 
             <button
               v-if="a.status === 'pendiente'"
               type="button"
-              class="mt-3 text-sm text-red-600 hover:underline min-h-[44px] sm:min-h-0"
+              class="mt-3 min-h-[44px] text-sm font-semibold text-alert hover:underline sm:min-h-0"
               @click="askCancel(a)"
             >
               Cancelar solicitud
@@ -75,26 +73,27 @@
     </div>
 
     <!-- Modal de confirmación (HU-37 CA#2) -->
-    <div v-if="toCancel" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" role="dialog" aria-modal="true">
-      <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-6">
-        <p class="text-gray-900 font-medium">¿Estás seguro de que deseas cancelar esta solicitud?</p>
-        <p class="text-sm text-gray-500 mt-1">Esta acción no se puede deshacer</p>
-        <div class="flex gap-3 mt-5">
-          <button type="button" class="flex-1 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50" :disabled="cancelling" @click="toCancel = null">
-            Volver
-          </button>
-          <button type="button" class="flex-1 py-2 rounded-md text-sm text-white bg-red-600 hover:bg-red-700 disabled:opacity-60" :disabled="cancelling" @click="confirmCancel">
-            {{ cancelling ? 'Cancelando…' : 'Sí, cancelar' }}
-          </button>
+    <Transition name="mp-modal">
+      <div v-if="toCancel" class="fixed inset-0 z-50 flex items-center justify-center bg-[#040404]/50 px-4" role="dialog" aria-modal="true">
+        <div class="mp-modal-panel w-full max-w-sm rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-xl">
+          <p class="font-display font-bold text-[#040404]">¿Estás seguro de que deseas cancelar esta solicitud?</p>
+          <p class="mt-1 text-sm text-ink-soft">Esta acción no se puede deshacer</p>
+          <div class="mt-5 flex gap-3">
+            <button type="button" class="mp-btn-ghost flex-1" :disabled="cancelling" @click="toCancel = null">Volver</button>
+            <button type="button" class="flex h-12 flex-1 items-center justify-center rounded-xl bg-alert text-[15px] font-bold text-white transition hover:opacity-90 disabled:opacity-60" :disabled="cancelling" @click="confirmCancel">
+              {{ cancelling ? 'Cancelando…' : 'Sí, cancelar' }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </Transition>
+  </DashboardLayout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import DashboardLayout from '../../components/layout/DashboardLayout.vue'
 import { useApplicationStore } from '../../stores/applicationStore'
 
 const router = useRouter()
@@ -109,13 +108,13 @@ const cancelling = ref(false)
 
 // HU-36 CA#2: pendiente amarillo · aprobada verde · rechazada rojo · cancelada gris.
 const BADGES = {
-  pendiente: { label: 'Pendiente', class: 'bg-amber-100 text-amber-700' },
-  aprobada: { label: 'Aprobada', class: 'bg-emerald-100 text-emerald-700' },
-  rechazada: { label: 'Rechazada', class: 'bg-red-100 text-red-700' },
-  cancelada: { label: 'Cancelada', class: 'bg-gray-200 text-gray-600' },
-  completada: { label: 'Completada', class: 'bg-indigo-100 text-indigo-700' }
+  pendiente: { label: 'Pendiente', class: 'bg-[#FCD8B8] text-[#040404]' },
+  aprobada: { label: 'Aprobada', class: 'bg-[#BA8C71] text-white' },
+  rechazada: { label: 'Rechazada', class: 'bg-alert-container text-alert' },
+  cancelada: { label: 'Cancelada', class: 'bg-[#A3AEB9]/30 text-[#040404]' },
+  completada: { label: 'Completada', class: 'bg-[#E1A16C] text-[#040404]' }
 }
-const badge = (status) => BADGES[status] || { label: status, class: 'bg-gray-100 text-gray-600' }
+const badge = (status) => BADGES[status] || { label: status, class: 'bg-[#A3AEB9]/20 text-[#040404]' }
 
 function photo(a) {
   const imgs = a.pets?.pet_images || []

@@ -1,140 +1,187 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-2xl mx-auto px-4 py-8">
-      <button
-        type="button"
-        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-2"
-        @click="router.push('/refugio/dashboard')"
-      >
-        ← Volver al panel
-      </button>
-
-      <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
-        <h1 class="text-2xl font-bold text-emerald-600">Perfil del Refugio 🏠</h1>
-        <p class="text-sm text-gray-500 mt-1">
-          La información que publiques aquí aparecerá junto a tus mascotas en el catálogo.
-        </p>
-
-        <form class="mt-8 space-y-5" novalidate @submit.prevent="handleSave">
-          <div>
-            <label for="shelter-name" class="block text-sm font-medium text-gray-700 mb-1">
-              Nombre del refugio *
-            </label>
-            <input
-              id="shelter-name"
-              v-model="form.shelter_name"
-              type="text"
-              required
-              class="input"
-              :class="{ 'border-red-400': errors.shelter_name }"
-              placeholder="Ej. Fundación Patitas"
-            />
-            <p v-if="errors.shelter_name" class="text-xs text-red-500 mt-1">{{ errors.shelter_name }}</p>
+  <DashboardLayout role="refugio" title="Perfil del Refugio">
+    <div class="mx-auto max-w-3xl">
+      <div class="overflow-hidden rounded-2xl border border-[#A3AEB9]/20 bg-white shadow-sm">
+        <!-- Cabecera: portada -->
+        <div class="relative h-48 w-full overflow-hidden bg-[#A3AEB9]/20 sm:h-64">
+          <img
+            v-if="currentCover"
+            :src="currentCover"
+            alt="Portada del refugio"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <div v-else class="absolute inset-0 bg-gradient-to-br from-[#FCD8B8] to-[#E1A16C]/50">
+            <span
+              class="material-symbols-outlined absolute right-6 top-6 select-none text-[72px] leading-none text-white/50"
+              style="font-variation-settings: 'FILL' 1"
+              aria-hidden="true"
+            >
+              home_work
+            </span>
           </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#040404]/50 to-transparent"></div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label for="shelter-city" class="block text-sm font-medium text-gray-700 mb-1">Ciudad *</label>
-              <input
-                id="shelter-city"
-                v-model="form.city"
-                type="text"
-                required
-                class="input"
-                :class="{ 'border-red-400': errors.city }"
-                placeholder="Ej. La Paz"
-              />
-              <p v-if="errors.city" class="text-xs text-red-500 mt-1">{{ errors.city }}</p>
-            </div>
-
-            <div>
-              <label for="shelter-phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-              <input
-                id="shelter-phone"
-                v-model="form.phone"
-                type="tel"
-                class="input"
-                placeholder="Ej. 70000000"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label for="shelter-address" class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
-            <input
-              id="shelter-address"
-              v-model="form.address"
-              type="text"
-              class="input"
-              placeholder="Ej. Av. Costanera #123"
-            />
-          </div>
-
-          <div>
-            <label for="shelter-description" class="block text-sm font-medium text-gray-700 mb-1">
-              Descripción <span class="text-red-500">*</span>
-            </label>
-            <textarea
-              id="shelter-description"
-              v-model="form.description"
-              rows="3"
-              required
-              class="input resize-none"
-              :class="{ 'border-red-400': errors.description }"
-              placeholder="Cuéntanos sobre tu organización y su misión (mínimo 20 caracteres)"
-            ></textarea>
-            <p v-if="errors.description" class="text-xs text-red-500 mt-1">{{ errors.description }}</p>
-          </div>
-
-          <div>
-            <label for="shelter-cover" class="block text-sm font-medium text-gray-700 mb-1">
-              Foto de portada (opcional, máx. 2 MB)
-            </label>
-            <input
-              id="shelter-cover"
-              type="file"
-              accept="image/*"
-              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
-              @change="onCoverChange"
-            />
-            <p v-if="errors.cover" class="text-xs text-red-500 mt-1">{{ errors.cover }}</p>
-
-            <img
-              v-if="coverPreview"
-              :src="coverPreview"
-              alt="Vista previa de la portada"
-              class="mt-3 w-full max-h-60 object-cover rounded-lg border border-gray-200"
-            />
-            <div v-else-if="currentCover" class="mt-3 flex items-center gap-3">
-              <img
-                :src="currentCover"
-                alt="Portada actual del refugio"
-                class="w-40 h-28 object-cover rounded-lg border border-gray-200"
-              />
-              <button
-                type="button"
-                class="text-xs text-red-500 hover:underline"
-                @click="clearCover"
-              >
-                Quitar imagen
-              </button>
-            </div>
-          </div>
-
-          <p v-if="storeError" class="text-red-500 text-sm text-center">{{ storeError }}</p>
-          <p v-if="successMsg" class="text-emerald-600 text-sm text-center">{{ successMsg }}</p>
+          <!-- Botón superpuesto: cambiar portada -->
+          <label
+            for="shelter-cover"
+            class="absolute bottom-4 right-4 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#040404]/70 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-300 hover:bg-[#BA8C71]"
+          >
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">photo_camera</span>
+            Cambiar portada
+          </label>
+          <input
+            id="shelter-cover"
+            type="file"
+            accept="image/*"
+            class="sr-only"
+            @change="onCoverChange"
+          />
 
           <button
-            type="submit"
-            :disabled="loading"
-            class="w-full py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+            v-if="currentCover"
+            type="button"
+            class="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-xl bg-[#040404]/60 px-3 py-2 text-xs font-semibold text-white backdrop-blur-sm transition-colors duration-300 hover:bg-[#B3261E]"
+            @click="clearCover"
           >
-            {{ loading ? 'Guardando...' : 'Guardar perfil del refugio' }}
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">delete</span>
+            Quitar
           </button>
-        </form>
+        </div>
+
+        <!-- Cuerpo -->
+        <div class="relative px-6 pb-8 pt-16 sm:px-8 sm:pt-20">
+          <!-- Avatar superpuesto -->
+          <div
+            class="absolute -top-12 left-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#FCD8B8] text-3xl font-black text-[#BA8C71] shadow-md sm:-top-16 sm:left-8 sm:h-32 sm:w-32 sm:text-4xl"
+          >
+            {{ shelterInitial }}
+          </div>
+
+          <h1 class="text-2xl font-black text-[#040404]">
+            {{ form.shelter_name || 'Perfil del Refugio' }}
+          </h1>
+          <p class="mt-1 text-sm text-ink-soft">
+            La información que publiques aquí aparecerá junto a tus mascotas en el catálogo.
+          </p>
+          <p v-if="errors.cover" class="mt-2 text-xs text-alert">{{ errors.cover }}</p>
+
+          <form class="mt-8 space-y-8" novalidate @submit.prevent="handleSave">
+            <!-- Información Básica -->
+            <section>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Información Básica</h2>
+              <div class="space-y-5">
+                <div>
+                  <label for="shelter-name" class="form-label">Nombre del refugio *</label>
+                  <input
+                    id="shelter-name"
+                    v-model="form.shelter_name"
+                    type="text"
+                    required
+                    class="form-input"
+                    :class="{ '!border-alert': errors.shelter_name }"
+                    placeholder="Ej. Fundación Patitas"
+                  />
+                  <p v-if="errors.shelter_name" class="mt-1 text-xs text-alert">{{ errors.shelter_name }}</p>
+                </div>
+
+                <div>
+                  <label for="shelter-description" class="form-label">
+                    Descripción <span class="text-[#BA8C71]">*</span>
+                  </label>
+                  <textarea
+                    id="shelter-description"
+                    v-model="form.description"
+                    rows="3"
+                    required
+                    class="form-input resize-none"
+                    :class="{ '!border-alert': errors.description }"
+                    placeholder="Cuéntanos sobre tu organización y su misión (mínimo 20 caracteres)"
+                  ></textarea>
+                  <p v-if="errors.description" class="mt-1 text-xs text-alert">{{ errors.description }}</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Ubicación y Contacto -->
+            <section>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Ubicación y Contacto</h2>
+              <div class="space-y-5">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label for="shelter-city" class="form-label">Ciudad *</label>
+                    <input
+                      id="shelter-city"
+                      v-model="form.city"
+                      type="text"
+                      required
+                      class="form-input"
+                      :class="{ '!border-alert': errors.city }"
+                      placeholder="Ej. La Paz"
+                    />
+                    <p v-if="errors.city" class="mt-1 text-xs text-alert">{{ errors.city }}</p>
+                  </div>
+
+                  <div>
+                    <label for="shelter-phone" class="form-label">Teléfono</label>
+                    <input
+                      id="shelter-phone"
+                      v-model="form.phone"
+                      type="tel"
+                      class="form-input"
+                      placeholder="Ej. 70000000"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="shelter-address" class="form-label">Dirección</label>
+                  <input
+                    id="shelter-address"
+                    v-model="form.address"
+                    type="text"
+                    class="form-input"
+                    placeholder="Ej. Av. Costanera #123"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <!-- Feedback -->
+            <p
+              v-if="storeError"
+              class="rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 p-4 text-sm text-alert"
+            >
+              {{ storeError }}
+            </p>
+            <div
+              v-if="successMsg"
+              class="rounded-xl border border-[#E1A16C]/30 bg-[#E1A16C]/10 p-4 text-sm text-[#040404]"
+            >
+              {{ successMsg }}
+            </div>
+
+            <!-- Acciones -->
+            <div class="flex flex-col gap-3 border-t border-[#A3AEB9]/20 pt-6 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                class="w-full rounded-xl border border-[#A3AEB9]/40 px-6 py-3 font-semibold text-[#040404] transition-all duration-300 hover:bg-[#FCD8B8]/40 sm:w-auto"
+                @click="router.push('/refugio/dashboard')"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                :disabled="loading"
+                class="w-full rounded-xl bg-[#BA8C71] px-6 py-3 font-bold text-white shadow-sm transition-all duration-300 hover:bg-[#E1A16C] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              >
+                {{ loading ? (coverFile ? 'Subiendo imagen…' : 'Guardando...') : 'Guardar Cambios' }}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </DashboardLayout>
 </template>
 
 <script setup>
@@ -144,6 +191,7 @@ import { useAuthStore } from '../../stores/authStore'
 import { usePetStore } from '../../stores/petStore'
 import { supabase } from '../../services/supabaseClient'
 import { translateDbError } from '../../utils/errorMessages'
+import DashboardLayout from '../../components/layout/DashboardLayout.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -165,6 +213,10 @@ const coverFile = ref(null)
 const coverPreview = ref('')
 
 const currentCover = computed(() => coverPreview.value || savedCoverUrl.value || null)
+const shelterInitial = computed(() => {
+  const name = form.shelter_name.trim()
+  return name ? name.charAt(0).toUpperCase() : '🏠'
+})
 
 function userId() {
   return authStore.user?.id
@@ -301,7 +353,10 @@ function saveCoverUrlState(coverUrl) {
 </script>
 
 <style scoped>
-.input {
-  @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm bg-white;
+.form-input {
+  @apply block w-full appearance-none rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2.5 text-sm text-[#040404] placeholder-[#A3AEB9] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20;
+}
+.form-label {
+  @apply mb-1.5 block text-sm font-semibold text-[#040404];
 }
 </style>

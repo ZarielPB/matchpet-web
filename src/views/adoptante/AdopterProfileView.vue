@@ -1,182 +1,236 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-2xl mx-auto px-4 py-8">
-      <button
-        type="button"
-        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-2"
-        @click="router.push('/adoptante/dashboard')"
-      >
-        ← Volver al panel
-      </button>
-
-      <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
-        <h1 class="text-2xl font-bold text-indigo-600">Mi Perfil de Adoptante 🐾</h1>
-        <p class="text-sm text-gray-500 mt-1">
-          Cuéntanos sobre tu hogar para encontrar a la mascota ideal para ti.
-        </p>
-
-        <form class="mt-8 space-y-5" novalidate @submit.prevent="handleSave">
-          <div>
-            <label for="full-name" class="block text-sm font-medium text-gray-700 mb-1">
-              Nombre completo *
-            </label>
-            <input
-              id="full-name"
-              v-model="fullName"
-              type="text"
-              required
-              class="input"
-              placeholder="Tu nombre"
-            />
-          </div>
-
-          <div>
-            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ciudad *</label>
-            <input
-              id="city"
-              v-model="form.city"
-              type="text"
-              class="input"
-              :class="{ 'border-red-400': errors.city }"
-              placeholder="Ej. La Paz"
-            />
-            <p v-if="errors.city" class="text-xs text-red-500 mt-1">{{ errors.city }}</p>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label for="housing-type" class="block text-sm font-medium text-gray-700 mb-1">
-                Tipo de vivienda *
-              </label>
-              <select
-                id="housing-type"
-                v-model="form.housing_type"
-                required
-                class="input"
-                :class="{ 'border-red-400': errors.housing_type }"
-              >
-                <option value="" disabled>Selecciona una opción</option>
-                <option value="casa">Casa</option>
-                <option value="departamento">Apartamento</option>
-              </select>
-              <p v-if="errors.housing_type" class="text-xs text-red-500 mt-1">{{ errors.housing_type }}</p>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">¿Tienes patio/jardín?</label>
-              <div class="flex gap-6">
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_yard" type="radio" value="true" class="accent-indigo-600" />
-                  Sí
-                </label>
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_yard" type="radio" value="false" class="accent-indigo-600" />
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">¿Tienes hijos?</label>
-              <div class="flex gap-6">
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_kids" type="radio" value="true" class="accent-indigo-600" />
-                  Sí
-                </label>
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_kids" type="radio" value="false" class="accent-indigo-600" />
-                  No
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">¿Tienes otras mascotas?</label>
-              <div class="flex gap-6">
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_other_pets" type="radio" value="true" class="accent-indigo-600" />
-                  Sí
-                </label>
-                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input v-model="form.has_other_pets" type="radio" value="false" class="accent-indigo-600" />
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="form.has_kids === 'true'">
-            <label for="kids-ages" class="block text-sm font-medium text-gray-700 mb-1">
-              Edades de los hijos
-            </label>
-            <input
-              id="kids-ages"
-              v-model="form.kids_ages"
-              type="text"
-              class="input"
-              placeholder="Ej. 4, 7 y 10 años"
-            />
-          </div>
-
-          <div v-if="form.has_other_pets === 'true'">
-            <label for="other-pets-details" class="block text-sm font-medium text-gray-700 mb-1">
-              Detalles de tus mascotas
-            </label>
-            <textarea
-              id="other-pets-details"
-              v-model="form.other_pets_details"
-              rows="2"
-              class="input resize-none"
-              placeholder="Ej. Un perro mestizo de 3 años, sociable"
-            ></textarea>
-          </div>
-
-          <div>
-            <label for="experience-years" class="block text-sm font-medium text-gray-700 mb-1">
-              Años de experiencia con mascotas *
-            </label>
-            <input
-              id="experience-years"
-              v-model.number="form.experience_years"
-              type="number"
-              min="0"
-              required
-              class="input"
-              :class="{ 'border-red-400': errors.experience_years }"
-              placeholder="Ej. 5"
-            />
-            <p v-if="errors.experience_years" class="text-xs text-red-500 mt-1">{{ errors.experience_years }}</p>
-          </div>
-
-          <p v-if="storeError" class="text-red-500 text-sm text-center">{{ storeError }}</p>
-          <p v-if="successMsg" class="text-emerald-600 text-sm text-center">{{ successMsg }}</p>
-
-          <button
-            type="submit"
-            :disabled="loading"
-            class="w-full py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+  <DashboardLayout role="adoptante" title="Mi Perfil">
+    <div class="mx-auto max-w-3xl">
+      <div class="overflow-hidden rounded-2xl border border-[#A3AEB9]/20 bg-white shadow-sm">
+        <!-- Cabecera: portada decorativa -->
+        <div class="relative h-48 w-full overflow-hidden bg-gradient-to-br from-[#FCD8B8] to-[#E1A16C]/50 sm:h-64">
+          <span
+            class="material-symbols-outlined absolute -right-4 -top-4 select-none text-[140px] leading-none text-white/40"
+            style="font-variation-settings: 'FILL' 1"
+            aria-hidden="true"
           >
-            {{ loading ? 'Guardando...' : 'Guardar mi perfil' }}
-          </button>
-        </form>
+            pets
+          </span>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#040404]/25 to-transparent"></div>
+        </div>
+
+        <!-- Cuerpo -->
+        <div class="relative px-6 pb-8 pt-16 sm:px-8 sm:pt-20">
+          <!-- Avatar superpuesto -->
+          <div
+            class="absolute -top-12 left-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#FCD8B8] text-3xl font-black text-[#BA8C71] shadow-md sm:-top-16 sm:left-8 sm:h-32 sm:w-32 sm:text-4xl"
+          >
+            {{ initials }}
+          </div>
+
+          <h1 class="text-2xl font-black text-[#040404]">
+            {{ fullName || 'Mi Perfil de Adoptante' }}
+          </h1>
+          <p class="mt-1 text-sm text-ink-soft">
+            Cuéntanos sobre tu hogar para encontrar a la mascota ideal para ti.
+          </p>
+
+          <form class="mt-8 space-y-8" novalidate @submit.prevent="handleSave">
+            <!-- Información Básica -->
+            <section>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Información Básica</h2>
+              <div class="space-y-5">
+                <div>
+                  <label for="full-name" class="form-label">Nombre completo *</label>
+                  <input
+                    id="full-name"
+                    v-model="fullName"
+                    type="text"
+                    required
+                    class="form-input"
+                    placeholder="Tu nombre"
+                  />
+                </div>
+
+                <div>
+                  <label for="experience-years" class="form-label">Años de experiencia con mascotas *</label>
+                  <input
+                    id="experience-years"
+                    v-model.number="form.experience_years"
+                    type="number"
+                    min="0"
+                    required
+                    class="form-input"
+                    :class="{ '!border-alert': errors.experience_years }"
+                    placeholder="Ej. 5"
+                  />
+                  <p v-if="errors.experience_years" class="mt-1 text-xs text-alert">{{ errors.experience_years }}</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Ubicación y Contacto -->
+            <section>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Ubicación y Contacto</h2>
+              <div>
+                <label for="city" class="form-label">Ciudad *</label>
+                <input
+                  id="city"
+                  v-model="form.city"
+                  type="text"
+                  class="form-input"
+                  :class="{ '!border-alert': errors.city }"
+                  placeholder="Ej. La Paz"
+                />
+                <p v-if="errors.city" class="mt-1 text-xs text-alert">{{ errors.city }}</p>
+              </div>
+            </section>
+
+            <!-- Vivienda y Convivencia -->
+            <section>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Vivienda y Convivencia</h2>
+              <div class="space-y-5">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label for="housing-type" class="form-label">Tipo de vivienda *</label>
+                    <select
+                      id="housing-type"
+                      v-model="form.housing_type"
+                      required
+                      class="form-input"
+                      :class="{ '!border-alert': errors.housing_type }"
+                    >
+                      <option value="" disabled>Selecciona una opción</option>
+                      <option value="casa">Casa</option>
+                      <option value="departamento">Apartamento</option>
+                    </select>
+                    <p v-if="errors.housing_type" class="mt-1 text-xs text-alert">{{ errors.housing_type }}</p>
+                  </div>
+
+                  <div>
+                    <label class="form-label">¿Tienes patio/jardín?</label>
+                    <div class="flex gap-6 pt-2">
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_yard" type="radio" value="true" class="accent-[#BA8C71]" />
+                        Sí
+                      </label>
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_yard" type="radio" value="false" class="accent-[#BA8C71]" />
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label class="form-label">¿Tienes hijos?</label>
+                    <div class="flex gap-6 pt-2">
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_kids" type="radio" value="true" class="accent-[#BA8C71]" />
+                        Sí
+                      </label>
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_kids" type="radio" value="false" class="accent-[#BA8C71]" />
+                        No
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="form-label">¿Tienes otras mascotas?</label>
+                    <div class="flex gap-6 pt-2">
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_other_pets" type="radio" value="true" class="accent-[#BA8C71]" />
+                        Sí
+                      </label>
+                      <label class="inline-flex items-center gap-2 text-sm text-[#040404]">
+                        <input v-model="form.has_other_pets" type="radio" value="false" class="accent-[#BA8C71]" />
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-if="form.has_kids === 'true'">
+                  <label for="kids-ages" class="form-label">Edades de los hijos</label>
+                  <input
+                    id="kids-ages"
+                    v-model="form.kids_ages"
+                    type="text"
+                    class="form-input"
+                    placeholder="Ej. 4, 7 y 10 años"
+                  />
+                </div>
+
+                <div v-if="form.has_other_pets === 'true'">
+                  <label for="other-pets-details" class="form-label">Detalles de tus mascotas</label>
+                  <textarea
+                    id="other-pets-details"
+                    v-model="form.other_pets_details"
+                    rows="2"
+                    class="form-input resize-none"
+                    placeholder="Ej. Un perro mestizo de 3 años, sociable"
+                  ></textarea>
+                </div>
+              </div>
+            </section>
+
+            <!-- Feedback -->
+            <p
+              v-if="storeError"
+              class="rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 p-4 text-sm text-alert"
+            >
+              {{ storeError }}
+            </p>
+            <div
+              v-if="successMsg"
+              class="rounded-xl border border-[#E1A16C]/30 bg-[#E1A16C]/10 p-4 text-sm text-[#040404]"
+            >
+              {{ successMsg }}
+            </div>
+
+            <!-- Acciones -->
+            <div class="flex flex-col gap-3 border-t border-[#A3AEB9]/20 pt-6 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                class="w-full rounded-xl border border-[#A3AEB9]/40 px-6 py-3 font-semibold text-[#040404] transition-all duration-300 hover:bg-[#FCD8B8]/40 sm:w-auto"
+                @click="router.push('/adoptante/dashboard')"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                :disabled="loading"
+                class="w-full rounded-xl bg-[#BA8C71] px-6 py-3 font-bold text-white shadow-sm transition-all duration-300 hover:bg-[#E1A16C] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              >
+                {{ loading ? 'Guardando...' : 'Guardar Cambios' }}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </DashboardLayout>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/authStore'
 import { supabase } from '../../services/supabaseClient'
 import { translateDbError } from '../../utils/errorMessages'
+import DashboardLayout from '../../components/layout/DashboardLayout.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
 
 const fullName = ref(authStore.profile?.full_name || '')
+
+const initials = computed(() => {
+  const name = fullName.value.trim()
+  if (!name) return '🐾'
+  return name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('')
+})
 
 const form = reactive({
   city: '',
@@ -267,7 +321,10 @@ async function handleSave() {
 </script>
 
 <style scoped>
-.input {
-  @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white;
+.form-input {
+  @apply block w-full appearance-none rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2.5 text-sm text-[#040404] placeholder-[#A3AEB9] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20;
+}
+.form-label {
+  @apply mb-1.5 block text-sm font-semibold text-[#040404];
 }
 </style>

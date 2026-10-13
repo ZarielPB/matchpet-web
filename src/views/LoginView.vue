@@ -6,17 +6,17 @@
         <router-link to="/" class="flex items-center gap-2 group" aria-label="MatchPet - Ir al inicio">
           <!-- Logo oficial unificado con HomeView.vue (badge + SVG huella + subtítulo teal) -->
           <div
-            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-purple to-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
+            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white shadow-md shadow-brand-primary/30 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
           >
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 13.5c-1.6 0-3 1.2-3 2.8 0 1.9 1.6 3.7 3 3.7s3-1.8 3-3.7c0-1.6-1.4-2.8-3-2.8zm-4.7-2.7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9.4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7.2-4.5c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2zm5 0c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2z"></path>
             </svg>
           </div>
           <div class="flex flex-col">
-            <span class="text-2xl font-black tracking-tight text-brand-purple font-display leading-tight">
-              Match<span class="text-purple-600">Pet</span>
+            <span class="text-2xl font-black tracking-tight text-brand-primary font-display leading-tight">
+              Match<span class="text-brand-primary">Pet</span>
             </span>
-            <span class="text-[10px] font-semibold text-teal-600 tracking-wider uppercase -mt-1">Adopción Responsable</span>
+            <span class="text-[10px] font-semibold text-brand-primary tracking-wider uppercase -mt-1">Adopción Responsable</span>
           </div>
         </router-link>
         <nav class="flex items-center gap-2 sm:gap-3">
@@ -51,7 +51,7 @@
 
               <!-- Encabezado -->
               <div class="mb-6">
-                <div class="inline-flex items-center gap-1.5 text-primary text-[11px] uppercase tracking-wider mb-2 bg-[#f3f0fa] px-2 py-1 rounded-full font-bold">
+                <div class="inline-flex items-center gap-1.5 text-primary text-[11px] uppercase tracking-wider mb-2 bg-brand-bg-soft/70 px-2 py-1 rounded-full font-bold">
                   <span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">pets</span>
                   <span>Acceso a la plataforma</span>
                 </div>
@@ -60,7 +60,7 @@
                     <span class="text-primary block">BIENVENIDO A</span>
                     <span class="text-teal block">MATCH PET</span>
                   </h1>
-                  <span class="material-symbols-outlined text-[#e9d5ff] text-[48px] select-none pointer-events-none" style="font-variation-settings: 'FILL' 1;">pets</span>
+                  <span class="material-symbols-outlined text-brand-primary/40 text-[48px] select-none pointer-events-none" style="font-variation-settings: 'FILL' 1;">pets</span>
                 </div>
                 <p class="text-sm text-ink-soft mt-1">Adopte a una mascotita para que sea su nuevo compañero en su vida</p>
               </div>
@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- Mensaje de error -->
-                <p v-if="authStore.errorMsg" class="text-red-600 text-sm text-center">
+                <p v-if="authStore.errorMsg" class="text-alert text-sm text-center">
                   {{ authStore.errorMsg }}
                 </p>
 
@@ -134,7 +134,7 @@
 
               <!-- ========== FORMULARIO RECUPERAR CONTRASEÑA ========== -->
               <form v-else class="space-y-4" @submit.prevent="handleReset">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider font-bold" style="background-color: #ede9fe; color: #3b0764;">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wider font-bold" style="background-color: #F6E7DB; color: #8F6349;">
                   <span class="material-symbols-outlined text-[14px]">security</span>
                   <span>Enlace seguro</span>
                 </div>
@@ -162,8 +162,8 @@
                 </div>
 
                 <!-- Mensajes -->
-                <p v-if="resetMsg" class="text-green-600 text-sm text-center">{{ resetMsg }}</p>
-                <p v-if="resetError" class="text-red-600 text-sm text-center">{{ resetError }}</p>
+                <p v-if="resetMsg" class="text-brand-primary text-sm text-center">{{ resetMsg }}</p>
+                <p v-if="resetError" class="text-alert text-sm text-center">{{ resetError }}</p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                   <button
@@ -196,7 +196,7 @@
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left bg-surface-low/60 rounded-xl p-2 px-4 mt-1">
                   <div class="text-xs text-ink-soft">
                     <span>¿Eres refugio?</span>
-                    <router-link to="/registro-refugio" class="text-emerald-600 hover:text-emerald-700 font-bold ml-1 transition-colors">Registra tu organización</router-link>
+                    <router-link to="/registro-refugio" class="text-brand-primary hover:text-primary-hover font-bold ml-1 transition-colors">Registra tu organización</router-link>
                   </div>
                   
                   
@@ -208,7 +208,7 @@
           <!-- Columna derecha: Bloque visual -->
           <div class="lg:col-span-6 relative bg-gradient-to-b from-teal-light to-teal-deep p-4 lg:p-6 flex flex-col justify-between overflow-hidden min-h-[460px] lg:min-h-full">
             <div class="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -left-12 bottom-12 w-48 h-48 bg-emerald-300/20 rounded-full blur-xl pointer-events-none"></div>
+            <div class="absolute -left-12 bottom-12 w-48 h-48 bg-brand-bg-soft/70 rounded-full blur-xl pointer-events-none"></div>
 
             <div class="relative z-10">
               <div class="inline-block bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.06)]">
@@ -219,14 +219,14 @@
             </div>
 
             <div class="relative z-0 my-auto flex items-center justify-center py-2">
-              <div class="relative max-w-[340px] lg:max-w-[380px] w-full aspect-square rounded-2xl overflow-hidden shadow-[0_20px_35px_-10px_rgba(0,33,20,0.25)]">
+              <div class="relative max-w-[340px] lg:max-w-[380px] w-full aspect-square rounded-2xl overflow-hidden shadow-[0_20px_35px_-10px_rgba(186,140,113,0.30)]">
                 <img
                   src="/wight.png"
                   alt="Cachorro bóxer saludando amistosamente con la patita levantada sobre fondo turquesa"
                   class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500 ease-out"
                 />
                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span class="w-2 h-2 rounded-full bg-brand-secondary animate-pulse"></span>
                   <span class="text-[11px] text-ink font-bold">En adopción hoy</span>
                 </div>
               </div>
@@ -235,7 +235,7 @@
             <div class="relative z-10 mt-auto">
               <div class="bg-surface-card/85 backdrop-blur-md rounded-xl p-4 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
                 <div class="flex items-start gap-2">
-                  <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0 text-emerald-600 mt-0.5">
+                  <div class="w-8 h-8 rounded-lg bg-brand-bg-soft/50 flex items-center justify-center flex-shrink-0 text-brand-primary mt-0.5">
                     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
                   </div>
                   <div>
@@ -285,6 +285,7 @@ const showPassword = ref(false)
 const handleLogin = async () => {
   const result = await authStore.login(email.value, password.value)
   if (result.success) {
+    sessionStorage.setItem('showWelcomeModal', 'true')
     // Redirigir según el rol que acaba de cargar el store
     if (authStore.userRole === 'refugio') {
       router.push('/refugio/dashboard')

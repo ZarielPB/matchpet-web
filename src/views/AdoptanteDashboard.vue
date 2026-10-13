@@ -1,98 +1,156 @@
 <template>
-  <div class="min-h-screen bg-gray-50 p-4">
-    <div class="max-w-4xl mx-auto">
-      <!-- HU-08 CA#7: aviso de acceso denegado -->
-      <div
-        v-if="authStore.accessDeniedMsg"
-        class="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-lg flex items-start justify-between gap-4"
-        role="alert"
-      >
-        <span>🚫 {{ authStore.accessDeniedMsg }}</span>
-        <button type="button" class="text-amber-700 hover:underline" @click="authStore.clearAccessDenied()">
-          ✕
-        </button>
-      </div>
+  <DashboardLayout role="adoptante" title="Panel del Adoptante">
+    <WelcomeModal
+      :show="showWelcome"
+      :user-name="userName"
+      role="adoptante"
+      @close="showWelcome = false"
+    />
 
-      <div class="bg-white p-6 rounded-xl shadow-md mb-6">
-        <h1 class="text-2xl font-bold text-indigo-600">Panel del Adoptante 🐾</h1>
-        <p class="mt-2 text-gray-600">Bienvenido/a, {{ authStore.profile?.full_name || 'Adoptante' }}.</p>
-      </div>
-
-      <!-- Accesos rápidos -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <router-link
-          to="/catalogo"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">🐶</div>
-          <h2 class="font-bold text-gray-900">Explorar catálogo</h2>
-          <p class="text-sm text-gray-500 mt-1">Encuentra a tu próxima mascota y guarda favoritos.</p>
-        </router-link>
-
-        <router-link
-          to="/adoptante/perfil"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">🏠</div>
-          <h2 class="font-bold text-gray-900">Mi perfil de adoptante</h2>
-          <p class="text-sm text-gray-500 mt-1">Cuenta tus preferencias de vivienda y experiencia.</p>
-        </router-link>
-
-        <router-link
-          to="/adoptante/recomendaciones"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">✨</div>
-          <h2 class="font-bold text-gray-900">Mis recomendaciones</h2>
-          <p class="text-sm text-gray-500 mt-1">Mascotas ordenadas por compatibilidad contigo.</p>
-        </router-link>
-
-        <router-link
-          to="/adoptante/cuestionario"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">📝</div>
-          <h2 class="font-bold text-gray-900">Mi cuestionario</h2>
-          <p class="text-sm text-gray-500 mt-1">Cuéntanos tu estilo de vida (edítalo cuando cambie).</p>
-        </router-link>
-
-        <router-link
-          to="/adoptante/solicitudes"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">📨</div>
-          <h2 class="font-bold text-gray-900">Mis solicitudes</h2>
-          <p class="text-sm text-gray-500 mt-1">Sigue el estado de tus solicitudes de adopción.</p>
-        </router-link>
-
-        <router-link
-          to="/favoritos"
-          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
-        >
-          <div class="text-3xl mb-2">❤️</div>
-          <h2 class="font-bold text-gray-900">Mis favoritos</h2>
-          <p class="text-sm text-gray-500 mt-1">Revisa las mascotas que guardaste para adoptar.</p>
-        </router-link>
-      </div>
-
-      <div class="mt-6 text-right">
-        <button @click="handleLogout" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-          Cerrar Sesión
-        </button>
-      </div>
+    <!-- HU-08 CA#7: aviso de acceso denegado -->
+    <div
+      v-if="authStore.accessDeniedMsg"
+      class="mb-6 flex items-start justify-between gap-4 rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 px-4 py-3 text-sm text-alert"
+      role="alert"
+    >
+      <span>🚫 {{ authStore.accessDeniedMsg }}</span>
+      <button type="button" class="text-alert hover:underline" @click="authStore.clearAccessDenied()">
+        ✕
+      </button>
     </div>
-  </div>
+
+    <!-- Hero de bienvenida -->
+    <section class="hero-fade mb-6 rounded-2xl border border-[#E1A16C]/30 bg-[#FCD8B8]/40 p-6 sm:p-8">
+      <div class="flex items-start gap-4">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#BA8C71] text-white">
+          <span
+            class="material-symbols-outlined text-[26px]"
+            style="font-variation-settings: 'FILL' 1"
+            aria-hidden="true"
+          >
+            favorite
+          </span>
+        </span>
+        <div>
+          <h2 class="font-display text-3xl font-black text-[#040404] sm:text-4xl">
+            ¡Bienvenido/a, {{ userName }}!
+          </h2>
+          <p class="mt-2 text-sm text-[#040404]/80">
+            Hoy podrías encontrar a tu nuevo mejor amigo. Explora el catálogo y guarda tus favoritos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accesos rápidos -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <router-link
+        to="/catalogo"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">travel_explore</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Explorar catálogo</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Encuentra a tu próxima mascota y guarda favoritos.</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/perfil"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">account_circle</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mi perfil de adoptante</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Cuenta tus preferencias de vivienda y experiencia.</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/recomendaciones"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">auto_awesome</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mis recomendaciones</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Mascotas ordenadas por compatibilidad contigo.</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/cuestionario"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">checklist</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mi cuestionario</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Cuéntanos tu estilo de vida (edítalo cuando cambie).</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/solicitudes"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mis solicitudes</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Sigue el estado de tus solicitudes de adopción.</p>
+      </router-link>
+
+      <router-link
+        to="/favoritos"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">favorite</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mis favoritos</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Revisa las mascotas que guardaste para adoptar.</p>
+      </router-link>
+    </div>
+  </DashboardLayout>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/authStore'
+import DashboardLayout from '../components/layout/DashboardLayout.vue'
+import WelcomeModal from '../components/ui/WelcomeModal.vue'
 
-const router = useRouter()
 const authStore = useAuthStore()
+const showWelcome = ref(false)
 
-const handleLogout = async () => {
-  await authStore.logout()
-  router.push('/login')
-}
+const userName = computed(() => authStore.profile?.full_name?.trim() || 'amigo')
+
+onMounted(async () => {
+  await authStore.getSession()
+  const showWelcomeFlag = sessionStorage.getItem('showWelcomeModal')
+  if (showWelcomeFlag === 'true') {
+    showWelcome.value = true
+    sessionStorage.removeItem('showWelcomeModal')
+  }
+})
 </script>
+
+<style scoped>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-fade {
+  animation: fadeInUp 0.6s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade {
+    animation: none;
+  }
+}
+</style>

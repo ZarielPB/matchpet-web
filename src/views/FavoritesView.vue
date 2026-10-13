@@ -1,53 +1,85 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <button
-        type="button"
-        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-2"
-        @click="router.push('/adoptante/dashboard')"
+  <DashboardLayout role="adoptante" title="Mis Favoritos">
+    <p class="mb-6 text-sm text-ink-soft">Las mascotas que guardaste para adoptar luego.</p>
+
+    <!-- Error -->
+    <div
+      v-if="petStore.error"
+      class="mb-6 rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 p-4 text-sm text-alert"
+      role="alert"
+    >
+      {{ petStore.error }}
+    </div>
+
+    <!-- Cargando (skeletons) -->
+    <div
+      v-if="petStore.loading && petStore.favoritePets.length === 0"
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      <div
+        v-for="i in 8"
+        :key="i"
+        class="animate-pulse overflow-hidden rounded-2xl border border-[#A3AEB9]/20 bg-white shadow-sm"
       >
-        ← Volver al panel
-      </button>
-
-      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Mis favoritos ❤️</h1>
-      <p class="text-sm text-gray-500 mb-6">Las mascotas que guardaste para adoptar luego.</p>
-
-      <div v-if="petStore.error" class="mb-6 px-4 py-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg">
-        {{ petStore.error }}
-      </div>
-
-      <div v-if="petStore.loading && petStore.favoritePets.length === 0" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div v-for="i in 6" :key="i" class="bg-white rounded-xl shadow-sm p-4 animate-pulse">
-          <div class="aspect-[4/3] bg-gray-200 rounded-lg mb-4"></div>
-          <div class="h-4 bg-gray-200 rounded mb-2 w-2/3"></div>
-          <div class="h-3 bg-gray-200 rounded w-full"></div>
+        <div class="aspect-[4/3] w-full bg-[#A3AEB9]/20"></div>
+        <div class="space-y-3 p-4">
+          <div class="flex items-center justify-between gap-3">
+            <div class="h-4 w-2/3 rounded bg-[#A3AEB9]/20"></div>
+            <div class="h-3 w-12 rounded bg-[#A3AEB9]/20"></div>
+          </div>
+          <div class="h-3 w-1/2 rounded bg-[#A3AEB9]/20"></div>
+          <div class="h-3 w-full rounded bg-[#A3AEB9]/20"></div>
+          <div class="h-3 w-4/5 rounded bg-[#A3AEB9]/20"></div>
+          <div class="flex gap-2 pt-1">
+            <div class="h-6 w-16 rounded-full bg-[#A3AEB9]/20"></div>
+            <div class="h-6 w-20 rounded-full bg-[#A3AEB9]/20"></div>
+          </div>
         </div>
       </div>
-
-      <div v-else-if="petStore.favoritePets.length === 0" class="text-center py-20 bg-white rounded-xl shadow-sm">
-        <div class="text-6xl mb-4">💔</div>
-        <p class="text-gray-600 font-medium">Aún no tienes mascotas favoritas.</p>
-        <p class="text-sm text-gray-400 mt-1">Explora el catálogo y guarda las que te enamoren.</p>
-        <router-link
-          to="/catalogo"
-          class="inline-block mt-6 px-6 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700"
-        >
-          Explorar catálogo
-        </router-link>
-      </div>
-
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-        <PetCard
-          v-for="pet in petStore.favoritePets"
-          :key="pet.id"
-          :pet="pet"
-          :is-favorite="true"
-          @open="goToDetail"
-          @toggle-favorite="handleRemoveFavorite"
-        />
-      </div>
     </div>
-  </div>
+
+    <!-- Estado vacío -->
+    <div
+      v-else-if="petStore.favoritePets.length === 0"
+      class="rounded-2xl border border-[#A3AEB9]/20 bg-white px-6 py-20 text-center shadow-sm"
+    >
+      <span
+        class="material-symbols-outlined text-[80px] text-[#A3AEB9]"
+        style="font-variation-settings: 'FILL' 1"
+        aria-hidden="true"
+      >
+        favorite
+      </span>
+      <h2 class="mt-4 text-xl font-bold text-[#040404]">Aún no tienes mascotas favoritas. ¡Explora el catálogo!</h2>
+      <p class="mx-auto mt-2 max-w-md text-sm text-[#A3AEB9]">
+        Explora el catálogo y guarda los perfiles de los animalitos que más te gusten.
+      </p>
+      <router-link
+        to="/catalogo"
+        class="mx-auto mt-6 inline-flex items-center gap-2 rounded-xl bg-[#BA8C71] px-6 py-3 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:bg-[#E1A16C]"
+      >
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">search</span>
+        Ir al Catálogo
+      </router-link>
+    </div>
+
+    <!-- Grilla de favoritos -->
+    <div
+      v-else
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      <PetCard
+        v-for="pet in petStore.favoritePets"
+        :key="pet.id"
+        :pet="pet"
+        :is-favorite="true"
+        :favorite-enabled="true"
+        :show-status="false"
+        @open="goToDetail"
+        @toggle-favorite="handleRemoveFavorite"
+      />
+    </div>
+  </DashboardLayout>
 </template>
 
 <script setup>
@@ -55,6 +87,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePetStore } from '../stores/petStore'
 import PetCard from '../components/pets/PetCard.vue'
+import DashboardLayout from '../components/layout/DashboardLayout.vue'
 
 const router = useRouter()
 const petStore = usePetStore()

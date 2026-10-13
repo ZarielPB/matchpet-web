@@ -153,7 +153,8 @@ export const usePetStore = defineStore('pets', () => {
     try {
       let query = supabase
         .from('pets')
-        .select(PET_SELECT, { count: 'exact' })
+        // `!inner` hace que el filtro por ciudad excluya mascotas de otras ciudades.
+        .select(filters.city ? PET_SELECT.replace('shelters(', 'shelters!inner(') : PET_SELECT, { count: 'exact' })
         .order('created_at', { ascending: false })
 
       if (filters.shelterId) query = query.eq('shelter_id', filters.shelterId)
@@ -707,7 +708,8 @@ export const usePetStore = defineStore('pets', () => {
         const { error: insertError } = await supabase
           .from('favorites')
           .insert({ user_id: user.id, pet_id: petId })
-        if (insertError) throw insertError
+        // 23505: doble clic, ya estaba guardada → no es un error para el usuario.
+        if (insertError && insertError.code !== '23505') throw insertError
         favoriteIds.value = [...favoriteIds.value, petId]
       }
       return { success: true }

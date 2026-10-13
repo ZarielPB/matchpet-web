@@ -1,71 +1,68 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-6xl mx-auto px-4 py-8">
-      <!-- Encabezado -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div>
-          <button
-            type="button"
-            class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-2"
-            @click="router.push('/refugio/dashboard')"
-          >
-            ← Volver al panel
-          </button>
-          <h1 class="text-2xl font-bold text-emerald-600">Gestión de Mascotas 🏠</h1>
-          <p class="text-sm text-gray-500">Registra, edita y actualiza el estado de tus mascotas.</p>
-        </div>
-        <button
-          v-if="hasShelter && mode === 'list'"
-          type="button"
-          class="px-4 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium"
-          @click="startCreate"
-        >
-          + Registrar mascota
-        </button>
-      </div>
-
-      <!-- Aviso del perfil de refugio (HU-21): no bloquea, orienta -->
-      <div
-        v-if="petStore.shelterError"
-        class="max-w-2xl mx-auto mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-lg"
+  <DashboardLayout role="refugio" :title="pageTitle">
+    <!-- Encabezado / acciones -->
+    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-ink-soft">Registra, edita y actualiza el estado de tus mascotas.</p>
+      <button
+        v-if="hasShelter && mode === 'list'"
+        type="button"
+        class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#BA8C71] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#E1A16C]"
+        @click="startCreate"
       >
-        ⚠️ {{ petStore.shelterError }}
-      </div>
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">add</span>
+        Registrar mascota
+      </button>
+    </div>
 
-      <!-- Bloqueo: el refugio aún no tiene perfil (shelters) completado -->
-      <div
-        v-if="!hasShelter && !petStore.shelterError"
-        class="max-w-2xl mx-auto mt-8 px-4 py-6 bg-amber-50 border border-amber-200 rounded-xl text-center"
+    <!-- Aviso del perfil de refugio (HU-21): no bloquea, orienta -->
+    <div
+      v-if="petStore.shelterError"
+      class="mx-auto mb-6 max-w-2xl rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 px-4 py-3 text-sm text-alert"
+    >
+      ⚠️ {{ petStore.shelterError }}
+    </div>
+
+    <!-- Bloqueo: el refugio aún no tiene perfil (shelters) completado -->
+    <div
+      v-if="!hasShelter && !petStore.shelterError"
+      class="mx-auto mt-8 max-w-2xl rounded-2xl border border-[#E1A16C]/40 bg-[#FCD8B8]/30 px-4 py-8 text-center"
+    >
+      <div class="mb-3 text-5xl">🏠</div>
+      <h2 class="mb-1 font-display text-lg font-bold text-[#040404]">Primero completa tu perfil de refugio</h2>
+      <p class="mx-auto max-w-md text-sm text-ink-soft">
+        Para registrar mascotas en el catálogo necesitas una ficha de refugio activa
+        (nombre y ciudad, como mínimo). Tómate un minuto para llenarla.
+      </p>
+      <router-link
+        to="/refugio/perfil"
+        class="mt-4 inline-block rounded-xl bg-[#BA8C71] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#E1A16C]"
       >
-        <div class="text-5xl mb-3">🏠</div>
-        <h2 class="text-lg font-bold text-gray-900 mb-1">Primero completa tu perfil de refugio</h2>
-        <p class="text-sm text-gray-600 max-w-md mx-auto">
-          Para registrar mascotas en el catálogo necesitas una ficha de refugio activa
-          (nombre y ciudad, como mínimo). Tómate un minuto para llenarla.
-        </p>
-        <router-link
-          to="/refugio/perfil"
-          class="inline-block mt-4 px-6 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition"
-        >
-          Completar mi perfil
-        </router-link>
-      </div>
+        Completar mi perfil
+      </router-link>
+    </div>
 
-      <template v-else>
+    <template v-else>
       <!-- Mensajes -->
-      <div v-if="successMsg" class="mb-6 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg">
+      <div v-if="successMsg" class="mb-6 rounded-xl border border-[#E1A16C]/40 bg-[#E1A16C]/20 px-4 py-3 text-sm text-[#040404]">
         ✅ {{ successMsg }}
       </div>
-      <div v-if="petStore.error" class="mb-6 px-4 py-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg">
+      <div v-if="petStore.error" class="mb-6 rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 px-4 py-3 text-sm text-alert">
         {{ petStore.error }}
       </div>
 
       <!-- Formulario (crear/editar) -->
-      <div v-if="mode !== 'list'" class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-md">
-        <h2 class="text-lg font-bold text-gray-900 mb-1">
+      <div v-if="mode !== 'list'" class="mx-auto max-w-5xl rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm sm:p-8">
+        <button
+          type="button"
+          class="mb-5 inline-flex items-center gap-1 text-sm text-[#A3AEB9] transition-colors hover:text-[#040404]"
+          @click="cancelForm"
+        >
+          ← Volver al listado
+        </button>
+        <h2 class="mb-1 font-display text-lg font-bold text-[#040404]">
           {{ mode === 'edit' ? 'Editar mascota' : 'Nueva mascota' }}
         </h2>
-        <p class="text-sm text-gray-500 mb-6">
+        <p class="mb-6 text-sm text-ink-soft">
           {{ mode === 'edit' ? 'Modifica los datos y guarda los cambios.' : 'Completa los datos y agrega una fotografía.' }}
         </p>
         <PetForm
@@ -83,8 +80,8 @@
       <!-- Listado -->
       <div v-else>
         <!-- HU-21 CA#4: filtro por estado -->
-        <div class="flex items-center gap-2 mb-5">
-          <label for="f-status" class="text-sm text-gray-600">Estado:</label>
+        <div class="mb-5 flex items-center gap-2">
+          <label for="f-status" class="text-sm font-semibold text-[#040404]">Estado:</label>
           <select id="f-status" v-model="statusFilter" class="form-select" @change="loadPets">
             <option value="">Todas</option>
             <option value="disponible">Disponible</option>
@@ -93,24 +90,24 @@
           </select>
         </div>
 
-        <div v-if="petStore.loading && petStore.myPets.length === 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div v-for="i in 6" :key="i" class="bg-white rounded-xl shadow-sm p-4 animate-pulse">
-            <div class="aspect-[4/3] bg-gray-200 rounded-lg mb-4"></div>
-            <div class="h-4 bg-gray-200 rounded mb-2 w-2/3"></div>
-            <div class="h-3 bg-gray-200 rounded w-full mb-1"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+        <div v-if="petStore.loading && petStore.myPets.length === 0" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div v-for="i in 6" :key="i" class="animate-pulse rounded-2xl border border-[#A3AEB9]/20 bg-white p-4 shadow-sm">
+            <div class="mb-4 aspect-[4/3] rounded-lg bg-[#A3AEB9]/20"></div>
+            <div class="mb-2 h-4 w-2/3 rounded bg-[#A3AEB9]/20"></div>
+            <div class="mb-1 h-3 w-full rounded bg-[#A3AEB9]/20"></div>
+            <div class="h-3 w-1/2 rounded bg-[#A3AEB9]/20"></div>
           </div>
         </div>
 
-        <div v-else-if="petStore.myPets.length === 0" class="text-center py-16 bg-white rounded-xl shadow-sm">
-          <div class="text-5xl mb-3">🐾</div>
-          <p class="text-gray-600 font-medium">
+        <div v-else-if="petStore.myPets.length === 0" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
+          <div class="mb-3 text-5xl">🐾</div>
+          <p class="font-medium text-[#040404]">
             {{ statusFilter ? 'No tienes mascotas en ese estado.' : 'Aún no tienes mascotas registradas.' }}
           </p>
-          <p class="text-sm text-gray-400 mt-1">Usa el botón "+ Registrar mascota" para empezar.</p>
+          <p class="mt-1 text-sm text-ink-soft">Usa el botón "Registrar mascota" para empezar.</p>
         </div>
 
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <PetCard
             v-for="pet in petStore.myPets"
             :key="pet.id"
@@ -124,17 +121,17 @@
           />
         </div>
       </div>
-      </template>
-    </div>
-  </div>
+    </template>
+  </DashboardLayout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePetStore } from '../../stores/petStore'
 import PetCard from '../../components/pets/PetCard.vue'
 import PetForm from '../../components/pets/PetForm.vue'
+import DashboardLayout from '../../components/layout/DashboardLayout.vue'
 
 const router = useRouter()
 const petStore = usePetStore()
@@ -146,6 +143,12 @@ const formError = ref('')
 const shelter = ref(null)
 const hasShelter = ref(false)
 const statusFilter = ref('')
+
+const pageTitle = computed(() => {
+  if (mode.value === 'edit') return 'Editar Mascota'
+  if (mode.value === 'new') return 'Registrar Nueva Mascota'
+  return 'Gestión de Mascotas'
+})
 
 async function loadPets() {
   await petStore.fetchMyPets({ status: statusFilter.value || undefined })
@@ -194,9 +197,9 @@ async function handleSave(payload, imageFiles) {
     if (result.success && imageFiles?.length) {
       const imgResult = await petStore.addPetImages(editingPet.value.id, imageFiles)
       if (!imgResult.success) formError.value = imgResult.error
-      else successMsg.value = 'Mascota actualizada correctamente.'
+      else successMsg.value = 'Información actualizada correctamente.'
     } else if (result.success) {
-      successMsg.value = 'Mascota actualizada correctamente.'
+      successMsg.value = 'Información actualizada correctamente.'
     }
   } else {
     result = await petStore.addPet(payload, imageFiles)
@@ -290,6 +293,6 @@ function goToDetail(pet) {
 
 <style scoped>
 .form-select {
-  @apply appearance-none block px-3 py-2 border border-gray-300 text-gray-900 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500;
+  @apply block appearance-none rounded-xl border border-[#A3AEB9]/40 bg-white px-3 py-2 text-sm text-[#040404] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20;
 }
 </style>
