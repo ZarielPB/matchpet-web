@@ -5,7 +5,7 @@
         <!-- Ambient background glow -->
         <div class="relative w-full max-w-xl">
           <div class="absolute -top-16 -left-12 w-64 h-64 bg-primary-faint rounded-full blur-3xl opacity-60 pointer-events-none"></div>
-          <div class="absolute -bottom-16 -right-12 w-64 h-64 bg-emerald-300/50 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+          <div class="absolute -bottom-16 -right-12 w-64 h-64 bg-brand-bg-soft rounded-full blur-3xl opacity-40 pointer-events-none"></div>
 
           <!-- Tarjeta principal -->
           <div class="relative bg-surface-card rounded-2xl shadow-xl p-8 sm:p-10 transition-all duration-300">
@@ -15,7 +15,7 @@
                 <span class="material-symbols-outlined text-[14px] transition-transform group-hover:-translate-x-0.5">arrow_back</span>
                 <span>Volver al inicio</span>
               </router-link>
-              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px]" style="background-color: #ede9fe; color: #3b0764;">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px]" style="background-color: #F6E7DB; color: #8F6349;">
                 <span class="material-symbols-outlined text-[12px]">security</span>
                 <span>Enlace seguro</span>
               </span>
@@ -23,10 +23,10 @@
 
             <!-- Encabezado -->
             <div class="text-center mb-8">
-              <div class="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full shadow-sm" style="background-color: #f3e8ff; color: #3b0764;">
+              <div class="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-full shadow-sm" style="background-color: #F6E7DB; color: #8F6349;">
                 <span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">pets</span>
               </div>
-              <h1 class="text-[28px] leading-[32px] mb-2 tracking-tight font-extrabold" style="color: #2e0854;">
+              <h1 class="text-[28px] leading-[32px] mb-2 tracking-tight font-extrabold" style="color: #040404;">
                 Crear Nueva Contraseña
               </h1>
               <p class="text-sm text-ink-soft flex items-center justify-center gap-1.5">
@@ -99,8 +99,8 @@
               </div>
 
               <!-- Mensajes -->
-              <p v-if="errorMsg" class="text-red-600 text-sm text-center">{{ errorMsg }}</p>
-              <p v-if="successMsg" class="text-green-600 text-sm text-center">{{ successMsg }}</p>
+              <p v-if="errorMsg" class="text-alert text-sm text-center">{{ errorMsg }}</p>
+              <p v-if="successMsg" class="text-brand-primary text-sm text-center">{{ successMsg }}</p>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                 <button
@@ -119,10 +119,10 @@
 
             <!-- Enlace inválido/vencido -->
             <div v-else class="space-y-4 text-center">
-              <div class="inline-flex items-center justify-center w-14 h-14 rounded-full" style="background-color: #ffdad6; color: #93000a;">
+              <div class="inline-flex items-center justify-center w-14 h-14 rounded-full" style="background-color: #F9DEDC; color: #8C1D18;">
                 <span class="material-symbols-outlined text-[28px]">error</span>
               </div>
-              <p class="text-red-600 text-sm">
+              <p class="text-alert text-sm">
                 El enlace de recuperación es inválido o ha expirado. Solicita uno nuevo.
               </p>
               <router-link

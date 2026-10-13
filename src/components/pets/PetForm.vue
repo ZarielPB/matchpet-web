@@ -1,280 +1,310 @@
 <template>
-  <form class="space-y-5" novalidate @submit.prevent="onSubmit">
-    <!-- Datos básicos -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label for="pet-name" class="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
-        <input
-          id="pet-name"
-          v-model="form.name"
-          type="text"
-          required
-          class="form-input"
-          :class="{ 'border-red-400': errors.name }"
-          placeholder="Ej. Firulais"
-        />
-        <p v-if="errors.name" class="text-xs text-red-500 mt-1">{{ errors.name }}</p>
-      </div>
-
-      <div>
-        <label for="pet-species" class="block text-sm font-medium text-gray-700 mb-1">Especie *</label>
-        <select
-          id="pet-species"
-          v-model="form.species"
-          required
-          class="form-input"
-          :class="{ 'border-red-400': errors.species }"
-        >
-          <option value="" disabled>Selecciona una especie</option>
-          <option value="perro">Perro</option>
-          <option value="gato">Gato</option>
-          <option value="otro">Otro</option>
-        </select>
-        <p v-if="errors.species" class="text-xs text-red-500 mt-1">{{ errors.species }}</p>
-      </div>
-
-      <div>
-        <label for="pet-breed" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
-        <input
-          id="pet-breed"
-          v-model="form.breed"
-          type="text"
-          class="form-input"
-          placeholder="Ej. Labrador (opcional)"
-        />
-      </div>
-
-      <div>
-        <label for="pet-age" class="block text-sm font-medium text-gray-700 mb-1">Edad (años) *</label>
-        <input
-          id="pet-age"
-          v-model.number="form.age_years"
-          type="number"
-          min="0"
-          step="1"
-          required
-          class="form-input"
-          :class="{ 'border-red-400': errors.age_years }"
-          placeholder="Ej. 2"
-        />
-        <p v-if="errors.age_years" class="text-xs text-red-500 mt-1">{{ errors.age_years }}</p>
-      </div>
-
-      <div>
-        <label for="pet-age-months" class="block text-sm font-medium text-gray-700 mb-1">Meses (0-11)</label>
-        <input
-          id="pet-age-months"
-          v-model.number="form.age_months"
-          type="number"
-          min="0"
-          max="11"
-          step="1"
-          class="form-input"
-          :class="{ 'border-red-400': errors.age_months }"
-          placeholder="Ej. 6"
-        />
-        <p v-if="errors.age_months" class="text-xs text-red-500 mt-1">{{ errors.age_months }}</p>
-      </div>
-
-      <div>
-        <label for="pet-weight" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
-        <input
-          id="pet-weight"
-          v-model.number="form.weight_kg"
-          type="number"
-          min="0"
-          step="0.1"
-          class="form-input"
-          :class="{ 'border-red-400': errors.weight_kg }"
-          placeholder="Ej. 12.5"
-        />
-        <p v-if="errors.weight_kg" class="text-xs text-red-500 mt-1">{{ errors.weight_kg }}</p>
-      </div>
-
-      <div>
-        <label for="pet-size" class="block text-sm font-medium text-gray-700 mb-1">Tamaño *</label>
-        <select
-          id="pet-size"
-          v-model="form.size"
-          required
-          class="form-input"
-          :class="{ 'border-red-400': errors.size }"
-        >
-          <option value="" disabled>Selecciona un tamaño</option>
-          <option value="pequeño">Pequeño</option>
-          <option value="mediano">Mediano</option>
-          <option value="grande">Grande</option>
-        </select>
-        <p v-if="errors.size" class="text-xs text-red-500 mt-1">{{ errors.size }}</p>
-      </div>
-
-      <div>
-        <label for="pet-health" class="block text-sm font-medium text-gray-700 mb-1">Estado de salud *</label>
-        <input
-          id="pet-health"
-          v-model="form.health_status"
-          type="text"
-          required
-          class="form-input"
-          :class="{ 'border-red-400': errors.health_status }"
-          placeholder="Ej. Vacunado, desparasitado"
-        />
-        <p v-if="errors.health_status" class="text-xs text-red-500 mt-1">{{ errors.health_status }}</p>
-      </div>
-    </div>
-
-    <div>
-      <label for="pet-temperament" class="block text-sm font-medium text-gray-700 mb-1">Temperamento</label>
-      <textarea
-        id="pet-temperament"
-        v-model="form.temperament"
-        rows="2"
-        class="form-input resize-none"
-        placeholder="Ej. Juguetón, cariñoso, buen con niños"
-      ></textarea>
-    </div>
-
-    <div>
-      <label for="pet-description" class="block text-sm font-medium text-gray-700 mb-1">Descripción *</label>
-      <textarea
-        id="pet-description"
-        v-model="form.description"
-        rows="3"
-        required
-        class="form-input resize-none"
-        :class="{ 'border-red-400': errors.description }"
-        placeholder="Cuéntanos la historia y características de la mascota"
-      ></textarea>
-      <p v-if="errors.description" class="text-xs text-red-500 mt-1">{{ errors.description }}</p>
-    </div>
-
-    <div>
-      <label for="pet-requirements" class="block text-sm font-medium text-gray-700 mb-1">Requisitos</label>
-      <textarea
-        id="pet-requirements"
-        v-model="form.requirements"
-        rows="2"
-        class="form-input resize-none"
-        placeholder="Ej. Requiere espacio amplio, ideal con experiencia"
-      ></textarea>
-    </div>
-
-    <!-- HU-17: galería de imágenes (admite varias y elegir la principal) -->
-    <div>
-      <label for="pet-image" class="block text-sm font-medium text-gray-700 mb-1">
-        {{ isEdit ? 'Agregar imágenes (opcional)' : 'Imágenes *' }}
-      </label>
-      <input
-        id="pet-image"
-        type="file"
-        accept="image/*"
-        multiple
-        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-        @change="onFilesChange"
-      />
-      <p class="text-xs text-gray-500 mt-1">
-        Puedes subir hasta {{ MAX_IMAGES_PER_PET }} imágenes de 2 MB cada una.
-      </p>
-      <p v-if="errors.images" class="text-xs text-red-500 mt-1">{{ errors.images }}</p>
-
-      <!-- Selección de la foto principal -->
-      <ul v-if="selected.length" class="mt-3 flex flex-wrap gap-3">
-        <li v-for="(item, index) in selected" :key="item.url" class="relative">
-          <img
-            :src="item.url"
-            alt="Vista previa de la imagen"
-            class="w-24 h-24 object-cover rounded-lg border-2"
-            :class="item.primary ? 'border-indigo-500' : 'border-gray-200'"
+  <form class="space-y-6" novalidate @submit.prevent="onSubmit">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <!-- Columna izquierda: datos de la mascota -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="pet-name" class="form-label">Nombre *</label>
+          <input
+            id="pet-name"
+            v-model="form.name"
+            type="text"
+            required
+            class="form-input"
+            :class="{ '!border-alert': errors.name }"
+            placeholder="Ej. Firulais"
           />
-          <span
-            v-if="item.primary"
-            class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[10px] font-semibold"
-          >
-            Principal
-          </span>
-          <div class="absolute bottom-1 inset-x-1 flex gap-1">
-            <button
-              v-if="!item.primary"
-              type="button"
-              class="flex-1 rounded bg-white/90 text-[10px] font-semibold text-indigo-700 py-0.5 hover:bg-white"
-              @click="setPrimary(index)"
-            >
-              Principal
-            </button>
-            <button
-              type="button"
-              class="rounded bg-white/90 text-[10px] font-semibold text-red-600 px-1.5 py-0.5 hover:bg-white"
-              :aria-label="`Quitar imagen ${index + 1}`"
-              @click="removeFile(index)"
-            >
-              ✕
-            </button>
-          </div>
-        </li>
-      </ul>
+          <p v-if="errors.name" class="mt-1 text-xs text-alert">{{ errors.name }}</p>
+        </div>
 
-      <!-- Galería actual en modo edición (HU-19) -->
-      <div v-if="isEdit" class="mt-4">
-        <p class="text-xs text-gray-500 mb-1">Imágenes actuales:</p>
-        <ul v-if="existingImages.length" class="flex flex-wrap gap-2">
-          <li
-            v-for="img in existingImages"
-            :key="img.id"
-            class="relative w-20 h-20"
+        <div>
+          <label for="pet-species" class="form-label">Especie *</label>
+          <select
+            id="pet-species"
+            v-model="form.species"
+            required
+            class="form-input"
+            :class="{ '!border-alert': errors.species }"
           >
-            <img
-              :src="img.image_url"
-              :alt="`Imagen ${img.id} de la mascota`"
-              class="w-full h-full object-cover rounded-lg border border-gray-200"
-              :class="{ 'ring-2 ring-indigo-500': img.is_primary }"
-            />
-            <span
-              v-if="img.is_primary"
-              class="absolute top-0 left-0 px-1 bg-indigo-600 text-white text-[10px] font-semibold rounded"
-            >
-              Princ.
-            </span>
-            <button
-              v-if="!img.is_primary"
-              type="button"
-              class="absolute top-0 right-0 rounded bg-white/90 px-1 text-[10px] font-semibold text-indigo-700"
-              @click="$emit('set-primary', props.initialData.id, img.id)"
-            >
-              ★
-            </button>
-            <button
-              type="button"
-              class="absolute bottom-0 right-0 rounded bg-white/90 px-1 text-[10px] font-semibold text-red-600"
-              :aria-label="`Eliminar imagen ${img.id}`"
-              @click="$emit('delete-image', props.initialData.id, img.id)"
-            >
-              ✕
-            </button>
-          </li>
-        </ul>
-        <p v-else class="text-xs text-gray-400">Esta mascota aún no tiene imágenes.</p>
+            <option value="" disabled>Selecciona una especie</option>
+            <option value="perro">Perro</option>
+            <option value="gato">Gato</option>
+            <option value="otro">Otro</option>
+          </select>
+          <p v-if="errors.species" class="mt-1 text-xs text-alert">{{ errors.species }}</p>
+        </div>
+
+        <div>
+          <label for="pet-breed" class="form-label">Raza</label>
+          <input
+            id="pet-breed"
+            v-model="form.breed"
+            type="text"
+            class="form-input"
+            placeholder="Ej. Labrador (opcional)"
+          />
+        </div>
+
+        <div>
+          <label for="pet-size" class="form-label">Tamaño *</label>
+          <select
+            id="pet-size"
+            v-model="form.size"
+            required
+            class="form-input"
+            :class="{ '!border-alert': errors.size }"
+          >
+            <option value="" disabled>Selecciona un tamaño</option>
+            <option value="pequeño">Pequeño</option>
+            <option value="mediano">Mediano</option>
+            <option value="grande">Grande</option>
+          </select>
+          <p v-if="errors.size" class="mt-1 text-xs text-alert">{{ errors.size }}</p>
+        </div>
+
+        <div>
+          <label for="pet-age" class="form-label">Edad (años) *</label>
+          <input
+            id="pet-age"
+            v-model.number="form.age_years"
+            type="number"
+            min="0"
+            step="1"
+            required
+            class="form-input"
+            :class="{ '!border-alert': errors.age_years }"
+            placeholder="Ej. 2"
+          />
+          <p v-if="errors.age_years" class="mt-1 text-xs text-alert">{{ errors.age_years }}</p>
+        </div>
+
+        <div>
+          <label for="pet-age-months" class="form-label">Meses (0-11)</label>
+          <input
+            id="pet-age-months"
+            v-model.number="form.age_months"
+            type="number"
+            min="0"
+            max="11"
+            step="1"
+            class="form-input"
+            :class="{ '!border-alert': errors.age_months }"
+            placeholder="Ej. 6"
+          />
+          <p v-if="errors.age_months" class="mt-1 text-xs text-alert">{{ errors.age_months }}</p>
+        </div>
+
+        <div>
+          <label for="pet-weight" class="form-label">Peso (kg)</label>
+          <input
+            id="pet-weight"
+            v-model.number="form.weight_kg"
+            type="number"
+            min="0"
+            step="0.1"
+            class="form-input"
+            :class="{ '!border-alert': errors.weight_kg }"
+            placeholder="Ej. 12.5"
+          />
+          <p v-if="errors.weight_kg" class="mt-1 text-xs text-alert">{{ errors.weight_kg }}</p>
+        </div>
+
+        <div>
+          <label for="pet-health" class="form-label">Estado de salud *</label>
+          <input
+            id="pet-health"
+            v-model="form.health_status"
+            type="text"
+            required
+            class="form-input"
+            :class="{ '!border-alert': errors.health_status }"
+            placeholder="Ej. Vacunado, desparasitado"
+          />
+          <p v-if="errors.health_status" class="mt-1 text-xs text-alert">{{ errors.health_status }}</p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="pet-temperament" class="form-label">Temperamento</label>
+          <textarea
+            id="pet-temperament"
+            v-model="form.temperament"
+            rows="2"
+            class="form-input resize-none"
+            placeholder="Ej. Juguetón, cariñoso, buen con niños"
+          ></textarea>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="pet-description" class="form-label">Descripción *</label>
+          <textarea
+            id="pet-description"
+            v-model="form.description"
+            rows="3"
+            required
+            class="form-input resize-none"
+            :class="{ '!border-alert': errors.description }"
+            placeholder="Cuéntanos la historia y características de la mascota"
+          ></textarea>
+          <p v-if="errors.description" class="mt-1 text-xs text-alert">{{ errors.description }}</p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="pet-requirements" class="form-label">Requisitos del hogar</label>
+          <textarea
+            id="pet-requirements"
+            v-model="form.requirements"
+            rows="2"
+            class="form-input resize-none"
+            placeholder="Ej. Requiere espacio amplio, ideal con experiencia"
+          ></textarea>
+        </div>
       </div>
-    </div>
 
-    <!-- Errores generales -->
-    <p v-if="serverError" class="text-red-500 text-sm text-center">{{ serverError }}</p>
+      <!-- Columna derecha: imágenes (HU-17) + envío -->
+      <div class="space-y-5">
+        <div>
+          <label for="pet-image" class="form-label">
+            {{ isEdit ? 'Agregar imágenes (opcional)' : 'Imágenes *' }}
+          </label>
 
-    <div class="flex flex-col sm:flex-row gap-3 pt-2">
-      <button
-        type="submit"
-        :disabled="loading"
-        class="flex-1 py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-      >
-        {{ loading ? 'Guardando...' : (isEdit ? 'Guardar cambios' : 'Registrar mascota') }}
-      </button>
-      <button
-        v-if="showCancel"
-        type="button"
-        class="flex-1 py-2.5 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-        @click="$emit('cancel')"
-      >
-        Cancelar
-      </button>
+          <!-- Zona de arrastrar y soltar -->
+          <label
+            for="pet-image"
+            class="mt-1 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors duration-200"
+            :class="isDragging
+              ? 'border-[#BA8C71] bg-[#FCD8B8]/30'
+              : 'border-[#A3AEB9]/50 bg-[#FCD8B8]/10 hover:border-[#BA8C71] hover:bg-[#FCD8B8]/30'"
+            @dragover.prevent="isDragging = true"
+            @dragenter.prevent="isDragging = true"
+            @dragleave.prevent="isDragging = false"
+            @drop.prevent="onDrop"
+          >
+            <input
+              id="pet-image"
+              type="file"
+              accept="image/*"
+              multiple
+              class="sr-only"
+              @change="onFilesChange"
+            />
+            <span class="material-symbols-outlined text-[40px] text-[#BA8C71]" aria-hidden="true">
+              add_photo_alternate
+            </span>
+            <span class="text-sm font-semibold text-[#040404]">
+              Arrastra tus imágenes aquí o
+              <span class="text-[#BA8C71] underline">haz clic para elegir</span>
+            </span>
+            <span class="text-xs text-[#A3AEB9]">
+              Hasta {{ MAX_IMAGES_PER_PET }} imágenes · máx. 2 MB cada una
+            </span>
+          </label>
+          <p v-if="errors.images" class="mt-2 text-xs text-alert">{{ errors.images }}</p>
+
+          <!-- Previsualización de las imágenes seleccionadas -->
+          <ul v-if="selected.length" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <li v-for="(item, index) in selected" :key="item.url" class="group relative">
+              <img
+                :src="item.url"
+                alt="Vista previa de la imagen"
+                class="aspect-square w-full rounded-lg border-2 object-cover"
+                :class="item.primary ? 'border-[#E1A16C]' : 'border-transparent'"
+              />
+              <span
+                v-if="item.primary"
+                class="absolute left-1 top-1 rounded bg-[#E1A16C] px-1.5 py-0.5 text-[10px] font-bold text-[#040404]"
+              >
+                Principal
+              </span>
+              <div class="absolute inset-x-1 bottom-1 flex gap-1">
+                <button
+                  v-if="!item.primary"
+                  type="button"
+                  class="flex-1 rounded bg-white/90 py-0.5 text-[10px] font-semibold text-[#040404] hover:bg-white"
+                  @click="setPrimary(index)"
+                >
+                  Principal
+                </button>
+                <button
+                  type="button"
+                  class="rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-[#040404] hover:bg-white"
+                  :aria-label="`Quitar imagen ${index + 1}`"
+                  @click="removeFile(index)"
+                >
+                  ✕
+                </button>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Galería actual en modo edición (HU-19) -->
+          <div v-if="isEdit" class="mt-5">
+            <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-soft">Imágenes actuales</p>
+            <ul v-if="existingImages.length" class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+              <li v-for="img in existingImages" :key="img.id" class="relative aspect-square">
+                <img
+                  :src="img.image_url"
+                  :alt="`Imagen ${img.id} de la mascota`"
+                  class="h-full w-full rounded-lg border border-[#A3AEB9]/30 object-cover"
+                  :class="{ 'ring-2 ring-[#E1A16C]': img.is_primary }"
+                />
+                <span
+                  v-if="img.is_primary"
+                  class="absolute left-1 top-1 rounded bg-[#E1A16C] px-1 text-[10px] font-bold text-[#040404]"
+                >
+                  Princ.
+                </span>
+                <button
+                  v-if="!img.is_primary"
+                  type="button"
+                  class="absolute right-1 top-1 rounded bg-white/90 px-1 text-[10px] font-bold text-[#040404] hover:bg-white"
+                  aria-label="Marcar como principal"
+                  @click="$emit('set-primary', props.initialData.id, img.id)"
+                >
+                  ★
+                </button>
+                <button
+                  type="button"
+                  class="absolute bottom-1 right-1 rounded bg-white/90 px-1 text-[10px] font-bold text-[#040404] hover:bg-white"
+                  :aria-label="`Eliminar imagen ${img.id}`"
+                  @click="$emit('delete-image', props.initialData.id, img.id)"
+                >
+                  ✕
+                </button>
+              </li>
+            </ul>
+            <p v-else class="text-xs text-ink-soft">Esta mascota aún no tiene imágenes.</p>
+          </div>
+        </div>
+
+        <!-- Errores generales -->
+        <p v-if="serverError" class="text-center text-sm text-alert">{{ serverError }}</p>
+
+        <!-- Botón de envío -->
+        <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
+          <button
+            v-if="showCancel"
+            type="button"
+            class="w-full rounded-xl border border-[#A3AEB9]/40 px-5 py-2.5 text-sm font-semibold text-[#040404] transition-colors hover:bg-[#FCD8B8]/30 sm:w-auto"
+            @click="$emit('cancel')"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            :disabled="loading"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#BA8C71] px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#E1A16C] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          >
+            <span
+              class="material-symbols-outlined text-[20px]"
+              style="font-variation-settings: 'FILL' 1"
+              aria-hidden="true"
+            >
+              pets
+            </span>
+            {{ loading ? 'Guardando...' : (isEdit ? 'Guardar cambios' : 'Registrar Mascota') }}
+          </button>
+        </div>
+      </div>
     </div>
   </form>
 </template>
@@ -309,6 +339,7 @@ const form = reactive({
 // `primary` se envía primera y el store la guarda con is_primary = true.
 const selected = ref([])
 const errors = ref({})
+const isDragging = ref(false)
 
 const isEdit = computed(() => Boolean(props.initialData))
 
@@ -360,24 +391,31 @@ function reset() {
 }
 
 function onFilesChange(event) {
-  const files = Array.from(event.target.files || [])
+  addFiles(event.target.files)
+  event.target.value = ''
+}
+
+function onDrop(event) {
+  isDragging.value = false
+  addFiles(event.dataTransfer?.files)
+}
+
+function addFiles(fileList) {
+  const files = Array.from(fileList || [])
   if (files.length === 0) return
 
   const invalid = files.find((f) => !f.type?.startsWith('image/'))
   if (invalid) {
     setError('images', 'Todos los archivos deben ser imágenes.')
-    event.target.value = ''
     return
   }
   const tooBig = files.find((f) => f.size > 2 * 1024 * 1024)
   if (tooBig) {
     setError('images', `"${tooBig.name}" supera el límite de 2 MB.`)
-    event.target.value = ''
     return
   }
   if (selected.value.length + files.length > MAX_IMAGES_PER_PET) {
     setError('images', `Puedes subir hasta ${MAX_IMAGES_PER_PET} imágenes por mascota.`)
-    event.target.value = ''
     return
   }
 
@@ -389,7 +427,6 @@ function onFilesChange(event) {
       primary: !currentPrimaryExists && index === 0
     })
   })
-  event.target.value = ''
   setError('images', '')
 }
 
@@ -474,6 +511,9 @@ function onSubmit() {
 
 <style scoped>
 .form-input {
-  @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white;
+  @apply block w-full appearance-none rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2.5 text-sm text-[#040404] placeholder-[#A3AEB9] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20;
+}
+.form-label {
+  @apply mb-1.5 block text-sm font-semibold text-[#040404];
 }
 </style>

@@ -1,53 +1,90 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <!-- Encabezado -->
-      <div class="flex items-center justify-between gap-4 mb-6">
-        <div>
-          <button
-            type="button"
-            class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-1"
-            @click="router.push('/')"
-          >
-            ← Inicio
-          </button>
-          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Catálogo de mascotas 🐾</h1>
-        </div>
-        <button
-          type="button"
-          class="lg:hidden px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
-          @click="mobileFiltersOpen = true"
-        >
-          Filtros
-        </button>
-      </div>
-
-      <!-- Barra de búsqueda -->
+  <component :is="shell" :role="shellRole" title="Explorar Mascotas">
+    <div class="mx-auto w-full max-w-7xl">
+      <!-- Barra de búsqueda (HU-25) -->
       <div class="relative mb-4">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
-          </svg>
+        <span
+          class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-[#A3AEB9]"
+          aria-hidden="true"
+        >
+          search
         </span>
         <input
           v-model="searchTerm"
           type="search"
-          class="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-          placeholder="Buscar por nombre, raza o descripción..."
+          class="w-full rounded-2xl border border-[#A3AEB9]/40 bg-white py-3.5 pl-12 pr-12 text-sm text-[#040404] placeholder-[#A3AEB9] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20"
+          placeholder="Buscar por nombre, raza..."
         />
         <button
           v-if="searchTerm"
           type="button"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-[#A3AEB9] transition hover:text-[#040404]"
           aria-label="Limpiar búsqueda"
           @click="searchTerm = ''"
         >
-          ✕
+          <span class="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <!-- Filtros (HU-24) -->
+      <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <select
+          v-model="filters.species"
+          class="filter-input w-full sm:w-auto sm:min-w-[10rem]"
+          aria-label="Filtrar por especie"
+          @change="applyFilters"
+        >
+          <option value="">Todas las especies</option>
+          <option value="perro">Perro</option>
+          <option value="gato">Gato</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <select
+          v-model="filters.size"
+          class="filter-input w-full sm:w-auto sm:min-w-[10rem]"
+          aria-label="Filtrar por tamaño"
+          @change="applyFilters"
+        >
+          <option value="">Cualquier tamaño</option>
+          <option value="pequeño">Pequeño</option>
+          <option value="mediano">Mediano</option>
+          <option value="grande">Grande</option>
+        </select>
+
+        <select
+          v-model="filters.city"
+          class="filter-input w-full sm:w-auto sm:min-w-[10rem]"
+          aria-label="Filtrar por ciudad"
+          @change="applyFilters"
+        >
+          <option value="">Todas las ciudades</option>
+          <option v-for="city in petStore.shelterCities" :key="city" :value="city">{{ city }}</option>
+        </select>
+
+        <select
+          v-model="filters.ageRange"
+          class="filter-input w-full sm:w-auto sm:min-w-[10rem]"
+          aria-label="Filtrar por edad"
+          @change="applyFilters"
+        >
+          <option value="">Cualquier edad</option>
+          <option value="menor_1">Menos de 1 año</option>
+          <option value="1_a_3">Entre 1 y 3 años</option>
+          <option value="mayor_3">Más de 3 años</option>
+        </select>
+
+        <button
+          type="button"
+          class="w-full rounded-xl border border-[#A3AEB9]/40 bg-white px-4 py-2.5 text-sm font-semibold text-[#040404] shadow-sm transition hover:bg-[#FCD8B8]/40 sm:w-auto"
+          @click="clearFilters"
+        >
+          Limpiar
         </button>
       </div>
 
       <!-- Contador de resultados -->
-      <p v-if="!petStore.loading" class="text-sm text-gray-500 mb-4">
+      <p v-if="!petStore.loading" class="mb-4 text-sm text-[#A3AEB9]">
         <template v-if="petStore.catalogPets.length === 0">No se encontraron mascotas.</template>
         <template v-else>
           Mostrando {{ petStore.catalogPets.length }} de {{ petStore.total }}
@@ -56,179 +93,103 @@
       </p>
 
       <!-- Error general -->
-      <div v-if="petStore.error" class="mb-6 px-4 py-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg">
+      <div v-if="petStore.error" class="mb-6 rounded-xl border border-[#B3261E]/30 bg-[#B3261E]/10 px-4 py-3 text-sm text-alert">
         {{ petStore.error }}
       </div>
 
-      <div class="lg:grid lg:grid-cols-[260px_1fr] lg:gap-8">
-        <!-- ===== Filtros (sidebar / modal móvil) ===== -->
-        <aside
-          v-if="mobileFiltersOpen || isDesktop"
-          class="fixed inset-0 z-40 lg:static lg:z-auto"
-          :class="mobileFiltersOpen ? 'block' : 'hidden lg:block'"
+      <!-- Skeleton de carga -->
+      <div
+        v-if="petStore.loading && petStore.catalogPets.length === 0"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <div
+          v-for="i in 8"
+          :key="i"
+          class="animate-pulse overflow-hidden rounded-2xl border border-[#A3AEB9]/20 bg-white shadow-sm"
         >
-          <!-- Fondo oscuro en móvil -->
-          <div
-            class="absolute inset-0 bg-black/40 lg:hidden"
-            @click="mobileFiltersOpen = false"
-          ></div>
-
-          <div class="relative bg-white h-full w-80 max-w-[85vw] lg:w-auto p-6 overflow-y-auto lg:rounded-xl lg:shadow-sm">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="font-bold text-gray-900">Filtros</h2>
-              <button
-                type="button"
-                class="lg:hidden text-gray-500 hover:text-gray-700"
-                aria-label="Cerrar filtros"
-                @click="mobileFiltersOpen = false"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form class="space-y-5" @submit.prevent="applyFilters">
-              <div>
-                <label for="f-species" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
-                <select id="f-species" v-model="filters.species" class="filter-input">
-                  <option value="">Todas</option>
-                  <option value="perro">Perro</option>
-                  <option value="gato">Gato</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="f-city" class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
-                <select id="f-city" v-model="filters.city" class="filter-input">
-                  <option value="">Todas</option>
-                  <option v-for="city in petStore.shelterCities" :key="city" :value="city">{{ city }}</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="f-size" class="block text-sm font-medium text-gray-700 mb-1">Tamaño</label>
-                <select id="f-size" v-model="filters.size" class="filter-input">
-                  <option value="">Todos</option>
-                  <option value="pequeño">Pequeño</option>
-                  <option value="mediano">Mediano</option>
-                  <option value="grande">Grande</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="f-age" class="block text-sm font-medium text-gray-700 mb-1">Edad</label>
-                <select id="f-age" v-model="filters.ageRange" class="filter-input">
-                  <option value="">Cualquiera</option>
-                  <option value="menor_1">Menos de 1 año</option>
-                  <option value="1_a_3">Entre 1 y 3 años</option>
-                  <option value="mayor_3">Más de 3 años</option>
-                </select>
-              </div>
-
-              <div class="pt-2 space-y-2">
-                <button
-                  type="submit"
-                  :disabled="petStore.loading"
-                  class="w-full py-2.5 px-4 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50"
-                >
-                  {{ petStore.loading ? 'Buscando...' : 'Aplicar filtros' }}
-                </button>
-                <button
-                  type="button"
-                  class="w-full py-2.5 px-4 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50"
-                  @click="clearFilters"
-                >
-                  Limpiar filtros
-                </button>
-              </div>
-            </form>
+          <div class="aspect-[4/3] bg-[#A3AEB9]/20"></div>
+          <div class="space-y-2 p-4">
+            <div class="h-4 w-2/3 rounded bg-[#A3AEB9]/20"></div>
+            <div class="h-3 w-1/2 rounded bg-[#A3AEB9]/20"></div>
+            <div class="h-3 w-full rounded bg-[#A3AEB9]/20"></div>
           </div>
-        </aside>
-
-        <!-- ===== Grilla de mascotas ===== -->
-        <main>
-          <!-- Skeleton de carga -->
-          <div v-if="petStore.loading && petStore.catalogPets.length === 0" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            <div v-for="i in 6" :key="i" class="bg-white rounded-xl shadow-sm p-4 animate-pulse">
-              <div class="aspect-[4/3] bg-gray-200 rounded-lg mb-4"></div>
-              <div class="h-4 bg-gray-200 rounded mb-2 w-2/3"></div>
-              <div class="h-3 bg-gray-200 rounded w-full"></div>
-            </div>
-          </div>
-
-          <!-- Vacío -->
-          <div v-else-if="petStore.catalogPets.length === 0" class="text-center py-20 bg-white rounded-xl shadow-sm">
-            <div class="text-6xl mb-4">🐾</div>
-            <p class="text-gray-600 font-medium">No encontramos mascotas con esos filtros.</p>
-            <p class="text-sm text-gray-400 mt-1">Prueba con otros filtros o vuelve más tarde.</p>
-          </div>
-
-          <!-- Grilla -->
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            <PetCard
-              v-for="pet in petStore.catalogPets"
-              :key="pet.id"
-              :pet="pet"
-              :is-favorite="petStore.isFavorite(pet.id)"
-              @open="goToDetail"
-              @toggle-favorite="handleToggleFavorite"
-            />
-          </div>
-
-          <!-- HU-23 CA#3: paginación del catálogo -->
-          <nav
-            v-if="totalPages > 1"
-            class="mt-8 flex items-center justify-center gap-3"
-            aria-label="Paginación del catálogo"
-          >
-            <button
-              type="button"
-              class="px-3.5 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-              :disabled="page === 1 || petStore.loading"
-              @click="goToPage(page - 1)"
-            >
-              Anterior
-            </button>
-            <span class="text-sm text-gray-500">
-              Página {{ page }} de {{ totalPages }}
-            </span>
-            <button
-              type="button"
-              class="px-3.5 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-              :disabled="page === totalPages || petStore.loading"
-              @click="goToPage(page + 1)"
-            >
-              Siguiente
-            </button>
-          </nav>
-        </main>
+        </div>
       </div>
+
+      <!-- Estado vacío -->
+      <div
+        v-else-if="petStore.catalogPets.length === 0"
+        class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-20 text-center shadow-sm"
+      >
+        <span
+          class="material-symbols-outlined text-[64px] text-[#A3AEB9]"
+          style="font-variation-settings: 'FILL' 1"
+          aria-hidden="true"
+        >
+          pets
+        </span>
+        <p class="mt-4 font-medium text-[#040404]">No encontramos mascotas con esos criterios</p>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Prueba con otros filtros o vuelve más tarde.</p>
+      </div>
+
+      <!-- Grilla -->
+      <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <PetCard
+          v-for="pet in petStore.catalogPets"
+          :key="pet.id"
+          :pet="pet"
+          :is-favorite="petStore.isFavorite(pet.id)"
+          @open="goToDetail"
+          @toggle-favorite="handleToggleFavorite"
+        />
+      </div>
+
+      <!-- HU-23 CA#3: paginación del catálogo -->
+      <nav
+        v-if="totalPages > 1"
+        class="mt-8 flex items-center justify-center gap-3"
+        aria-label="Paginación del catálogo"
+      >
+        <button
+          type="button"
+          class="rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
+          :disabled="page === 1 || petStore.loading"
+          @click="goToPage(page - 1)"
+        >
+          Anterior
+        </button>
+        <span class="text-sm text-[#A3AEB9]">Página {{ page }} de {{ totalPages }}</span>
+        <button
+          type="button"
+          class="rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
+          :disabled="page === totalPages || petStore.loading"
+          @click="goToPage(page + 1)"
+        >
+          Siguiente
+        </button>
+      </nav>
     </div>
-  </div>
+  </component>
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, h, reactive, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import { usePetStore } from '../stores/petStore'
 import PetCard from '../components/pets/PetCard.vue'
+import DashboardLayout from '../components/layout/DashboardLayout.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const petStore = usePetStore()
 
-const mobileFiltersOpen = ref(false)
-const isDesktop = ref(false)
 const searchTerm = ref('')
-let mediaQuery = null
 let searchTimer = null
 
-// Detecta si el viewport es de escritorio para mostrar la sidebar fija.
-function updateIsDesktop() {
-  isDesktop.value = mediaQuery.matches
-  if (mediaQuery.matches) mobileFiltersOpen.value = false
-}
+// Layout: sidebar de dashboard si hay sesión, header simple si es invitado.
+const shell = computed(() => (authStore.isAuthenticated ? DashboardLayout : PublicShell))
+const shellRole = computed(() => (authStore.isAuthenticated ? authStore.userRole : 'adoptante'))
 
 const filters = reactive({
   species: '',
@@ -270,7 +231,6 @@ async function refreshList() {
 }
 
 async function applyFilters() {
-  mobileFiltersOpen.value = false
   page.value = 1
   await refreshList()
 }
@@ -310,11 +270,65 @@ async function handleToggleFavorite(pet) {
   await petStore.toggleFavorite(pet.id)
 }
 
-onMounted(async () => {
-  mediaQuery = window.matchMedia('(min-width: 1024px)')
-  updateIsDesktop()
-  mediaQuery.addEventListener('change', updateIsDesktop)
+// Header público para visitantes sin sesión (HU-23 es una ruta pública).
+const PublicShell = {
+  props: {
+    role: { type: String, default: '' },
+    title: { type: String, default: '' }
+  },
+  setup(props, { slots }) {
+    return () =>
+      h('div', { class: 'min-h-screen bg-[#FCD8B8]/20' }, [
+        h(
+          'header',
+          { class: 'sticky top-0 z-30 border-b border-[#A3AEB9]/20 bg-white/90 backdrop-blur-md' },
+          h('div', { class: 'mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5' }, [
+            h(RouterLink, { to: '/', class: 'flex items-center gap-2.5' }, () => [
+              h('span', { class: 'flex h-9 w-9 items-center justify-center rounded-xl bg-[#BA8C71] text-white' }, [
+                h(
+                  'span',
+                  { class: 'material-symbols-outlined text-[20px]', style: "font-variation-settings: 'FILL' 1" },
+                  'pets'
+                )
+              ]),
+              h('span', { class: 'font-display text-lg font-black tracking-tight text-[#040404]' }, [
+                'Match',
+                h('span', { class: 'text-[#BA8C71]' }, 'Pet')
+              ])
+            ]),
+            h('div', { class: 'flex items-center gap-2' }, [
+              h(
+                RouterLink,
+                {
+                  to: '/login',
+                  class: 'rounded-xl px-4 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/50'
+                },
+                () => 'Iniciar sesión'
+              ),
+              h(
+                RouterLink,
+                {
+                  to: '/registro',
+                  class: 'rounded-xl bg-[#BA8C71] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-[#E1A16C]'
+                },
+                () => 'Registrarse'
+              )
+            ])
+          ])
+        ),
+        h('div', { class: 'mx-auto max-w-7xl px-4 py-8' }, [
+          h(
+            'h1',
+            { class: 'mb-6 font-display text-2xl font-black tracking-tight text-[#040404] sm:text-3xl' },
+            props.title
+          ),
+          slots.default?.()
+        ])
+      ])
+  }
+}
 
+onMounted(async () => {
   await petStore.fetchShelterCities()
   await refreshList()
   if (authStore.isAuthenticated) {
@@ -324,12 +338,11 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearTimeout(searchTimer)
-  if (mediaQuery) mediaQuery.removeEventListener('change', updateIsDesktop)
 })
 </script>
 
 <style scoped>
 .filter-input {
-  @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white;
+  @apply block appearance-none rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2.5 text-sm text-[#040404] shadow-sm transition focus:border-[#BA8C71] focus:outline-none focus:ring-2 focus:ring-[#BA8C71]/20;
 }
 </style>

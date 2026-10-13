@@ -6,17 +6,17 @@
         <router-link to="/" class="flex items-center gap-2 group" aria-label="MatchPet - Ir al inicio">
           <!-- Logo oficial unificado con HomeView.vue (badge + SVG huella + subtítulo teal) -->
           <div
-            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-purple to-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
+            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white shadow-md shadow-brand-primary/30 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
           >
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 13.5c-1.6 0-3 1.2-3 2.8 0 1.9 1.6 3.7 3 3.7s3-1.8 3-3.7c0-1.6-1.4-2.8-3-2.8zm-4.7-2.7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9.4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7.2-4.5c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2zm5 0c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2z"></path>
             </svg>
           </div>
           <div class="flex flex-col">
-            <span class="text-2xl font-black tracking-tight text-brand-purple font-display leading-tight">
-              Match<span class="text-purple-600">Pet</span>
+            <span class="text-2xl font-black tracking-tight text-brand-primary font-display leading-tight">
+              Match<span class="text-brand-primary">Pet</span>
             </span>
-            <span class="text-[10px] font-semibold text-teal-600 tracking-wider uppercase -mt-1">Adopción Responsable</span>
+            <span class="text-[10px] font-semibold text-brand-primary tracking-wider uppercase -mt-1">Adopción Responsable</span>
           </div>
         </router-link>
         <nav class="flex items-center gap-2 sm:gap-3">
@@ -51,10 +51,10 @@
           <!-- Grid principal -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <!-- Columna izquierda: Formulario -->
-            <div class="lg:col-span-7 bg-surface-card rounded-2xl shadow-[0_4px_24px_-4px_rgba(80,56,237,0.06),0_1px_3px_rgba(0,0,0,0.03)] p-8 lg:p-10">
+            <div class="lg:col-span-7 bg-surface-card rounded-2xl shadow-[0_4px_24px_-4px_rgba(186,140,113,0.10),0_1px_3px_rgba(0,0,0,0.03)] p-8 lg:p-10">
               <!-- Encabezado -->
               <div class="mb-8">
-                <div class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full mb-3" style="background-color: #e6f2ee; color: #3b7b75;">
+                <div class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full mb-3" style="background-color: #FCD8B8; color: #8F6349;">
                   <span class="material-symbols-outlined text-[16px]">domain_add</span>
                   <span class="text-[11px] uppercase tracking-wider font-bold">Portal Refugios &amp; Santuarios</span>
                 </div>
@@ -206,8 +206,8 @@
                 </div>
 
                 <!-- Mensajes de validación y error -->
-                <p v-if="validationError" class="text-red-600 text-sm text-center">{{ validationError }}</p>
-                <p v-if="authStore.errorMsg" class="text-red-600 text-sm text-center">{{ authStore.errorMsg }}</p>
+                <p v-if="validationError" class="text-alert text-sm text-center">{{ validationError }}</p>
+                <p v-if="authStore.errorMsg" class="text-alert text-sm text-center">{{ authStore.errorMsg }}</p>
 
                 <!-- Botón submit -->
                 <div class="pt-2">
@@ -256,7 +256,7 @@
               </div>
 
               <!-- Tarjeta de beneficios -->
-              <div class="bg-surface-card rounded-2xl p-6 shadow-[0_4px_24px_-4px_rgba(80,56,237,0.06)] space-y-6">
+              <div class="bg-surface-card rounded-2xl p-6 shadow-[0_4px_24px_-4px_rgba(186,140,113,0.10)] space-y-6">
                 <div class="border-b border-surface-low pb-2">
                   <h3 class="text-[16px] font-bold text-ink">Beneficios para tu organización</h3>
                   <p class="text-xs text-ink-soft">
@@ -266,7 +266,7 @@
                 <div class="space-y-4">
                   <!-- Beneficio 1 -->
                   <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #ede7fb; color: #3b0764;">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #F6E7DB; color: #8F6349;">
                       <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
                     </div>
                     <div>
@@ -278,7 +278,7 @@
                   </div>
                   <!-- Beneficio 2 -->
                   <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #e5f2f0; color: #3b7b75;">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #FCD8B8; color: #8F6349;">
                       <span class="material-symbols-outlined text-[20px]">filter_alt</span>
                     </div>
                     <div>
@@ -290,7 +290,7 @@
                   </div>
                   <!-- Beneficio 3 -->
                   <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #e2e7ff;">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #F6E7DB;">
                       <span class="material-symbols-outlined text-[20px]">security</span>
                     </div>
                     <div>

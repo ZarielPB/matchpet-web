@@ -9,17 +9,17 @@
         <!-- Logo oficial unificado con HomeView.vue (badge + SVG huella + subtítulo teal) -->
         <router-link to="/" class="flex items-center gap-2 group" aria-label="MatchPet - Ir al inicio">
           <div
-            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-purple to-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
+            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white shadow-md shadow-brand-primary/30 shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
           >
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 13.5c-1.6 0-3 1.2-3 2.8 0 1.9 1.6 3.7 3 3.7s3-1.8 3-3.7c0-1.6-1.4-2.8-3-2.8zm-4.7-2.7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9.4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7.2-4.5c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2zm5 0c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2z"></path>
             </svg>
           </div>
           <div class="flex flex-col">
-            <span class="text-2xl font-black tracking-tight text-brand-purple font-display leading-tight">
-              Match<span class="text-purple-600">Pet</span>
+            <span class="text-2xl font-black tracking-tight text-brand-primary font-display leading-tight">
+              Match<span class="text-brand-primary">Pet</span>
             </span>
-            <span class="text-[10px] font-semibold text-teal-600 tracking-wider uppercase -mt-1">Adopción Responsable</span>
+            <span class="text-[10px] font-semibold text-brand-primary tracking-wider uppercase -mt-1">Adopción Responsable</span>
           </div>
         </router-link>
         <nav class="flex items-center gap-2 sm:gap-3">
@@ -73,7 +73,7 @@
 
             <!-- Encabezado del formulario -->
             <div class="mb-6">
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-2" style="background-color: #e6f4f1; color: #2d6a68;">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-2" style="background-color: #FCD8B8; color: #8F6349;">
                 <span class="material-symbols-outlined text-[14px]">pets</span>
                 <span class="text-[11px] uppercase tracking-wider">Comienza la aventura</span>
               </div>
@@ -176,8 +176,8 @@
               </label>
 
               <!-- Mensajes -->
-              <p v-if="validationError" class="text-red-600 text-sm text-center">{{ validationError }}</p>
-              <p v-if="authStore.errorMsg" class="text-red-600 text-sm text-center">{{ authStore.errorMsg }}</p>
+              <p v-if="validationError" class="text-alert text-sm text-center">{{ validationError }}</p>
+              <p v-if="authStore.errorMsg" class="text-alert text-sm text-center">{{ authStore.errorMsg }}</p>
 
               <!-- Botón registrarme -->
               <button
@@ -207,7 +207,7 @@
         <!-- Columna derecha: Bloque visual y emotivo -->
         <div class="w-full lg:w-5/12 bg-teal relative min-h-[460px] lg:min-h-full flex flex-col justify-between p-6 overflow-hidden">
           <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
-          <div class="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-emerald-300/20 blur-xl pointer-events-none"></div>
+          <div class="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-brand-bg-soft/70 blur-xl pointer-events-none"></div>
 
           <!-- Encabezado visual -->
           <div class="relative z-10 text-center pt-2">
@@ -234,8 +234,8 @@
           <!-- Tarjeta flotante -->
           <div class="relative z-10 bg-white/90 backdrop-blur-md rounded-xl p-4 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
             <div class="flex items-start gap-2">
-              <div class="w-9 h-9 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0 mt-0.5">
-                <span class="material-symbols-outlined text-emerald-700 text-[20px]">volunteer_activism</span>
+              <div class="w-9 h-9 rounded-full bg-brand-bg-soft/60 flex items-center justify-center shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-brand-primary text-[20px]">volunteer_activism</span>
               </div>
               <div>
                 <p class="text-[13px] text-ink font-semibold mb-0.5">Compromiso de vida</p>

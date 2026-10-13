@@ -7,20 +7,20 @@
     nunca scrollea) en lugar de contra el viewport.
     `overflow: clip` recorta igual en X pero NO crea scroll container -> sticky funciona.
   -->
-  <div class="min-h-screen bg-[#faf9fe] text-slate-800 font-sans antialiased overflow-x-clip">
+  <div class="min-h-screen bg-surface text-brand-dark font-sans antialiased overflow-x-clip">
     <!-- ══════════ HEADER (STICKY) ══════════ -->
     <header
       :class="[
         'sticky top-0 z-50 border-b transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-xl border-purple-200/70 shadow-[0_12px_30px_-20px_rgba(55,20,87,0.5)]'
-          : 'bg-white/85 backdrop-blur-md border-purple-100',
+          ? 'bg-white/95 backdrop-blur-xl border-brand-primary/20 shadow-[0_12px_30px_-20px_rgba(186,140,113,0.5)]'
+          : 'bg-white/85 backdrop-blur-md border-brand-primary/15',
       ]"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         <router-link to="/" class="flex items-center gap-3 group shrink-0" aria-label="MatchPet - Ir al inicio">
           <div
-            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-purple to-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-900/20 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
+            class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white shadow-md shadow-brand-primary/30 group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300"
           >
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 13.5c-1.6 0-3 1.2-3 2.8 0 1.9 1.6 3.7 3 3.7s3-1.8 3-3.7c0-1.6-1.4-2.8-3-2.8zm-4.7-2.7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9.4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7.2-4.5c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2zm5 0c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2z"></path>
@@ -28,29 +28,29 @@
           </div>
           <div class="flex flex-col">
             <span
-              class="text-2xl font-black tracking-tight text-brand-purple font-display leading-tight flex items-center"
+              class="text-2xl font-black tracking-tight text-brand-primary font-display leading-tight flex items-center"
             >
-              Match<span class="text-purple-600">Pet</span>
+              Match<span class="text-brand-primary">Pet</span>
             </span>
-            <span class="text-[10px] font-semibold text-teal-600 tracking-wider uppercase -mt-1">Adopción Responsable</span>
+            <span class="text-[10px] font-semibold text-brand-primary tracking-wider uppercase -mt-1">Adopción Responsable</span>
           </div>
         </router-link>
 
-        <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600" aria-label="Navegación principal">
+        <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-ink-soft" aria-label="Navegación principal">
           <a
             v-for="link in navLinks"
             :key="link.target"
             :href="`#${link.target}`"
             :class="[
-              'relative px-3 py-2 rounded-lg transition-colors duration-200 hover:text-brand-purple',
-              activeSection === link.target ? 'text-brand-purple' : '',
+              'relative px-3 py-2 rounded-lg transition-colors duration-200 hover:text-brand-primary',
+              activeSection === link.target ? 'text-brand-primary' : '',
             ]"
             :aria-current="activeSection === link.target ? 'true' : undefined"
           >
             {{ link.label }}
             <span
               :class="[
-                'absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-brand-purple transition-all duration-300',
+                'absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-brand-primary transition-all duration-300',
                 activeSection === link.target ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0',
               ]"
               aria-hidden="true"
@@ -61,14 +61,14 @@
         <div class="flex items-center gap-2 sm:gap-3">
           <router-link
             to="/login"
-            class="hidden sm:inline-flex px-5 py-2.5 rounded-xl bg-brand-purple text-white text-sm font-semibold shadow-md shadow-purple-950/20 hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200 items-center gap-2"
+            class="hidden sm:inline-flex px-5 py-2.5 rounded-xl bg-brand-primary text-brand-dark text-sm font-semibold shadow-md shadow-brand-primary/30 hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200 items-center gap-2"
           >
             <span class="material-symbols-outlined text-[18px]" aria-hidden="true">login</span>
             Ingresar
           </router-link>
           <button
             type="button"
-            class="md:hidden w-10 h-10 rounded-xl border border-purple-200 bg-white text-brand-purple flex items-center justify-center hover:bg-purple-50 transition-colors duration-200"
+            class="md:hidden w-10 h-10 rounded-xl border border-brand-primary/20 bg-white text-brand-primary flex items-center justify-center hover:bg-brand-bg-soft/50 transition-colors duration-200"
             :aria-expanded="isMobileMenuOpen"
             aria-controls="mp-mobile-menu"
             aria-label="Abrir menú de navegación"
@@ -84,7 +84,7 @@
         <Transition name="mp-overlay">
           <div
             v-if="isMobileMenuOpen"
-            class="md:hidden fixed inset-x-0 top-20 bottom-0 z-40 bg-brand-deep/50"
+            class="md:hidden fixed inset-x-0 top-20 bottom-0 z-40 bg-brand-dark/50"
             aria-hidden="true"
             @click="closeMobileMenu"
           ></div>
@@ -94,7 +94,7 @@
         <div
           v-if="isMobileMenuOpen"
           id="mp-mobile-menu"
-          class="md:hidden absolute inset-x-0 top-20 z-50 bg-white border-b border-purple-200 shadow-[0_24px_48px_-16px_rgba(35,11,59,0.45)]"
+          class="md:hidden absolute inset-x-0 top-20 z-50 bg-white border-b border-brand-primary/20 shadow-[0_24px_48px_-16px_rgba(4,4,4,0.45)]"
         >
           <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1" aria-label="Navegación móvil">
             <a
@@ -104,14 +104,14 @@
               :class="[
                 'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors duration-200',
                 activeSection === link.target
-                  ? 'bg-purple-50 text-brand-purple'
-                  : 'text-slate-700 hover:bg-surface-low hover:text-brand-purple',
+                  ? 'bg-brand-bg-soft/50 text-brand-primary'
+                  : 'text-ink-soft hover:bg-surface-low hover:text-brand-primary',
               ]"
               @click="closeMobileMenu"
             >
               <span
                 class="material-symbols-outlined text-[20px] shrink-0"
-                :class="activeSection === link.target ? 'text-brand-purple' : 'text-slate-500'"
+                :class="activeSection === link.target ? 'text-brand-primary' : 'text-ink-soft'"
                 aria-hidden="true"
                 >{{ link.icon }}</span
               >
@@ -119,7 +119,7 @@
             </a>
             <router-link
               to="/login"
-              class="mt-2 sm:hidden inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl bg-brand-purple text-white text-sm font-semibold shadow-md shadow-purple-950/20"
+              class="mt-2 sm:hidden inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl bg-brand-primary text-brand-dark text-sm font-semibold shadow-md shadow-brand-primary/30"
               @click="closeMobileMenu"
             >
               <span class="material-symbols-outlined text-[18px]" aria-hidden="true">login</span>
@@ -136,26 +136,26 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex items-center justify-center mb-6" v-reveal>
           <span
-            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-purple-200 text-xs font-bold text-brand-purple shadow-sm"
+            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-primary/20 text-xs font-bold text-brand-primary shadow-sm"
           >
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+            <span class="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" aria-hidden="true"></span>
             ¡Conecta con tu compañero ideal en Bolivia!
-            <span class="material-symbols-outlined text-[15px] text-teal-600" aria-hidden="true">location_on</span>
+            <span class="material-symbols-outlined text-[15px] text-brand-primary" aria-hidden="true">location_on</span>
           </span>
         </div>
 
         <div class="text-center max-w-3xl mx-auto">
           <h1
             v-reveal="80"
-            class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15] font-display flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-3"
+            class="text-4xl sm:text-5xl lg:text-6xl font-black text-brand-dark tracking-tight leading-[1.15] font-display flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-3"
           >
             <span class="inline-flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined text-brand-purple" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
+              <span class="material-symbols-outlined text-brand-primary" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
               MatchPet
             </span>
             <span class="block mp-gradient-text">Encuentra a tu compañero ideal</span>
           </h1>
-          <p v-reveal="160" class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
+          <p v-reveal="160" class="mt-5 text-base sm:text-lg text-ink-soft leading-relaxed max-w-2xl mx-auto">
             Conectamos refugios de Bolivia con adoptantes responsables mediante un algoritmo de compatibilidad. Menos
             devoluciones, más hogares felices.
           </p>
@@ -164,14 +164,14 @@
         <div v-reveal="220" class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <router-link
             to="/registro"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-purple text-white font-bold text-base shadow-xl shadow-brand-purple/25 hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-primary text-brand-dark font-bold text-base shadow-xl shadow-brand-primary/25 hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
           >
             Quiero adoptar
             <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
           </router-link>
           <router-link
             to="/registro-refugio"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-teal-700 border-2 border-teal-600/80 font-bold text-base hover:bg-teal-50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-brand-primary border-2 border-brand-primary/60 font-bold text-base hover:bg-brand-bg-soft/60 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
           >
             Soy un refugio
             <span class="material-symbols-outlined text-[21px]" aria-hidden="true">home_work</span>
@@ -181,42 +181,42 @@
         <!-- Hero Visual Composition -->
         <div v-reveal data-reveal="zoom" class="mt-14 relative max-w-4xl mx-auto">
           <div
-            class="relative bg-white rounded-3xl p-6 sm:p-10 border border-purple-100 shadow-soft overflow-hidden mp-ring-brand"
+            class="relative bg-white rounded-3xl p-6 sm:p-10 border border-brand-primary/15 shadow-soft overflow-hidden mp-ring-brand"
           >
-            <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-purple-100/60 pointer-events-none blur-2xl" aria-hidden="true"></div>
-            <div class="absolute -left-16 -bottom-16 w-64 h-64 rounded-full bg-teal-100/50 pointer-events-none blur-xl" aria-hidden="true"></div>
+            <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-brand-bg-soft/60 pointer-events-none blur-2xl" aria-hidden="true"></div>
+            <div class="absolute -left-16 -bottom-16 w-64 h-64 rounded-full bg-brand-bg-soft/70 pointer-events-none blur-xl" aria-hidden="true"></div>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative">
               <div class="md:col-span-5 space-y-4">
-                <span class="inline-block text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100 px-3 py-1 rounded-full">
+                <span class="inline-block text-xs font-bold uppercase tracking-wider text-brand-primary bg-brand-bg-soft/60 px-3 py-1 rounded-full">
                   Match Destacado del Día
                 </span>
-                <h3 class="text-2xl font-black text-brand-purple font-display">Pequeños listos para dar y recibir amor</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
+                <h3 class="text-2xl font-black text-brand-dark font-display">Pequeños listos para dar y recibir amor</h3>
+                <p class="text-ink-soft text-sm leading-relaxed">
                   Cada peludo proviene de refugios certificados en Bolivia. Evaluamos su personalidad, energía y
                   necesidades para asegurar que su próximo hogar sea definitivo y lleno de amor.
                 </p>
-                <div class="bg-purple-50/80 backdrop-blur-sm border border-purple-200/80 p-3 rounded-2xl flex items-center gap-3 w-max">
+                <div class="bg-brand-bg-soft/50 backdrop-blur-sm border border-brand-primary/20 p-3 rounded-2xl flex items-center gap-3 w-max">
                   <div
-                    class="w-12 h-12 rounded-xl bg-gradient-to-tr from-teal-400 to-teal-600 flex items-center justify-center text-white"
+                    class="w-12 h-12 rounded-xl bg-brand-secondary flex items-center justify-center text-brand-dark"
                     aria-hidden="true"
                   >
                     <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1">pets</span>
                   </div>
                   <div>
-                    <h4 class="text-sm font-bold text-slate-800 leading-tight">Mark • 1 año</h4>
+                    <h4 class="text-sm font-bold text-brand-dark leading-tight">Mark • 1 año</h4>
                     <div class="flex items-center gap-2 mt-0.5">
-                      <span class="h-2 w-20 bg-purple-200 rounded-full overflow-hidden block">
-                        <span class="h-full bg-teal-500 w-[94%] block"></span>
+                      <span class="h-2 w-20 bg-brand-secondary/20 rounded-full overflow-hidden block">
+                        <span class="h-full bg-brand-secondary w-[94%] block"></span>
                       </span>
-                      <span class="text-[11px] font-bold text-teal-700">98% Match</span>
+                      <span class="text-[11px] font-bold text-brand-primary">98% Match</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="md:col-span-7 relative flex justify-center">
-                <div class="relative w-72 sm:w-80 md:w-96 aspect-square rounded-full bg-gradient-to-tr from-brand-purple to-purple-400 p-2 shadow-2xl">
+                <div class="relative w-72 sm:w-80 md:w-96 aspect-square rounded-full bg-gradient-to-tr from-brand-primary to-brand-secondary p-2 shadow-2xl">
                   <img
                     src="/cat_dog.png"
                     alt="Perro y gato adoptables"
@@ -226,36 +226,36 @@
                 </div>
 
                 <div
-                  class="absolute -top-4 right-2 sm:right-6 bg-white border border-purple-100 p-3 rounded-2xl shadow-xl flex items-center gap-3"
+                  class="absolute -top-4 right-2 sm:right-6 bg-white border border-brand-primary/15 p-3 rounded-2xl shadow-xl flex items-center gap-3"
                 >
                   <div
-                    class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-300 to-amber-500 flex items-center justify-center text-white"
+                    class="w-11 h-11 rounded-xl bg-brand-secondary flex items-center justify-center text-brand-dark"
                     aria-hidden="true"
                   >
                     <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1">pets</span>
                   </div>
                   <div>
                     <div class="flex items-center justify-between gap-4">
-                      <span class="text-xs font-bold text-slate-900">Tiny (Mestizo)</span>
-                      <span class="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+                      <span class="text-xs font-bold text-brand-dark">Tiny (Mestizo)</span>
+                      <span class="w-2 h-2 rounded-full bg-brand-secondary" aria-hidden="true"></span>
                     </div>
-                    <div class="w-24 bg-purple-100 h-1.5 rounded-full mt-1.5">
-                      <div class="bg-brand-purple h-1.5 rounded-full w-[95%]"></div>
+                    <div class="w-24 bg-brand-bg-soft/60 h-1.5 rounded-full mt-1.5">
+                      <div class="bg-brand-primary h-1.5 rounded-full w-[95%]"></div>
                     </div>
-                    <span class="text-[10px] text-purple-700 font-semibold mt-1 block">Compatible con departamento</span>
+                    <span class="text-[10px] text-brand-primary font-semibold mt-1 block">Compatible con departamento</span>
                   </div>
                 </div>
 
                 <div
-                  class="absolute bottom-4 left-2 sm:left-4 bg-white/95 backdrop-blur border border-emerald-200 px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-2"
+                  class="absolute bottom-4 left-2 sm:left-4 bg-white/95 backdrop-blur border border-brand-secondary/60 px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-2"
                 >
                   <div
-                    class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0"
+                    class="w-6 h-6 rounded-full bg-brand-bg-soft text-brand-primary flex items-center justify-center shrink-0"
                     aria-hidden="true"
                   >
                     <span class="material-symbols-outlined text-[16px]">verified</span>
                   </div>
-                  <span class="text-xs font-bold text-slate-800">Vacunación &amp; Esterilización Obligatoria</span>
+                  <span class="text-xs font-bold text-brand-dark">Vacunación &amp; Esterilización Obligatoria</span>
                 </div>
               </div>
             </div>
@@ -268,7 +268,7 @@
             v-for="(pillar, i) in pillars"
             :key="pillar.title"
             v-reveal="i * 110"
-            class="group bg-white rounded-2xl p-7 border border-purple-100 shadow-soft text-center shadow-hover"
+            class="group bg-white rounded-2xl p-7 border border-brand-primary/15 shadow-soft text-center shadow-hover"
           >
             <div
               :class="['w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110', pillar.bg, pillar.textColor]"
@@ -276,14 +276,14 @@
             >
               <span class="material-symbols-outlined text-[30px]">{{ pillar.icon }}</span>
             </div>
-            <h2 class="text-lg font-bold text-slate-900 mb-2">{{ pillar.title }}</h2>
-            <p class="text-sm text-slate-600 leading-relaxed">{{ pillar.text }}</p>
+            <h2 class="text-lg font-bold text-brand-dark mb-2">{{ pillar.title }}</h2>
+            <p class="text-sm text-ink-soft leading-relaxed">{{ pillar.text }}</p>
           </div>
         </div>
 
-        <p v-reveal class="text-center text-sm text-slate-500 mt-8">
+        <p v-reveal class="text-center text-sm text-ink-soft mt-8">
           ¿Ya tienes cuenta activa?
-          <router-link to="/login" class="text-brand-purple font-bold underline decoration-purple-400 hover:text-purple-900">
+          <router-link to="/login" class="text-brand-primary font-bold underline decoration-brand-secondary hover:text-brand-primary">
             Inicia sesión aquí
           </router-link>
         </p>
@@ -291,12 +291,12 @@
     </section>
 
     <!-- ══════════ NOSOTROS ══════════ -->
-    <section id="empresa" class="mp-section py-20 bg-white relative border-t border-purple-50">
+    <section id="empresa" class="mp-section py-20 bg-white relative border-t border-brand-primary/15">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div class="lg:col-span-6 space-y-6">
             <div class="flex items-center gap-2" v-reveal data-reveal="left">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-teal-600 bg-teal-50 px-3 py-1.5 rounded-full border border-teal-200">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-brand-primary bg-brand-bg-soft/60 px-3 py-1.5 rounded-full border border-brand-primary/30">
                 Sobre MatchPet
                 <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
               </span>
@@ -304,11 +304,11 @@
             <h2
               v-reveal="80"
               data-reveal="left"
-              class="text-3xl sm:text-4xl font-black text-brand-purple font-display tracking-tight leading-tight"
+              class="text-3xl sm:text-4xl font-black text-brand-dark font-display tracking-tight leading-tight"
             >
               Un puente tecnológico y humano contra el abandono animal
             </h2>
-            <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+            <div class="space-y-4 text-ink-soft text-sm sm:text-base leading-relaxed">
               <p v-reveal="140" data-reveal="left">
                 MatchPet nace para transformar las adopciones informales y desorganizadas de redes sociales en procesos
                 seguros, transparentes y duraderos en La Paz, El Alto, Santa Cruz y Cochabamba. Combatimos las altas
@@ -322,7 +322,7 @@
             </div>
 
             <div class="pt-4">
-              <h4 v-reveal data-reveal="left" class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+              <h4 v-reveal data-reveal="left" class="text-xs font-bold uppercase tracking-wider text-brand-neutral mb-4">
                 Nuestra propuesta de valor
               </h4>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -336,14 +336,14 @@
                   <div :class="['w-9 h-9 rounded-xl mb-3 flex items-center justify-center', value.iconBg, value.iconText]" aria-hidden="true">
                     <span class="material-symbols-outlined text-[20px]">{{ value.icon }}</span>
                   </div>
-                  <h5 class="font-bold text-slate-900 text-sm">{{ value.title }}</h5>
-                  <p class="text-xs text-slate-600 mt-1">{{ value.text }}</p>
+                  <h5 class="font-bold text-brand-dark text-sm">{{ value.title }}</h5>
+                  <p class="text-xs text-ink-soft mt-1">{{ value.text }}</p>
 
                   <!-- Botón que abre el modal de la Ley 700 -->
                   <button
                     v-if="value.action === 'ley700'"
                     type="button"
-                    class="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-purple text-white text-xs font-semibold rounded-lg hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200"
+                    class="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-primary text-brand-dark text-xs font-semibold rounded-lg hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200"
                     @click="openLey700"
                   >
                     Conoce más
@@ -352,7 +352,7 @@
                   <a
                     v-else
                     :href="value.href"
-                    class="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-purple text-white text-xs font-semibold rounded-lg hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200"
+                    class="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-primary text-brand-dark text-xs font-semibold rounded-lg hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200"
                   >
                     Ver detalles
                     <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
@@ -364,7 +364,7 @@
 
           <div class="lg:col-span-6 relative flex justify-center" v-reveal data-reveal="right">
             <div
-              class="relative w-full max-w-md aspect-square rounded-[3rem] bg-gradient-to-tr from-purple-100 to-teal-50 p-4 border border-purple-100 flex items-center justify-center"
+              class="relative w-full max-w-md aspect-square rounded-[3rem] bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/20 p-4 border border-brand-primary/15 flex items-center justify-center"
             >
               <img
                 src="/dogBlack.png"
@@ -372,16 +372,16 @@
                 class="w-full h-full object-cover rounded-[2.5rem] shadow-xl"
                 loading="lazy"
               />
-              <div class="absolute -bottom-6 -left-4 sm:-left-6 bg-white border border-purple-100 p-4 rounded-2xl shadow-xl max-w-xs flex items-center gap-3">
+              <div class="absolute -bottom-6 -left-4 sm:-left-6 bg-white border border-brand-primary/15 p-4 rounded-2xl shadow-xl max-w-xs flex items-center gap-3">
                 <div
-                  class="w-12 h-12 rounded-xl bg-amber-100 text-amber-500 flex items-center justify-center shrink-0"
+                  class="w-12 h-12 rounded-xl bg-brand-bg-soft text-brand-primary flex items-center justify-center shrink-0"
                   aria-hidden="true"
                 >
                   <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1">star</span>
                 </div>
                 <div>
-                  <p class="text-xs font-bold text-slate-900">100% Satisfacción</p>
-                  <p class="text-[11px] text-slate-500">Seguimiento Veterinario.</p>
+                  <p class="text-xs font-bold text-brand-dark">100% Satisfacción</p>
+                  <p class="text-[11px] text-ink-soft">Seguimiento Veterinario.</p>
                 </div>
               </div>
             </div>
@@ -391,18 +391,18 @@
     </section>
 
     <!-- ══════════ ¿CÓMO FUNCIONA? ══════════ -->
-    <section id="como-funciona" class="mp-section py-24 bg-[#f8f6fc] relative overflow-hidden">
+    <section id="como-funciona" class="mp-section py-24 bg-brand-bg-soft/50 relative overflow-hidden">
       <div class="absolute inset-0 paw-pattern pointer-events-none" aria-hidden="true"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center max-w-2xl mx-auto mb-16">
           <div class="flex items-center justify-center gap-2 mb-2" v-reveal>
-            <span class="text-sm font-bold uppercase tracking-widest text-purple-700">¿CÓMO FUNCIONA?</span>
-            <span class="material-symbols-outlined text-brand-purple text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
+            <span class="text-sm font-bold uppercase tracking-widest text-brand-primary">¿CÓMO FUNCIONA?</span>
+            <span class="material-symbols-outlined text-brand-primary text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
           </div>
-          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-slate-900 font-display">
+          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-brand-dark font-display">
             Tu camino hacia una adopción segura
           </h2>
-          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-slate-600">
+          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-ink-soft">
             Pasos metodológicos basados en compatibilidad real para asegurar bienestar animal permanente.
           </p>
         </div>
@@ -412,11 +412,11 @@
             v-for="(step, i) in steps"
             :key="step.title"
             v-reveal="i * 110"
-            class="group bg-white p-7 rounded-2xl border border-purple-100 shadow-soft text-center shadow-hover relative overflow-hidden"
+            class="group bg-white p-7 rounded-2xl border border-brand-primary/15 shadow-soft text-center shadow-hover relative overflow-hidden"
           >
             <div
               :class="[
-                'w-14 h-14 mx-auto mb-5 rounded-2xl text-white flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110',
+                'w-14 h-14 mx-auto mb-5 rounded-2xl text-brand-dark flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110',
                 step.bg,
               ]"
               aria-hidden="true"
@@ -424,30 +424,30 @@
               <span class="material-symbols-outlined text-[30px]">{{ step.icon }}</span>
             </div>
             <span
-              class="absolute top-4 right-5 text-[64px] leading-none font-black text-slate-900/[0.04] select-none"
+              class="absolute top-4 right-5 text-[64px] leading-none font-black text-brand-dark/[0.04] select-none"
               aria-hidden="true"
             >
               {{ step.number }}
             </span>
-            <h3 class="text-base font-bold text-slate-900 relative">{{ step.title }}</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed relative">{{ step.text }}</p>
+            <h3 class="text-base font-bold text-brand-dark relative">{{ step.title }}</h3>
+            <p class="text-xs text-ink-soft mt-2 leading-relaxed relative">{{ step.text }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ══════════ BENEFICIOS ══════════ -->
-    <section id="beneficios" class="mp-section py-10 bg-white relative border-t border-purple-50">
+    <section id="beneficios" class="mp-section py-10 bg-white relative border-t border-brand-primary/15">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-14">
           <div class="flex items-center justify-center gap-2 mb-2" v-reveal>
-            <span class="text-sm font-bold uppercase tracking-widest text-teal-600">BENEFICIOS</span>
-            <span class="material-symbols-outlined text-teal-600 text-[24px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">emoji_events</span>
+            <span class="text-sm font-bold uppercase tracking-widest text-brand-primary">BENEFICIOS</span>
+            <span class="material-symbols-outlined text-brand-primary text-[24px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">emoji_events</span>
           </div>
-          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-brand-purple font-display tracking-tight">
+          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-brand-dark font-display tracking-tight">
             ¿Por qué adoptar con MatchPet?
           </h2>
-          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-slate-600">
+          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-ink-soft">
             Una plataforma pensada para que cada adopción sea definitiva.
           </p>
         </div>
@@ -457,7 +457,7 @@
             v-for="(benefit, i) in benefits"
             :key="benefit.title"
             v-reveal="i * 80"
-            class="group bg-[#f8f6fc] rounded-2xl p-6 border border-purple-100 shadow-soft shadow-hover flex gap-4"
+            class="group bg-brand-bg-soft/50 rounded-2xl p-6 border border-brand-primary/15 shadow-soft shadow-hover flex gap-4"
           >
             <div
               :class="[
@@ -470,8 +470,8 @@
               <span class="material-symbols-outlined text-[22px]">{{ benefit.icon }}</span>
             </div>
             <div>
-              <h3 class="font-bold text-slate-900 text-sm">{{ benefit.title }}</h3>
-              <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ benefit.text }}</p>
+              <h3 class="font-bold text-brand-dark text-sm">{{ benefit.title }}</h3>
+              <p class="text-xs text-ink-soft mt-1 leading-relaxed">{{ benefit.text }}</p>
             </div>
           </div>
         </div>
@@ -479,11 +479,11 @@
     </section>
 
     <!-- ══════════ DISCOVERY ══════════ -->
-    <section id="discovery" class="mp-section py-20 bg-white border-t border-purple-50">
+    <section id="discovery" class="mp-section py-20 bg-white border-t border-brand-primary/15">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-10">
-          <h2 v-reveal class="text-3xl sm:text-4xl font-black text-brand-purple font-display tracking-tight">DESCUBRELOS</h2>
-          <p v-reveal="80" class="text-sm sm:text-base text-slate-600 mt-2">
+          <h2 v-reveal class="text-3xl sm:text-4xl font-black text-brand-dark font-display tracking-tight">DESCUBRELOS</h2>
+          <p v-reveal="80" class="text-sm sm:text-base text-ink-soft mt-2">
             Conoce los perfiles compatibles y razas para adopción responsable y convivencia armoniosa.
           </p>
         </div>
@@ -499,8 +499,8 @@
             :class="[
               'inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200',
               activeCategory === cat.id
-                ? 'bg-brand-purple text-white shadow-md shadow-brand-purple/25 scale-[1.02]'
-                : 'bg-slate-50 hover:bg-purple-50 text-slate-700 border border-slate-200 hover:border-purple-200 hover:-translate-y-0.5',
+                ? 'bg-brand-primary text-brand-dark shadow-md shadow-brand-primary/25 scale-[1.02]'
+                : 'bg-surface-low hover:bg-brand-bg-soft/50 text-ink-soft border border-brand-neutral hover:border-brand-primary/20 hover:-translate-y-0.5',
             ]"
             @click="activeCategory = cat.id"
           >
@@ -514,34 +514,34 @@
           <article
             v-for="pet in visiblePets"
             :key="pet.id"
-            class="bg-white rounded-2xl border border-purple-100 p-5 shadow-soft shadow-hover flex flex-col mp-ring-brand"
+            class="bg-white rounded-2xl border border-brand-primary/15 p-5 shadow-soft shadow-hover flex flex-col mp-ring-brand"
           >
             <div :class="['w-full h-44 rounded-xl overflow-hidden mb-4 bg-gradient-to-tr flex items-center justify-center', pet.grad]">
               <span class="text-6xl drop-shadow-sm" aria-hidden="true">{{ pet.emoji }}</span>
             </div>
-            <h3 class="text-lg font-black text-brand-purple tracking-tight font-display">{{ pet.name }}</h3>
-            <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5 mb-4">
+            <h3 class="text-lg font-black text-brand-dark tracking-tight font-display">{{ pet.name }}</h3>
+            <p class="text-xs text-ink-soft flex items-center gap-1 mt-0.5 mb-4">
               <span class="material-symbols-outlined text-[14px] opacity-70" aria-hidden="true">public</span>
               Origen: {{ pet.origin }}
             </p>
 
             
-            <div class="space-y-3 text-[11px] font-medium text-slate-600">
+            <div class="space-y-3 text-[11px] font-medium text-ink-soft">
               <div v-for="trait in pet.traits" :key="trait.label">
                 <div class="flex justify-between mb-1">
                   <span>{{ trait.label }}</span>
-                  <span class="font-bold text-slate-700">{{ trait.value }}</span>
+                  <span class="font-bold text-ink-soft">{{ trait.value }}</span>
                 </div>
-                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                  <div class="bg-brand-purple h-full rounded-full transition-[width] duration-700" :style="{ width: trait.pct + '%' }"></div>
+                <div class="w-full bg-brand-neutral/25 h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-brand-primary h-full rounded-full transition-[width] duration-700" :style="{ width: trait.pct + '%' }"></div>
                 </div>
               </div>
             </div>
 
-            <p class="text-xs text-slate-600 mt-4 leading-relaxed flex-1">{{ pet.text }}</p>
+            <p class="text-xs text-ink-soft mt-4 leading-relaxed flex-1">{{ pet.text }}</p>
             <a
               href="#contacto"
-              class="mt-5 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-brand-purple hover:underline pt-4 border-t border-slate-100 transition-colors"
+              class="mt-5 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-brand-primary hover:underline pt-4 border-t border-brand-neutral/40 transition-colors"
             >
               Conocer Más
               <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
@@ -552,25 +552,25 @@
         <!-- Estado vacío (categoría sin fichas cargadas) -->
         <div
           v-if="visiblePets.length === 0"
-          class="mt-4 text-center border border-dashed border-purple-200 rounded-2xl bg-[#f8f6fc] py-14 px-6"
+          class="mt-4 text-center border border-dashed border-brand-primary/20 rounded-2xl bg-brand-bg-soft/50 py-14 px-6"
         >
-          <span class="material-symbols-outlined text-purple-400 text-[44px]" aria-hidden="true">flare</span>
-          <h3 class="mt-3 font-bold text-slate-900">Próximamente</h3>
-          <p class="mt-1 text-sm text-slate-600 max-w-md mx-auto">
+          <span class="material-symbols-outlined text-brand-primary text-[44px]" aria-hidden="true">flare</span>
+          <h3 class="mt-3 font-bold text-brand-dark">Próximamente</h3>
+          <p class="mt-1 text-sm text-ink-soft max-w-md mx-auto">
             Todavía no hay perfiles cargados en esta categoría. Escríbenos y te ayudamos a encontrar el
             compañero ideal.
           </p>
           <a
             href="#contacto"
-            class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-purple text-white text-sm font-semibold hover:bg-purple-900 transition-colors"
+            class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-primary text-brand-dark text-sm font-semibold hover:bg-primary-hover transition-colors"
           >
             Contactar a un refugio
             <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
 
-        <p v-if="visiblePets.length > 0" class="flex items-center justify-center gap-2 mt-10 text-xs font-semibold text-slate-500">
-          <span class="material-symbols-outlined text-[16px] text-teal-600" aria-hidden="true">info</span>
+        <p v-if="visiblePets.length > 0" class="flex items-center justify-center gap-2 mt-10 text-xs font-semibold text-ink-soft">
+          <span class="material-symbols-outlined text-[16px] text-brand-primary" aria-hidden="true">info</span>
           Mostrando {{ visiblePets.length }} {{ visiblePets.length === 1 ? 'perfil' : 'perfiles' }} de
           {{ activeCategory === 'perros' ? 'perros' : activeCategory === 'gatos' ? 'gatos' : 'otras especies' }}
         </p>
@@ -578,38 +578,38 @@
     </section>
 
     <!-- ══════════ ESTADÍSTICAS DE IMPACTO ══════════ -->
-    <section class="bg-[#1e293b] text-white py-16 relative overflow-hidden" data-purpose="metrics-counter">
+    <section class="bg-brand-dark text-white py-16 relative overflow-hidden" data-purpose="metrics-counter">
       <div class="absolute inset-0 paw-pattern pointer-events-none" aria-hidden="true"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-700/60">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-brand-neutral/40">
           <div
             v-for="(stat, i) in stats"
             :key="stat.label"
             v-reveal="i * 90"
             class="pt-4 md:pt-0 px-4"
           >
-            <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-400 mx-auto flex items-center justify-center mb-3" aria-hidden="true">
+            <div class="w-12 h-12 rounded-2xl bg-brand-bg-soft/60 text-brand-primary mx-auto flex items-center justify-center mb-3" aria-hidden="true">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path :d="stat.path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
               </svg>
             </div>
             <p class="text-3xl sm:text-4xl font-black font-display text-white">{{ stat.value }}</p>
-            <p class="text-xs sm:text-sm text-slate-300 font-medium mt-1">{{ stat.label }}</p>
+            <p class="text-xs sm:text-sm text-brand-neutral font-medium mt-1">{{ stat.label }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ══════════ TESTIMONIOS ══════════ -->
-    <section id="testimonios" class="mp-section py-20 bg-[#f8f6fc] relative overflow-hidden">
+    <section id="testimonios" class="mp-section py-20 bg-brand-bg-soft/50 relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-14">
           <div class="flex items-center justify-center gap-2 mb-2" v-reveal>
-            <span class="text-sm font-bold uppercase tracking-widest text-purple-700">CASOS DE ÉXITO</span>
-            <span class="material-symbols-outlined text-brand-purple text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">favorite</span>
+            <span class="text-sm font-bold uppercase tracking-widest text-brand-primary">CASOS DE ÉXITO</span>
+            <span class="material-symbols-outlined text-brand-primary text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">favorite</span>
           </div>
-          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-slate-900 font-display">Historias que cambian vidas</h2>
-          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-slate-600">
+          <h2 v-reveal="80" class="text-3xl sm:text-4xl font-black text-brand-dark font-display">Historias que cambian vidas</h2>
+          <p v-reveal="140" class="mt-3 text-sm sm:text-base text-ink-soft">
             Adoptantes, refugios y voluntarios que ya confían en MatchPet.
           </p>
         </div>
@@ -619,19 +619,19 @@
             v-for="(t, i) in testimonials"
             :key="t.name"
             v-reveal="i * 110"
-            class="bg-white rounded-2xl border border-purple-100 shadow-soft p-7 shadow-hover flex flex-col"
+            class="bg-white rounded-2xl border border-brand-primary/15 shadow-soft p-7 shadow-hover flex flex-col"
           >
-            <div class="flex items-center gap-0.5 text-amber-400" :aria-label="`${t.rating} de 5 estrellas`">
+            <div class="flex items-center gap-0.5 text-brand-primary" :aria-label="`${t.rating} de 5 estrellas`">
               <span v-for="n in 5" :key="n" class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">star</span>
             </div>
-            <blockquote class="text-sm text-slate-600 leading-relaxed mt-4 flex-1">{{ t.text }}</blockquote>
-            <figcaption class="flex items-center gap-3 mt-6 pt-5 border-t border-slate-100">
-              <div :class="['w-11 h-11 rounded-full text-white flex items-center justify-center font-black shrink-0', t.grad]" aria-hidden="true">
+            <blockquote class="text-sm text-ink-soft leading-relaxed mt-4 flex-1">{{ t.text }}</blockquote>
+            <figcaption class="flex items-center gap-3 mt-6 pt-5 border-t border-brand-neutral/40">
+              <div :class="['w-11 h-11 rounded-full text-brand-dark flex items-center justify-center font-black shrink-0', t.grad]" aria-hidden="true">
                 {{ t.initials }}
               </div>
               <div>
-                <p class="text-sm font-bold text-slate-900">{{ t.name }}</p>
-                <p class="text-xs text-slate-500">{{ t.role }}</p>
+                <p class="text-sm font-bold text-brand-dark">{{ t.name }}</p>
+                <p class="text-xs text-ink-soft">{{ t.role }}</p>
               </div>
             </figcaption>
           </figure>
@@ -643,22 +643,22 @@
     <section id="contacto" class="mp-section py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div v-reveal data-reveal="left" class="lg:col-span-6 bg-slate-50/70 p-8 sm:p-10 rounded-3xl border border-purple-100 shadow-soft">
+          <div v-reveal data-reveal="left" class="lg:col-span-6 bg-brand-bg-soft/40 p-8 sm:p-10 rounded-3xl border border-brand-primary/15 shadow-soft">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-brand-purple font-black text-2xl font-display">CONTÁCTANOS</span>
-              <span class="material-symbols-outlined text-purple-600 text-[22px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
+              <span class="text-brand-dark font-black text-2xl font-display">CONTÁCTANOS</span>
+              <span class="material-symbols-outlined text-brand-primary text-[22px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
             </div>
-            <p class="text-slate-600 text-sm mb-8">
+            <p class="text-ink-soft text-sm mb-8">
               Déjanos tu mensaje para iniciar tu proceso de adopción, registrar tu refugio o sumarte como voluntario en
               Bolivia.
             </p>
             <form class="space-y-5" @submit.prevent>
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1" for="full-name">Nombre Completo</label>
+                <label class="block text-xs font-bold text-ink-soft uppercase tracking-wider mb-1" for="full-name">Nombre Completo</label>
                 <div class="relative">
                   <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" aria-hidden="true">person</span>
                   <input
-                    class="w-full rounded-xl border-slate-200 text-sm focus:border-brand-purple focus:ring-brand-purple bg-white pl-11 pr-4 py-3"
+                    class="w-full rounded-xl border-brand-neutral text-sm focus:border-brand-primary focus:ring-brand-primary bg-white pl-11 pr-4 py-3"
                     id="full-name"
                     name="full-name"
                     placeholder="Ej: Patricia Mendoza"
@@ -667,11 +667,11 @@
                 </div>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1" for="phone">Número de Teléfono / WhatsApp</label>
+                <label class="block text-xs font-bold text-ink-soft uppercase tracking-wider mb-1" for="phone">Número de Teléfono / WhatsApp</label>
                 <div class="relative">
                   <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" aria-hidden="true">call</span>
                   <input
-                    class="w-full rounded-xl border-slate-200 text-sm focus:border-brand-purple focus:ring-brand-purple bg-white pl-11 pr-4 py-3"
+                    class="w-full rounded-xl border-brand-neutral text-sm focus:border-brand-primary focus:ring-brand-primary bg-white pl-11 pr-4 py-3"
                     id="phone"
                     name="phone"
                     placeholder="Ej: +591 70000000"
@@ -680,11 +680,11 @@
                 </div>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1" for="email">Correo Electrónico</label>
+                <label class="block text-xs font-bold text-ink-soft uppercase tracking-wider mb-1" for="email">Correo Electrónico</label>
                 <div class="relative">
                   <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" aria-hidden="true">mail</span>
                   <input
-                    class="w-full rounded-xl border-slate-200 text-sm focus:border-brand-purple focus:ring-brand-purple bg-white pl-11 pr-4 py-3"
+                    class="w-full rounded-xl border-brand-neutral text-sm focus:border-brand-primary focus:ring-brand-primary bg-white pl-11 pr-4 py-3"
                     id="email"
                     name="email"
                     placeholder="ejemplo@correo.com"
@@ -693,11 +693,11 @@
                 </div>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1" for="interest">Interés principal</label>
+                <label class="block text-xs font-bold text-ink-soft uppercase tracking-wider mb-1" for="interest">Interés principal</label>
                 <div class="relative">
                   <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none" aria-hidden="true">tune</span>
                   <select
-                    class="w-full appearance-none rounded-xl border-slate-200 text-sm focus:border-brand-purple focus:ring-brand-purple bg-white pl-11 pr-10 py-3"
+                    class="w-full appearance-none rounded-xl border-brand-neutral text-sm focus:border-brand-primary focus:ring-brand-primary bg-white pl-11 pr-10 py-3"
                     id="interest"
                     name="interest"
                   >
@@ -711,14 +711,14 @@
               </div>
               <div class="pt-2 flex items-center gap-4">
                 <button
-                  class="px-7 py-3 rounded-xl bg-brand-purple text-white font-bold text-sm shadow-md hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200 flex-1 sm:flex-none inline-flex items-center justify-center gap-2"
+                  class="px-7 py-3 rounded-xl bg-brand-primary text-brand-dark font-bold text-sm shadow-md hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200 flex-1 sm:flex-none inline-flex items-center justify-center gap-2"
                   type="submit"
                 >
                   <span class="material-symbols-outlined text-[18px]" aria-hidden="true">send</span>
                   Enviar Consulta
                 </button>
                 <button
-                  class="px-6 py-3 rounded-xl bg-white border border-slate-300 text-slate-700 font-semibold text-sm hover:bg-slate-100 transition-colors"
+                  class="px-6 py-3 rounded-xl bg-white border border-brand-neutral text-ink-soft font-semibold text-sm hover:bg-brand-neutral/25 transition-colors"
                   type="reset"
                 >
                   Limpiar
@@ -729,7 +729,7 @@
 
           <div class="lg:col-span-6 flex flex-col items-center justify-center text-center" v-reveal data-reveal="right">
             <div class="relative max-w-md w-full">
-              <div class="relative w-72 h-72 sm:w-80 sm:h-80 mx-auto rounded-full p-2 bg-gradient-to-tr from-brand-purple via-purple-400 to-teal-400 shadow-2xl">
+              <div class="relative w-72 h-72 sm:w-80 sm:h-80 mx-auto rounded-full p-2 bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-secondary shadow-2xl">
                 <img
                   src="/dogBlack.png"
                   alt="Mascota rescatada en brazos de un voluntario"
@@ -737,17 +737,17 @@
                   loading="lazy"
                 />
               </div>
-              <div class="mt-8 bg-purple-50 rounded-2xl p-5 border border-purple-100 max-w-sm mx-auto shadow-sm">
+              <div class="mt-8 bg-brand-bg-soft/50 rounded-2xl p-5 border border-brand-primary/15 max-w-sm mx-auto shadow-sm">
                 <div class="flex items-center gap-2.5">
                   <span
-                    class="w-9 h-9 rounded-xl bg-white text-brand-purple border border-purple-200 flex items-center justify-center shrink-0"
+                    class="w-9 h-9 rounded-xl bg-white text-brand-primary border border-brand-primary/20 flex items-center justify-center shrink-0"
                     aria-hidden="true"
                   >
                     <span class="material-symbols-outlined text-[20px]">verified_user</span>
                   </span>
-                  <h4 class="font-bold text-brand-purple text-sm">Adopciones Seguras y Conscientes</h4>
+                  <h4 class="font-bold text-brand-primary text-sm">Adopciones Seguras y Conscientes</h4>
                 </div>
-                <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                <p class="text-xs text-ink-soft mt-3 leading-relaxed">
                   Validamos cada solicitud para proteger la vida, integridad y salud de cada mascota en Bolivia.
                 </p>
               </div>
@@ -758,43 +758,43 @@
     </section>
 
     <!-- ══════════ FOOTER ══════════ -->
-    <footer class="bg-[#f2eefb] border-t border-purple-100 pt-16 pb-12 text-slate-700">
+    <footer class="bg-brand-bg-soft/60 border-t border-brand-primary/15 pt-16 pb-12 text-ink-soft">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-purple-200/70">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-brand-primary/20">
           <div class="lg:col-span-5 space-y-4">
             <router-link to="/" class="flex items-center gap-3" aria-label="MatchPet">
-              <div class="w-10 h-10 rounded-xl bg-brand-purple flex items-center justify-center text-white">
+              <div class="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center text-white">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 13.5c-1.6 0-3 1.2-3 2.8 0 1.9 1.6 3.7 3 3.7s3-1.8 3-3.7c0-1.6-1.4-2.8-3-2.8zm-4.7-2.7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9.4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7.2-4.5c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2zm5 0c-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2c0-1.2-1-2.2-2.2-2.2z"></path>
                 </svg>
               </div>
-              <span class="text-2xl font-black text-brand-purple font-display tracking-tight">MatchPet</span>
+              <span class="text-2xl font-black text-brand-primary font-display tracking-tight">MatchPet</span>
             </router-link>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm">
+            <p class="text-xs sm:text-sm text-ink-soft leading-relaxed max-w-sm">
               La plataforma tecnológica que une hogares amorosos con refugios certificados en Bolivia. Algoritmo de
               compatibilidad, cero devoluciones y seguimiento con amor.
             </p>
 
             <!-- Contacto con iconos (antes eran emojis) -->
-            <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium pt-2">
+            <ul class="space-y-2.5 text-xs sm:text-sm text-ink-soft font-medium pt-2">
               <li>
-                <a href="mailto:contacto@matchpet.bo" class="group flex items-center gap-3 hover:text-brand-purple transition-colors">
-                  <span class="w-8 h-8 rounded-lg bg-white border border-purple-200 text-brand-purple flex items-center justify-center group-hover:bg-brand-purple group-hover:text-white transition-colors duration-200 shrink-0" aria-hidden="true">
+                <a href="mailto:contacto@matchpet.bo" class="group flex items-center gap-3 hover:text-brand-primary transition-colors">
+                  <span class="w-8 h-8 rounded-lg bg-white border border-brand-primary/20 text-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white transition-colors duration-200 shrink-0" aria-hidden="true">
                     <span class="material-symbols-outlined text-[17px]">mail</span>
                   </span>
                   contacto@matchpet.bo
                 </a>
               </li>
               <li>
-                <a href="tel:+59170890434" class="group flex items-center gap-3 hover:text-brand-purple transition-colors">
-                  <span class="w-8 h-8 rounded-lg bg-white border border-purple-200 text-brand-purple flex items-center justify-center group-hover:bg-brand-purple group-hover:text-white transition-colors duration-200 shrink-0" aria-hidden="true">
+                <a href="tel:+59170890434" class="group flex items-center gap-3 hover:text-brand-primary transition-colors">
+                  <span class="w-8 h-8 rounded-lg bg-white border border-brand-primary/20 text-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white transition-colors duration-200 shrink-0" aria-hidden="true">
                     <span class="material-symbols-outlined text-[17px]">call</span>
                   </span>
                   +591 708-90434 / +591 650-38772
                 </a>
               </li>
               <li class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-white border border-purple-200 text-brand-purple flex items-center justify-center shrink-0" aria-hidden="true">
+                <span class="w-8 h-8 rounded-lg bg-white border border-brand-primary/20 text-brand-primary flex items-center justify-center shrink-0" aria-hidden="true">
                   <span class="material-symbols-outlined text-[17px]">location_on</span>
                 </span>
                 La Paz • El Alto • Cochabamba • Santa Cruz
@@ -808,7 +808,7 @@
                 :key="social.name"
                 href="#"
                 :aria-label="social.name"
-                class="w-9 h-9 rounded-xl bg-white border border-purple-200 text-brand-purple flex items-center justify-center hover:bg-brand-purple hover:text-white hover:-translate-y-0.5 transition-all duration-200"
+                class="w-9 h-9 rounded-xl bg-white border border-brand-primary/20 text-brand-primary flex items-center justify-center hover:bg-brand-primary hover:text-white hover:-translate-y-0.5 transition-all duration-200"
               >
                 <!-- INSERTAR ICONO MODERNO AQUÍ si prefieres otro set: svg oficial de la marca -->
                 <svg class="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24" aria-hidden="true">
@@ -819,34 +819,34 @@
           </div>
 
           <div class="lg:col-span-3 space-y-3">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-brand-purple">Plataforma</h4>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
-              <li><router-link to="/registro" class="hover:text-brand-purple transition">Quiero adoptar</router-link></li>
-              <li><router-link to="/registro-refugio" class="hover:text-brand-purple transition">Registrar mi refugio</router-link></li>
-              <li><router-link to="/login" class="hover:text-brand-purple transition">Iniciar sesión</router-link></li>
-              <li><a href="#como-funciona" class="hover:text-brand-purple transition">Cómo funciona</a></li>
-              <li><a href="#beneficios" class="hover:text-brand-purple transition">Beneficios</a></li>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-brand-primary">Plataforma</h4>
+            <ul class="space-y-2 text-xs sm:text-sm text-ink-soft">
+              <li><router-link to="/registro" class="hover:text-brand-primary transition">Quiero adoptar</router-link></li>
+              <li><router-link to="/registro-refugio" class="hover:text-brand-primary transition">Registrar mi refugio</router-link></li>
+              <li><router-link to="/login" class="hover:text-brand-primary transition">Iniciar sesión</router-link></li>
+              <li><a href="#como-funciona" class="hover:text-brand-primary transition">Cómo funciona</a></li>
+              <li><a href="#beneficios" class="hover:text-brand-primary transition">Beneficios</a></li>
             </ul>
           </div>
 
           <div class="lg:col-span-2 space-y-3">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-brand-purple">Navegación</h4>
-            <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
-              <li><a href="#hero" class="hover:text-brand-purple transition">Inicio</a></li>
-              <li><a href="#empresa" class="hover:text-brand-purple transition">Sobre Nosotros</a></li>
-              <li><a href="#discovery" class="hover:text-brand-purple transition">Discovery Razas</a></li>
-              <li><a href="#testimonios" class="hover:text-brand-purple transition">Casos de Éxito</a></li>
-              <li><a href="#contacto" class="hover:text-brand-purple transition">Contacto</a></li>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-brand-primary">Navegación</h4>
+            <ul class="space-y-2 text-xs sm:text-sm text-ink-soft">
+              <li><a href="#hero" class="hover:text-brand-primary transition">Inicio</a></li>
+              <li><a href="#empresa" class="hover:text-brand-primary transition">Sobre Nosotros</a></li>
+              <li><a href="#discovery" class="hover:text-brand-primary transition">Discovery Razas</a></li>
+              <li><a href="#testimonios" class="hover:text-brand-primary transition">Casos de Éxito</a></li>
+              <li><a href="#contacto" class="hover:text-brand-primary transition">Contacto</a></li>
             </ul>
           </div>
 
          
         </div>
 
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-ink-soft gap-4">
           <p class="flex items-center gap-1.5">
             © 2026 MatchPet. Todos los derechos reservados. Hecho con
-            <span class="material-symbols-outlined text-[15px] text-rose-500 align-middle" style="font-variation-settings: 'FILL' 1" aria-label="amor">favorite</span>
+            <span class="material-symbols-outlined text-[15px] text-brand-primary align-middle" style="font-variation-settings: 'FILL' 1" aria-label="amor">favorite</span>
             para las mascotas.
           </p>
           <div class="flex flex-wrap justify-center gap-6">
@@ -870,7 +870,7 @@
         >
           <!-- Backdrop -->
           <div
-            class="absolute inset-0 bg-brand-deep/60 backdrop-blur-sm"
+            class="absolute inset-0 bg-brand-dark/60 backdrop-blur-sm"
             aria-hidden="true"
             @click="closeLey700"
           ></div>
@@ -878,11 +878,11 @@
           <!-- Panel -->
           <div
             ref="modalPanel"
-            class="mp-modal-panel relative w-full sm:max-w-2xl max-h-[92vh] sm:max-h-[86vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl ring-1 ring-purple-100 overflow-hidden focus:outline-none"
+            class="mp-modal-panel relative w-full sm:max-w-2xl max-h-[92vh] sm:max-h-[86vh] flex flex-col bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl ring-1 ring-brand-primary/20 overflow-hidden focus:outline-none"
             tabindex="-1"
           >
             <!-- Cabecera -->
-            <div class="relative px-6 sm:px-8 pt-6 pb-5 bg-gradient-to-br from-brand-purple to-purple-700 text-white shrink-0">
+            <div class="relative px-6 sm:px-8 pt-6 pb-5 bg-gradient-to-br from-brand-primary to-brand-secondary text-white shrink-0">
               <div class="absolute inset-0 paw-pattern opacity-[0.08]" aria-hidden="true"></div>
               <button
                 type="button"
@@ -901,7 +901,7 @@
                   <span class="material-symbols-outlined text-[26px]">gavel</span>
                 </span>
                 <div>
-                  <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-purple-100 mb-1.5">
+                  <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-brand-secondary mb-1.5">
                     <span class="material-symbols-outlined text-[14px]" aria-hidden="true">verified</span>
                     Legislación de Bolivia
                   </span>
@@ -914,36 +914,36 @@
 
             <!-- Contenido -->
             <div class="px-6 sm:px-8 py-6 overflow-y-auto overscroll-contain">
-              <p class="text-sm text-slate-600 leading-relaxed">
-                La <strong class="text-slate-900">Ley Nº 700</strong> es el marco normativo boliviano que establece las
+              <p class="text-sm text-ink-soft leading-relaxed">
+                La <strong class="text-brand-dark">Ley Nº 700</strong> es el marco normativo boliviano que establece las
                 reglas de protección y defensa de la vida de los animales domésticos y de compañía. MatchPet existe
                 para operarla en el día a día: cada adopción pasa por un proceso ordenado, evaluado y documentado que
                 reduce el abandono y las devoluciones.
               </p>
 
-              <h4 class="mt-6 mb-3 text-xs font-bold uppercase tracking-wider text-brand-purple">¿Qué establece?</h4>
+              <h4 class="mt-6 mb-3 text-xs font-bold uppercase tracking-wider text-brand-primary">¿Qué establece?</h4>
               <ul class="space-y-3">
                 <li
                   v-for="(item, i) in ley700Points"
                   :key="item.title"
-                  class="flex gap-3 rounded-2xl border border-purple-100 bg-[#f8f6fc] p-4"
+                  class="flex gap-3 rounded-2xl border border-brand-primary/15 bg-brand-bg-soft/50 p-4"
                 >
                   <span
-                    class="w-9 h-9 rounded-xl bg-white ring-1 ring-purple-200 text-brand-purple flex items-center justify-center shrink-0"
+                    class="w-9 h-9 rounded-xl bg-white ring-1 ring-brand-primary/30 text-brand-primary flex items-center justify-center shrink-0"
                     aria-hidden="true"
                   >
                     <span class="material-symbols-outlined text-[20px]">{{ item.icon }}</span>
                   </span>
                   <div>
-                    <h5 class="text-sm font-bold text-slate-900">{{ item.title }}</h5>
-                    <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">{{ item.text }}</p>
+                    <h5 class="text-sm font-bold text-brand-dark">{{ item.title }}</h5>
+                    <p class="text-xs text-ink-soft mt-0.5 leading-relaxed">{{ item.text }}</p>
                   </div>
                 </li>
               </ul>
 
-              <div class="mt-6 rounded-2xl border border-teal-200 bg-teal-50/70 p-4 flex gap-3">
-                <span class="material-symbols-outlined text-teal-700 text-[20px] shrink-0" aria-hidden="true">pets</span>
-                <p class="text-xs text-slate-700 leading-relaxed">
+              <div class="mt-6 rounded-2xl border border-brand-primary/30 bg-brand-bg-soft/60 p-4 flex gap-3">
+                <span class="material-symbols-outlined text-brand-primary text-[20px] shrink-0" aria-hidden="true">pets</span>
+                <p class="text-xs text-ink-soft leading-relaxed">
                   En MatchPet cada adopción incluye un <strong>compromiso firmado</strong> por parte del adoptante, un
                   seguimiento post-adopción y el apoyo de refugios verificados. Si una mascota no puede seguir con
                   su familia, el proceso de devolución es guiado — nunca improvisado.
@@ -952,10 +952,10 @@
             </div>
 
             <!-- Pie -->
-            <div class="px-6 sm:px-8 py-4 border-t border-purple-100 bg-[#fbfaff] flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
+            <div class="px-6 sm:px-8 py-4 border-t border-brand-primary/15 bg-brand-bg-soft/50 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
               <button
                 type="button"
-                class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-2.5 rounded-xl border border-purple-200 bg-white text-brand-purple text-sm font-semibold hover:bg-purple-50 transition-colors duration-200"
+                class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-2.5 rounded-xl border border-brand-primary/20 bg-white text-brand-primary text-sm font-semibold hover:bg-brand-bg-soft/50 transition-colors duration-200"
                 @click="closeLey700"
               >
                 Cerrar
@@ -964,7 +964,7 @@
                 :href="LEY700_URL"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-purple text-white text-sm font-semibold shadow-md shadow-brand-purple/25 hover:bg-purple-900 hover:-translate-y-0.5 transition-all duration-200"
+                class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-primary text-brand-dark text-sm font-semibold shadow-md shadow-brand-primary/25 hover:bg-primary-hover hover:-translate-y-0.5 transition-all duration-200"
               >
                 <span class="material-symbols-outlined text-[18px]" aria-hidden="true">gavel</span>
                 Consultar texto oficial
@@ -1012,22 +1012,22 @@ const pillars = [
     icon: 'psychology',
     title: 'Match Inteligente',
     text: 'Algoritmo ponderado: Espacio (40%), Tiempo (40%) y Experiencia (20%) para adopciones conscientes.',
-    bg: 'bg-pink-50',
-    textColor: 'text-pink-600',
+    bg: 'bg-brand-bg-soft/60',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'install_mobile',
     title: '100% PWA Móvil',
     text: 'App Web Progresiva ultraligera. Funciona sin ocupar almacenamiento, incluso con conexión lenta.',
-    bg: 'bg-amber-50',
-    textColor: 'text-amber-600',
+    bg: 'bg-brand-bg-soft/70',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'volunteer_activism',
     title: 'Adopción Responsable',
     text: 'En sintonía con la Ley 700 de Bolivia. Cero devoluciones y seguimiento continuo.',
-    bg: 'bg-red-50',
-    textColor: 'text-rose-600',
+    bg: 'bg-brand-bg-soft/50',
+    textColor: 'text-brand-primary',
   },
 ]
 
@@ -1036,10 +1036,10 @@ const valueProps = [
     icon: 'tune',
     title: 'Algoritmo Ponderado',
     text: 'Cruce inteligente de vivienda, tiempo y experiencia previa.',
-    card: 'bg-emerald-50/70',
-    border: 'border-emerald-200',
+    card: 'bg-brand-bg-soft/70',
+    border: 'border-brand-secondary/60',
     iconBg: 'bg-white',
-    iconText: 'text-emerald-700',
+    iconText: 'text-brand-primary',
     action: 'anchor',
     href: '#como-funciona',
   },
@@ -1047,10 +1047,10 @@ const valueProps = [
     icon: 'gavel',
     title: 'Impacto Social & Ley 700',
     text: 'Desahogo operativo a voluntarios y tenencia responsable.',
-    card: 'bg-purple-50/80',
-    border: 'border-purple-200',
+    card: 'bg-brand-bg-soft/50',
+    border: 'border-brand-primary/20',
     iconBg: 'bg-white',
-    iconText: 'text-brand-purple',
+    iconText: 'text-brand-primary',
     action: 'ley700',
   },
 ]
@@ -1061,28 +1061,28 @@ const steps = [
     icon: 'person_edit',
     title: 'Registra tu perfil',
     text: 'Crea tu cuenta y responde el cuestionario de vida: espacio, presupuesto, vivienda y rutina.',
-    bg: 'bg-brand-purple shadow-brand-purple/30',
+    bg: 'bg-brand-primary shadow-brand-primary/30',
   },
   {
     number: '2',
     icon: 'manage_search',
     title: 'Encuentra tus matches',
     text: 'El algoritmo ponderado 40/40/20 cruza tu estilo de vida con cada mascota disponible.',
-    bg: 'bg-teal-600 shadow-teal-600/30',
+    bg: 'bg-brand-secondary shadow-brand-secondary/30',
   },
   {
     number: '3',
     icon: 'handshake',
     title: 'Conecta con refugios',
     text: 'Coordina visitas, conoce en persona y comparte tu compromiso bajo la Ley 700.',
-    bg: 'bg-brand-purple shadow-brand-purple/30',
+    bg: 'bg-brand-primary shadow-brand-primary/30',
   },
   {
     number: '4',
     icon: 'health_and_safety',
     title: 'Adopta y sigue acompañado',
     text: 'Monitoreo médico, etológico y de adaptación para garantizar cero devoluciones.',
-    bg: 'bg-red-600 shadow-red-600/30',
+    bg: 'bg-brand-primary shadow-brand-primary/30',
   },
 ]
 
@@ -1091,43 +1091,43 @@ const benefits = [
     icon: 'tune',
     title: 'Algoritmo ponderado 40/40/20',
     text: 'Compatibilidad medida por espacio, tiempo y experiencia previa real.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'home_work',
     title: 'Evaluación digital de hogares',
     text: 'Validamos cada solicitud para proteger la vida y salud de cada mascota.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'visibility',
     title: "Visibilidad a animales 'invisibles'",
     text: 'Prioridad para adultos, mestizos y mascotas con requerimientos especiales.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'assignment_turned_in',
     title: 'Compromiso Ley 700',
     text: 'Firma digital de compromiso bajo la legislación boliviana contra el maltrato.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'verified_user',
     title: 'Refugios verificados',
     text: 'Gestión centralizada con albergues certificados en las 4 ciudades principales.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
   {
     icon: 'offline_bolt',
     title: 'PWA ultraligera y offline',
     text: 'Usa la app sin instalar nada, incluso con conexión débil o nula.',
-    bg: 'bg-emerald-100',
-    textColor: 'text-emerald-700',
+    bg: 'bg-brand-bg-soft',
+    textColor: 'text-brand-primary',
   },
 ]
 
@@ -1148,7 +1148,7 @@ const pets = [
     especie: 'perros',
     name: 'CHIHUAHUA DOG',
     emoji: '🐕',
-    grad: 'from-purple-100 to-pink-100',
+    grad: 'from-brand-primary/20 to-brand-secondary/25',
     origin: 'Pando',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Alto', pct: 85 },
@@ -1161,7 +1161,7 @@ const pets = [
     especie: 'perros',
     name: 'DACHSHUND DOG',
     emoji: '🐕',
-    grad: 'from-amber-100 to-orange-100',
+    grad: 'from-brand-secondary/40 to-brand-secondary/25',
     origin: 'Alemania',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Moderado', pct: 60 },
@@ -1174,7 +1174,7 @@ const pets = [
     especie: 'perros',
     name: 'POODLE DOG',
     emoji: '🐩',
-    grad: 'from-teal-100 to-emerald-100',
+    grad: 'from-brand-secondary/25 to-brand-secondary/25',
     origin: 'Francia / Alemania',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Alto', pct: 90 },
@@ -1187,7 +1187,7 @@ const pets = [
     especie: 'perros',
     name: 'PUG DOG',
     emoji: '🐶',
-    grad: 'from-rose-100 to-purple-100',
+    grad: 'from-brand-secondary/25 to-brand-primary/20',
     origin: 'China',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Bajo', pct: 35 },
@@ -1202,7 +1202,7 @@ const pets = [
     especie: 'gatos',
     name: 'SIAMESE CAT',
     emoji: '🐈',
-    grad: 'from-teal-100 to-emerald-100',
+    grad: 'from-brand-secondary/25 to-brand-secondary/25',
     origin: 'Tailandia',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Alto', pct: 80 },
@@ -1215,7 +1215,7 @@ const pets = [
     especie: 'gatos',
     name: 'MAINE COON CAT',
     emoji: '🐈',
-    grad: 'from-amber-100 to-orange-100',
+    grad: 'from-brand-secondary/40 to-brand-secondary/25',
     origin: 'Estados Unidos',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Moderado', pct: 65 },
@@ -1228,7 +1228,7 @@ const pets = [
     especie: 'gatos',
     name: 'PERSIAN CAT',
     emoji: '🐈',
-    grad: 'from-rose-100 to-purple-100',
+    grad: 'from-brand-secondary/25 to-brand-primary/20',
     origin: 'Persia (Irán)',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Bajo', pct: 30 },
@@ -1241,7 +1241,7 @@ const pets = [
     especie: 'gatos',
     name: 'CALLEJERO BOLIVIANO',
     emoji: '🐈',
-    grad: 'from-sky-100 to-indigo-100',
+    grad: 'from-brand-secondary/25 to-brand-primary/20',
     origin: 'Bolivia',
     traits: [
       { label: 'Necesidad de ejercicio', value: 'Moderado', pct: 60 },
@@ -1294,21 +1294,21 @@ const testimonials = [
     initials: 'VR',
     name: 'Valeria Rojas',
     role: 'Adoptante · La Paz',
-    grad: 'bg-gradient-to-tr from-brand-purple to-purple-400',
+    grad: 'bg-gradient-to-tr from-brand-primary to-brand-secondary',
     text: '"Gracias al match del 94% encontré a Bruno, un mestizo adulto que nadie quería. Hoy es mi compañero de viajes y de vida. El seguimiento post-adopción hizo toda la diferencia."',
   },
   {
     initials: 'PA',
     name: 'Refugio Pata de Ayuda',
     role: 'Albergue aliado · El Alto',
-    grad: 'bg-gradient-to-tr from-teal-500 to-emerald-500',
+    grad: 'bg-brand-primary',
     text: '"Pasamos de adoptar por redes sociales a un proceso ordenado y humano. Las devoluciones cayeron a cero y encontramos hogar para los perritos que llevaban años con nosotros."',
   },
   {
     initials: 'MS',
     name: 'Marco Salazar',
     role: 'Voluntario · Santa Cruz',
-    grad: 'bg-gradient-to-tr from-rose-400 to-pink-500',
+    grad: 'bg-brand-primary',
     text: '"Como voluntario, la plataforma me permitió dar visibilidad a los casos especiales. Hoy \'Luna\' vive con una familia maravillosa que fue evaluada y preparada para recibirla."',
   },
 ]
