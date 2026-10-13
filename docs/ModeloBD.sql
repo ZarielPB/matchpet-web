@@ -14,6 +14,9 @@ CREATE TYPE public.pet_size AS ENUM ('pequeño', 'mediano', 'grande');
 -- Estados de las solicitudes de adopción
 CREATE TYPE public.application_status AS ENUM ('pendiente', 'aprobada', 'rechazada', 'cancelada', 'completada');
 
+-- [SPRINT 3 · HU-32] Nivel de energía de la mascota (dimensión D2 del matching)
+CREATE TYPE public.energy_level AS ENUM ('baja', 'media', 'alta');
+
 -- Tipos de seguimiento post-adopción
 CREATE TYPE public.follow_up_type AS ENUM ('llamada', 'visita', 'mensaje');
 
@@ -78,6 +81,13 @@ CREATE TABLE public.pets (
     description TEXT,
     requirements TEXT,
     status public.pet_status NOT NULL DEFAULT 'disponible',
+    -- [SPRINT 3 · HU-32] Atributos estructurados para el motor de matching.
+    -- D2 = energy_level; D4 = good_with_kids / good_with_other_pets.
+    -- Defaults conservadores: asumir energía media y NO apto para niños/otros
+    -- animales hasta que el refugio lo declare explícitamente.
+    energy_level public.energy_level NOT NULL DEFAULT 'media',
+    good_with_kids BOOLEAN NOT NULL DEFAULT FALSE,
+    good_with_other_pets BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -101,27 +111,31 @@ CREATE TABLE public.favorites (
 );
 
 -- D. Compatibilidad y Matching (HU-30 a HU-33)
--- Respuestas del cuestionario de estilo de vida (1:1 con adopter_profiles)
+-- [SPRINT 3] Respuestas del cuestionario de estilo de vida (1:1 con profiles).
+-- HU-31 la menciona como "compatibility_answers"; el nombre canónico es compatibility_profiles.
 CREATE TABLE public.compatibility_profiles (
     user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE PRIMARY KEY,
-    hours_at_home TEXT, -- 'menos_de_4', '4_a_8', 'mas_de_8'
-    activity_level TEXT, -- 'bajo', 'moderado', 'alto'
-    space_type TEXT, -- 'pequeño', 'amplio'
-    preferred_size public.pet_size,
-    updated_at TIMESTAMPTZ DEFAULT NOW()
+    hours_at_home TEXT NOT NULL CHECK (hours_at_home IN ('menos_de_4', '4_a_8', 'mas_de_8')),
+    activity_level TEXT NOT NULL CHECK (activity_level IN ('bajo', 'moderado', 'alto')), -- D2
+    space_type TEXT NOT NULL CHECK (space_type IN ('pequeño', 'amplio')),                 -- D1
+    preferred_size public.pet_size,                    -- D1 (NULL = sin preferencia)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 -- E. Proceso de Adopción (HU-35 a HU-41)
--- Solicitudes de adopción
+-- [SPRINT 3] Solicitudes de adopción (HU-35).
+-- status -> enum application_status; resolved_at lo rellena el trigger de
+-- auditoría cuando el estado sale de 'pendiente' (rechazo/aceptación).
 CREATE TABLE public.adoption_applications (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     pet_id UUID REFERENCES public.pets(id) ON DELETE CASCADE NOT NULL,
     user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-    message TEXT NOT NULL,
+    message TEXT NOT NULL CHECK (char_length(message) BETWEEN 10 AND 500),
     status public.application_status NOT NULL DEFAULT 'pendiente',
     shelter_comments TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     resolved_at TIMESTAMPTZ
 );
 
@@ -181,6 +195,11 @@ CREATE INDEX idx_pets_species ON public.pets(species);
 CREATE INDEX idx_pets_size ON public.pets(size);
 CREATE INDEX idx_applications_user ON public.adoption_applications(user_id);
 CREATE INDEX idx_applications_pet ON public.adoption_applications(pet_id);
+-- [SPRINT 3 · HU-35 CA#5] Máximo 1 solicitud ABIERTA por (adoptante, mascota).
+-- Parcial: permite volver a solicitar tras un 'rechazada' o 'cancelada'.
+CREATE UNIQUE INDEX uq_applications_open
+    ON public.adoption_applications(user_id, pet_id)
+    WHERE status IN ('pendiente', 'aprobada');
 CREATE INDEX idx_notifications_user ON public.notifications(user_id, is_read);
 CREATE INDEX idx_vaccination_due ON public.vaccination_records(due_date);
 
@@ -227,6 +246,26 @@ CREATE TRIGGER update_adopter_profiles_updated_at BEFORE UPDATE ON public.adopte
 CREATE TRIGGER update_shelters_updated_at BEFORE UPDATE ON public.shelters FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 CREATE TRIGGER update_pets_updated_at BEFORE UPDATE ON public.pets FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 CREATE TRIGGER update_applications_updated_at BEFORE UPDATE ON public.adoption_applications FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_compatibility_profiles_updated_at BEFORE UPDATE ON public.compatibility_profiles FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+-- [SPRINT 3 · HU-35] Auditoría de resolución: registra CUÁNDO se cerró la solicitud.
+CREATE OR REPLACE FUNCTION public.set_application_resolved_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.status IS DISTINCT FROM OLD.status THEN
+        IF NEW.status = 'pendiente' THEN
+            NEW.resolved_at = NULL;   -- se reabre (solo posible en desarrollo/testing)
+        ELSE
+            NEW.resolved_at = NOW();  -- aprobada / rechazada / cancelada / completada
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER adoption_applications_set_resolved_at
+    BEFORE UPDATE ON public.adoption_applications
+    FOR EACH ROW EXECUTE FUNCTION public.set_application_resolved_at();
 CREATE TRIGGER update_reports_updated_at BEFORE UPDATE ON public.post_adoption_reports FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 -- 5. Seguridad (Row Level Security - RLS)
@@ -244,4 +283,54 @@ ALTER TABLE public.follow_up_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.vaccination_records ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.post_adoption_reports ENABLE ROW LEVEL SECURITY;
 
--- (Nota: Las políticas CREATE POLICY específicas se configuran en el dashboard de Supabase o mediante scripts adicionales, pero este comando es el que activa el escudo de seguridad).
+-- (Nota: Las políticas CREATE POLICY de las tablas de Sprint 1-2 se configuran
+-- en el dashboard de Supabase o mediante scripts adicionales, pero este comando
+-- es el que activa el escudo de seguridad).
+
+-- 6. Políticas RLS — [SPRINT 3] Tablas nuevas (matriz aprobada en el Plan Maestro)
+-- -----------------------------------------------------------------------
+-- compatibility_profiles: solo su dueño (el adoptante) puede leer/escribir.
+CREATE POLICY cp_select_own ON public.compatibility_profiles FOR SELECT
+    USING (user_id = auth.uid());
+CREATE POLICY cp_insert_own ON public.compatibility_profiles FOR INSERT
+    WITH CHECK (user_id = auth.uid());
+CREATE POLICY cp_update_own ON public.compatibility_profiles FOR UPDATE
+    USING (user_id = auth.uid())
+    WITH CHECK (user_id = auth.uid());
+
+-- adoption_applications:
+--   aa_select_own        -> el adoptante ve sus solicitudes.
+--   aa_select_shelter    -> el refugio ve las de sus mascotas (base HU-39, Sprint 4).
+--   aa_insert_adoptante  -> solo rol adoptante, mascota 'disponible', estado 'pendiente'.
+--   aa_update_cancel_own -> solo puede pasar de 'pendiente' a 'cancelada',
+--                           sin tocar shelter_comments (HU-35 CA#6).
+CREATE POLICY aa_select_own ON public.adoption_applications FOR SELECT
+    USING (user_id = auth.uid());
+CREATE POLICY aa_select_shelter ON public.adoption_applications FOR SELECT
+    USING (EXISTS (
+        SELECT 1 FROM public.pets pt
+        JOIN public.shelters s ON s.id = pt.shelter_id
+        WHERE pt.id = adoption_applications.pet_id AND s.user_id = auth.uid()
+    ));
+CREATE POLICY aa_insert_adoptante ON public.adoption_applications FOR INSERT
+    WITH CHECK (
+        user_id = auth.uid()
+        AND status = 'pendiente'
+        AND EXISTS (SELECT 1 FROM public.pets pt WHERE pt.id = adoption_applications.pet_id AND pt.status = 'disponible')
+        AND EXISTS (SELECT 1 FROM public.profiles p WHERE p.id = auth.uid() AND p.role = 'adoptante')
+        AND EXISTS (SELECT 1 FROM public.adopter_profiles ap WHERE ap.user_id = auth.uid())
+    );
+CREATE POLICY aa_update_cancel_own ON public.adoption_applications FOR UPDATE
+    USING (user_id = auth.uid() AND status = 'pendiente')
+    WITH CHECK (user_id = auth.uid() AND status = 'cancelada' AND shelter_comments IS NULL);
+
+-- 7. Grants: el rol anónimo NO tiene acceso a las tablas del Sprint 3.
+REVOKE ALL ON public.compatibility_profiles FROM anon, authenticated;
+REVOKE ALL ON public.adoption_applications FROM anon, authenticated;
+GRANT SELECT, INSERT, UPDATE ON public.compatibility_profiles TO authenticated;
+GRANT SELECT, INSERT ON public.adoption_applications TO authenticated;
+GRANT UPDATE (status) ON public.adoption_applications TO authenticated; -- HU-37: solo cancelar
+
+-- 8. Motor de matching (HU-32): ver public.match_recommendations() en
+--    supabase/migrations/20240000000002_sprint3_matching_adoption.sql
+--    y la especificación en docs/DECISIONES_ALGORITMO_MATCHING.md.

@@ -148,6 +148,26 @@
       <p v-if="errors.description" class="text-xs text-red-500 mt-1">{{ errors.description }}</p>
     </div>
 
+    <!-- Sprint 3 (HU-32): datos estructurados para el matching -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div>
+        <label for="pet-energy" class="block text-sm font-medium text-gray-700 mb-1">Nivel de energía</label>
+        <select id="pet-energy" v-model="form.energy_level" class="form-input">
+          <option value="baja">Baja</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+        </select>
+      </div>
+      <label class="flex items-center gap-2 text-sm text-gray-700 sm:pt-6">
+        <input v-model="form.good_with_kids" type="checkbox" class="accent-indigo-600" />
+        Apta para niños
+      </label>
+      <label class="flex items-center gap-2 text-sm text-gray-700 sm:pt-6">
+        <input v-model="form.good_with_other_pets" type="checkbox" class="accent-indigo-600" />
+        Se lleva bien con otras mascotas
+      </label>
+    </div>
+
     <div>
       <label for="pet-requirements" class="block text-sm font-medium text-gray-700 mb-1">Requisitos</label>
       <textarea
@@ -302,7 +322,11 @@ const form = reactive({
   health_status: 'Saludable',
   temperament: '',
   description: '',
-  requirements: ''
+  requirements: '',
+  // Sprint 3 (HU-32): alimentan el matching (D2 y D4).
+  energy_level: 'media',
+  good_with_kids: false,
+  good_with_other_pets: false
 })
 
 // Lista de imágenes por subir: { file, url, primary }. La marcada como
@@ -337,6 +361,9 @@ watch(
     form.temperament = data.temperament || ''
     form.description = data.description || ''
     form.requirements = data.requirements || ''
+    form.energy_level = data.energy_level || 'media'
+    form.good_with_kids = !!data.good_with_kids
+    form.good_with_other_pets = !!data.good_with_other_pets
     clearFiles()
     errors.value = {}
   },
@@ -355,6 +382,9 @@ function reset() {
   form.temperament = ''
   form.description = ''
   form.requirements = ''
+  form.energy_level = 'media'
+  form.good_with_kids = false
+  form.good_with_other_pets = false
   clearFiles()
   errors.value = {}
 }

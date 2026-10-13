@@ -89,6 +89,10 @@ function appendRawDetails(friendly, error) {
 
 export function translateDbError(error) {
   const code = error?.code
+  // HU-35 CA#5: índice único parcial de solicitudes abiertas.
+  if (code === '23505' && String(error?.message || '').includes('uq_applications_open')) {
+    return appendRawDetails('Ya tienes una solicitud abierta para esta mascota.', error)
+  }
   if (code && dbErrorByCode[code]) {
     return appendRawDetails(dbErrorByCode[code], error)
   }

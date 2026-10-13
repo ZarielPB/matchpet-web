@@ -34,3 +34,9 @@ dev-dist
 *.njsproj
 *.sln
 *.sw?
+
+# credenciales mcp
+.mcp.json
+
+# respaldos con datos reales
+supabase/backups/

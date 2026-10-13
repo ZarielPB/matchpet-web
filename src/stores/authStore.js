@@ -14,6 +14,10 @@ export const useAuthStore = defineStore('auth', () => {
   const accessDeniedMsg = ref('')
   const errorMsg = ref('')
 
+  // Sprint 3 (HU-35 CA#1): perfil extendido del adoptante (null = no completado).
+  const adopterProfile = ref(null)
+  const hasAdopterProfile = computed(() => !!adopterProfile.value)
+
   const isAuthenticated = computed(() => !!user.value)
   const userRole = computed(() => profile.value?.role || 'guest')
   // `sessionRestored` ya no se expone: el guard usa `authLoading`.
@@ -42,9 +46,22 @@ export const useAuthStore = defineStore('auth', () => {
       fetchProfile(session.user.id)
     } else {
       profile.value = null
+      adopterProfile.value = null
       profileError.value = ''
     }
   })
+
+  // Lee adopter_profiles del usuario autenticado. Devuelve la fila o null.
+  async function loadAdopterProfile() {
+    if (!user.value) { adopterProfile.value = null; return null }
+    const { data, error: queryError } = await supabase
+      .from('adopter_profiles')
+      .select('*')
+      .eq('user_id', user.value.id)
+      .maybeSingle()
+    adopterProfile.value = queryError ? null : data
+    return adopterProfile.value
+  }
 
   // HU-09 CA#4 / HU-08 CA#2: el rol se lee de `profiles.role`.
   async function fetchProfile(userId) {
@@ -266,6 +283,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     user, profile, loading, authLoading, profileError, accessDeniedMsg, errorMsg,
+    adopterProfile, hasAdopterProfile, loadAdopterProfile,
     isAuthenticated, userRole, isAuthReady,
     getSession, fetchProfile, ensureProfile,
     registerAdoptante, registerRefugio, login, logout,

@@ -25,6 +25,24 @@ const routes = [
     meta: { requiresAuth: true, role: 'adoptante' }
   },
   {
+    path: '/adoptante/cuestionario',
+    name: 'CompatibilityQuiz',
+    component: () => import('../views/adoptante/CompatibilityQuizView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
+    path: '/adoptante/recomendaciones',
+    name: 'Recommendations',
+    component: () => import('../views/adoptante/RecommendationsView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
+    path: '/adoptante/solicitudes',
+    name: 'MyApplications',
+    component: () => import('../views/adoptante/MyApplicationsView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
     path: '/favoritos',
     name: 'Favorites',
     component: () => import('../views/FavoritesView.vue'),

@@ -39,6 +39,33 @@
         </router-link>
 
         <router-link
+          to="/adoptante/recomendaciones"
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
+        >
+          <div class="text-3xl mb-2">✨</div>
+          <h2 class="font-bold text-gray-900">Mis recomendaciones</h2>
+          <p class="text-sm text-gray-500 mt-1">Mascotas ordenadas por compatibilidad contigo.</p>
+        </router-link>
+
+        <router-link
+          to="/adoptante/cuestionario"
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
+        >
+          <div class="text-3xl mb-2">📝</div>
+          <h2 class="font-bold text-gray-900">Mi cuestionario</h2>
+          <p class="text-sm text-gray-500 mt-1">Cuéntanos tu estilo de vida (edítalo cuando cambie).</p>
+        </router-link>
+
+        <router-link
+          to="/adoptante/solicitudes"
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
+        >
+          <div class="text-3xl mb-2">📨</div>
+          <h2 class="font-bold text-gray-900">Mis solicitudes</h2>
+          <p class="text-sm text-gray-500 mt-1">Sigue el estado de tus solicitudes de adopción.</p>
+        </router-link>
+
+        <router-link
           to="/favoritos"
           class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border border-transparent hover:border-indigo-200"
         >

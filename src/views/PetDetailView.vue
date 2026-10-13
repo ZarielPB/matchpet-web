@@ -171,17 +171,60 @@
               </span>
             </div>
 
+            <!-- HU-35 CA#1: solo adoptantes con perfil completado -->
+            <router-link
+              v-else-if="!authStore.hasAdopterProfile"
+              to="/adoptante/perfil"
+              class="block w-full text-center py-3 px-4 rounded-lg text-sm font-medium text-white bg-gray-500 hover:bg-gray-600 transition"
+            >
+              📝 Completa tu perfil para solicitar
+            </router-link>
+
+            <router-link
+              v-else-if="openApplication"
+              to="/adoptante/solicitudes"
+              class="block w-full text-center py-3 px-4 rounded-lg text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 transition"
+            >
+              ✅ Ya tienes una solicitud abierta · Ver mis solicitudes
+            </router-link>
+
             <button
               v-else
               type="button"
               class="w-full py-3 px-4 rounded-lg text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition"
-              @click="handleRequestAdoption"
+              @click="openRequestModal"
             >
               💌 Solicitar Adopción
             </button>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Modal de solicitud (HU-35) -->
+    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" role="dialog" aria-modal="true">
+      <form class="bg-white rounded-xl shadow-xl max-w-md w-full p-6" @submit.prevent="submitRequest">
+        <h2 class="text-lg font-bold text-gray-900">Solicitar adopción de {{ pet?.name }}</h2>
+        <label for="adoption-message" class="block text-sm font-medium text-gray-700 mt-4 mb-1">Mensaje para el refugio *</label>
+        <textarea
+          id="adoption-message"
+          v-model="requestMessage"
+          rows="5"
+          :maxlength="MESSAGE_MAX"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          placeholder="Cuéntale al refugio por qué quieres adoptar a esta mascota"
+        ></textarea>
+        <p class="text-xs text-gray-500 mt-1 text-right">{{ requestMessage.trim().length }}/{{ MESSAGE_MAX }} (mínimo {{ MESSAGE_MIN }})</p>
+        <p v-if="requestError" class="text-red-500 text-sm mt-2">{{ requestError }}</p>
+        <div class="flex gap-3 mt-4">
+          <button type="button" class="flex-1 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50" :disabled="sending" @click="showModal = false">
+            Cancelar
+          </button>
+          <button type="submit" class="flex-1 py-2 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60" :disabled="sending">
+            {{ sending ? 'Enviando…' : 'Enviar solicitud' }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -191,11 +234,13 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import { usePetStore, STATUS_LABEL } from '../stores/petStore'
+import { useApplicationStore, MESSAGE_MIN, MESSAGE_MAX } from '../stores/applicationStore'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const petStore = usePetStore()
+const applicationStore = useApplicationStore()
 
 const activeIndex = ref(0)
 const infoMsg = ref('')
@@ -242,16 +287,49 @@ function setActive(index) {
   activeIndex.value = index
 }
 
+// HU-35: estado de la solicitud del adoptante para esta mascota.
+const openApplication = ref(false)
+const showModal = ref(false)
+const requestMessage = ref('')
+const requestError = ref('')
+const sending = ref(false)
+
+async function loadApplicationState() {
+  openApplication.value = false
+  if (!authStore.isAuthenticated || authStore.userRole !== 'adoptante') return
+  const [, open] = await Promise.all([
+    authStore.hasAdopterProfile ? null : authStore.loadAdopterProfile(),
+    applicationStore.getOpenApplication(route.params.id)
+  ])
+  openApplication.value = !!open.data
+}
+
 async function loadPet() {
   activeIndex.value = 0
   infoMsg.value = ''
   await petStore.fetchPetById(route.params.id)
+  await loadApplicationState()
 }
 
 watch(() => route.params.id, () => loadPet())
 
-function handleRequestAdoption() {
-  infoMsg.value = 'Contáctate con el refugio para más información...'
+function openRequestModal() {
+  requestMessage.value = ''
+  requestError.value = ''
+  showModal.value = true
+}
+
+async function submitRequest() {
+  sending.value = true
+  requestError.value = ''
+  const result = await applicationStore.createApplication(pet.value.id, requestMessage.value)
+  sending.value = false
+  if (!result.success) {
+    requestError.value = result.error
+    return
+  }
+  showModal.value = false
+  router.push({ path: '/adoptante/solicitudes', query: { enviada: '1' } })
 }
 
 onMounted(loadPet)
