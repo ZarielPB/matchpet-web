@@ -63,6 +63,18 @@ const routes = [
     meta: { requiresAuth: true, role: 'refugio' }
   },
   {
+    path: '/refugio/solicitudes',
+    name: 'ReceivedApplications',
+    component: () => import('../views/refugio/ReceivedApplicationsView.vue'),
+    meta: { requiresAuth: true, role: 'refugio' }
+  },
+  {
+    path: '/refugio/expediente/:id',
+    name: 'AdoptionRecord',
+    component: () => import('../views/refugio/AdoptionRecordView.vue'),
+    meta: { requiresAuth: true, role: 'refugio' }
+  },
+  {
     path: '/refugio/mascotas',
     name: 'PetManagement',
     component: () => import('../views/refugio/PetManagementView.vue'),

@@ -53,6 +53,18 @@
     <!-- Accesos rápidos -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <router-link
+        to="/refugio/solicitudes"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="relative flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
+          <span v-if="applicationStore.pendingCount" class="absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-alert px-1.5 text-xs font-bold text-white">{{ applicationStore.pendingCount }}</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Gestionar solicitudes</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Aprueba, rechaza y registra la entrega de tus adopciones.</p>
+      </router-link>
+
+      <router-link
         to="/refugio/mascotas"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
@@ -94,11 +106,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 import { usePetStore } from '../stores/petStore'
+import { useApplicationManagementStore } from '../stores/applicationManagementStore'
 import DashboardLayout from '../components/layout/DashboardLayout.vue'
 import WelcomeModal from '../components/ui/WelcomeModal.vue'
 
 const authStore = useAuthStore()
 const petStore = usePetStore()
+const applicationStore = useApplicationManagementStore()
 const shelter = ref(null)
 const shelterError = ref('')
 const showWelcome = ref(false)
@@ -107,6 +121,7 @@ const userName = computed(() => authStore.profile?.full_name?.trim() || 'amigo')
 
 onMounted(async () => {
   await authStore.getSession()
+  applicationStore.fetchReceivedApplications() // alimenta el contador de pendientes
   shelter.value = await petStore.getMyShelter()
   shelterError.value = petStore.shelterError
   const showWelcomeFlag = sessionStorage.getItem('showWelcomeModal')

@@ -272,3 +272,19 @@
     .mp-fade-up { animation: none !important; }
   }
 }
+
+/* ── Impresión del expediente de adopción (HU-43) ─────────────
+   Solo se imprime .print-area; menú, botones y fondos quedan fuera. */
+@media print {
+  @page { size: A4; margin: 15mm; }
+  body * { visibility: hidden !important; }
+  .print-area, .print-area * { visibility: visible !important; }
+  .print-area {
+    position: absolute; left: 0; top: 0; width: 100%;
+    margin: 0 !important; padding: 0 !important;
+    box-shadow: none !important; border: none !important;
+    background: #fff !important; color: #000 !important;
+  }
+  .no-print { display: none !important; }
+  .print-area section { break-inside: avoid; }
+}
