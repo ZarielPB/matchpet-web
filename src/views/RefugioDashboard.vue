@@ -50,6 +50,9 @@
       </div>
     </section>
 
+    <!-- HU-49: métricas del refugio -->
+    <DashboardStats />
+
     <!-- Accesos rápidos -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <router-link
@@ -62,6 +65,39 @@
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Gestionar solicitudes</h2>
         <p class="mt-1 text-sm text-[#A3AEB9]">Aprueba, rechaza y registra la entrega de tus adopciones.</p>
+      </router-link>
+
+      <router-link
+        to="/refugio/seguimiento"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Seguimiento post-adopción</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Registra notas sobre cómo se adaptan tus mascotas adoptadas.</p>
+      </router-link>
+
+      <router-link
+        to="/refugio/reportes"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">report</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Reportes de adoptantes</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Responde las dudas y problemas de quienes adoptaron.</p>
+      </router-link>
+
+      <router-link
+        to="/refugio/estadisticas"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">monitoring</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Estadísticas</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Gráficas de adopciones y efectividad del cuestionario.</p>
       </router-link>
 
       <router-link
@@ -109,6 +145,7 @@ import { usePetStore } from '../stores/petStore'
 import { useApplicationManagementStore } from '../stores/applicationManagementStore'
 import DashboardLayout from '../components/layout/DashboardLayout.vue'
 import WelcomeModal from '../components/ui/WelcomeModal.vue'
+import DashboardStats from '../components/refugio/DashboardStats.vue'
 
 const authStore = useAuthStore()
 const petStore = usePetStore()

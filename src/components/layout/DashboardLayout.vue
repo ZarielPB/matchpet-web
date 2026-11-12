@@ -182,6 +182,7 @@ const NAV_BY_ROLE = {
     { to: '/catalogo', label: 'Explorar catálogo', icon: 'travel_explore' },
     { to: '/adoptante/recomendaciones', label: 'Recomendaciones', icon: 'auto_awesome' },
     { to: '/adoptante/solicitudes', label: 'Mis solicitudes', icon: 'mail' },
+    { to: '/adoptante/mis-adopciones', label: 'Mis adopciones', icon: 'volunteer_activism' },
     { to: '/favoritos', label: 'Mis favoritos', icon: 'favorite' },
     { to: '/adoptante/cuestionario', label: 'Mi cuestionario', icon: 'checklist' },
     { to: '/adoptante/perfil', label: 'Mi perfil', icon: 'account_circle' }
@@ -189,6 +190,9 @@ const NAV_BY_ROLE = {
   refugio: [
     { to: '/refugio/dashboard', label: 'Inicio', icon: 'dashboard' },
     { to: '/refugio/solicitudes', label: 'Solicitudes', icon: 'mail' },
+    { to: '/refugio/seguimiento', label: 'Seguimiento', icon: 'volunteer_activism' },
+    { to: '/refugio/reportes', label: 'Reportes', icon: 'report' },
+    { to: '/refugio/estadisticas', label: 'Estadísticas', icon: 'monitoring' },
     { to: '/refugio/mascotas', label: 'Gestionar mascotas', icon: 'pets' },
     { to: '/refugio/perfil', label: 'Mi refugio', icon: 'home_work' },
     { to: '/catalogo', label: 'Ver catálogo', icon: 'storefront' }
@@ -208,8 +212,8 @@ const notificationStore = useNotificationStore()
 
 const mobileOpen = ref(false)
 const showNotifs = ref(false)
-// Por ahora solo el adoptante recibe notificaciones (HU-41).
-const showBell = computed(() => authStore.userRole === 'adoptante')
+// HU-41 (adoptante) y HU-47 (el refugio recibe avisos de nuevos reportes).
+const showBell = computed(() => ['adoptante', 'refugio'].includes(authStore.userRole))
 
 const bellLabel = computed(() =>
   notificationStore.hasUnread ? `Notificaciones (${notificationStore.unreadCount} sin leer)` : 'Notificaciones'
