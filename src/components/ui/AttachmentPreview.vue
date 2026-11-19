@@ -13,14 +13,15 @@
 import { computed, onMounted, ref } from 'vue'
 import { useFollowUpStore } from '../../stores/followUpStore'
 
-const props = defineProps({ path: { type: String, default: null } })
+// `loader` permite reutilizarlo con otro bucket privado (por defecto, adjuntos de reportes).
+const props = defineProps({ path: { type: String, default: null }, loader: { type: Function, default: null } })
 const store = useFollowUpStore()
 const url = ref(null)
 const loading = ref(!!props.path)
 const isVideo = computed(() => /\.(mp4|webm)$/i.test(props.path || ''))
 
 onMounted(async () => {
-  if (props.path) url.value = await store.getAttachmentUrl(props.path)
+  if (props.path) url.value = await (props.loader || store.getAttachmentUrl)(props.path)
   loading.value = false
 })
 </script>

@@ -183,6 +183,7 @@ const NAV_BY_ROLE = {
     { to: '/adoptante/recomendaciones', label: 'Recomendaciones', icon: 'auto_awesome' },
     { to: '/adoptante/solicitudes', label: 'Mis solicitudes', icon: 'mail' },
     { to: '/adoptante/mis-adopciones', label: 'Mis adopciones', icon: 'volunteer_activism' },
+    { to: '/adoptante/calendario-salud', label: 'Calendario de salud', icon: 'vaccines' },
     { to: '/favoritos', label: 'Mis favoritos', icon: 'favorite' },
     { to: '/adoptante/cuestionario', label: 'Mi cuestionario', icon: 'checklist' },
     { to: '/adoptante/perfil', label: 'Mi perfil', icon: 'account_circle' }

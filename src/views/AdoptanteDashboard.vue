@@ -111,6 +111,17 @@
       </router-link>
 
       <router-link
+        to="/adoptante/calendario-salud"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">vaccines</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Calendario de salud</h2>
+        <p class="mt-1 text-sm text-[#A3AEB9]">Vacunas y desparasitaciones de tu mascota, con recordatorios.</p>
+      </router-link>
+
+      <router-link
         to="/favoritos"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >

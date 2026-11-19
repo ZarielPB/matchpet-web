@@ -40,6 +40,11 @@ import FollowUpNoteModal from '../src/components/refugio/FollowUpNoteModal.vue'
 import ReportModal from '../src/components/adoptante/ReportModal.vue'
 import RespondReportModal from '../src/components/refugio/RespondReportModal.vue'
 import AttachmentPreview from '../src/components/ui/AttachmentPreview.vue'
+import { healthStatus, useHealthStore } from '../src/stores/healthStore'
+import HealthRecordList from '../src/components/ui/HealthRecordList.vue'
+import CompleteHealthModal from '../src/components/adoptante/CompleteHealthModal.vue'
+import HealthRecordModal from '../src/components/refugio/HealthRecordModal.vue'
+import HealthCalendarView from '../src/views/adoptante/HealthCalendarView.vue'
 import DashboardStats from '../src/components/refugio/DashboardStats.vue'
 import StatsView from '../src/views/refugio/StatsView.vue'
 import MyAdoptionsView from '../src/views/adoptante/MyAdoptionsView.vue'
@@ -237,5 +242,99 @@ describe('HU-50 / HU-51 — gráficas y métricas', () => {
     expect(t).toContain('50%')  // 2 de 4
     expect(t).toContain('0%')   // 0 de 2
     expect(t).not.toMatch(/@|correo|email/i) // sin datos personales
+  })
+})
+
+describe('HU-46 — calendario de salud y recordatorios', () => {
+  const iso = (offset) => { const d = new Date(); d.setDate(d.getDate() + offset); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
+  const rec = (over = {}) => ({ id: 'r1', kind: 'vacuna', vaccine_name: 'Antirrábica', due_date: iso(30), completed_at: null, proof_image_url: null, ...over })
+
+  it('clasifica cada registro: completada, vencida, próxima (≤3 días) o pendiente', () => {
+    expect(healthStatus(rec({ completed_at: '2026-01-01T00:00:00Z' }))).toBe('completada')
+    expect(healthStatus(rec({ due_date: iso(-1) }))).toBe('vencida')
+    expect(healthStatus(rec({ due_date: iso(0) }))).toBe('proxima')
+    expect(healthStatus(rec({ due_date: iso(3) }))).toBe('proxima')
+    expect(healthStatus(rec({ due_date: iso(4) }))).toBe('pendiente')
+  })
+
+  it('la lista muestra nombre, estado y las acciones que le pasa la vista', () => {
+    const w = mount(HealthRecordList, { props: { records: [rec({ due_date: iso(-2) }), rec({ id: 'r2', vaccine_name: 'Desparasitación', completed_at: '2026-10-01T00:00:00Z' })] }, slots: { actions: '<button class="act">x</button>' } })
+    expect(w.text()).toContain('Antirrábica'); expect(w.text()).toContain('Vencida'); expect(w.text()).toContain('Completada')
+    expect(w.findAll('.act')).toHaveLength(2)
+    expect(mount(HealthRecordList, { props: { records: [] } }).text()).toContain('Aún no hay registros')
+  })
+
+  it('CA#4: al abrir su calendario se disparan los recordatorios y se ordena por fecha', async () => {
+    db.tables.adoption_applications = { error: null, data: [{ id: 'a1', pets: { name: 'Coraje' }, vaccination_records: [rec({ id: 'b', due_date: iso(90) }), rec({ id: 'a', due_date: iso(10) })] }] }
+    const store = useHealthStore()
+    await store.fetchMyCalendar()
+    expect(rpcCalls('refresh_my_health_reminders')).toHaveLength(1)
+    expect(store.adoptions[0].vaccination_records.map((r) => r.id)).toEqual(['a', 'b'])
+  })
+
+  it('CA#5: completar con comprobante lo sube a la carpeta del usuario y envía la ruta', async () => {
+    const file = { name: 'cert.png', type: 'image/png', size: 2048 }
+    const r = await useHealthStore().completeRecord('r1', file)
+    expect(r.success).toBe(true)
+    const up = db.calls.find((c) => c.bucket === 'health-proofs' && c.upload).upload
+    expect(up).toMatch(/^u1\/[0-9a-f-]+\.png$/)
+    expect(rpcCalls('complete_health_record')[0].params).toEqual({ p_id: 'r1', p_proof_path: up })
+  })
+
+  it('completar sin comprobante es válido (CA#5 lo deja opcional)', async () => {
+    await useHealthStore().completeRecord('r1')
+    expect(rpcCalls('complete_health_record')[0].params.p_proof_path).toBeNull()
+    expect(db.calls.some((c) => c.upload)).toBe(false)
+  })
+
+  it('rechaza comprobantes que no son foto o pesan más de 5 MB, y limpia el archivo si la BD falla', async () => {
+    const store = useHealthStore()
+    expect((await store.completeRecord('r1', { name: 'x.pdf', type: 'application/pdf', size: 1 })).success).toBe(false)
+    expect((await store.completeRecord('r1', { name: 'x.jpg', type: 'image/jpeg', size: 6 * 1024 * 1024 })).error).toContain('5 MB')
+    expect(db.calls.filter((c) => c.upload || c.rpc === 'complete_health_record')).toHaveLength(0)
+    db.rpc.complete_health_record = { data: null, error: { code: '22023', message: 'Este registro ya está completado' } }
+    const r = await store.completeRecord('r1', { name: 'x.jpg', type: 'image/jpeg', size: 10 })
+    expect(r.error).toBe('Este registro ya está completado')
+    expect(db.calls.find((c) => c.remove).remove).toHaveLength(1)
+  })
+
+  it('el modal del adoptante confirma y avisa', async () => {
+    const w = mount(CompleteHealthModal, { props: { record: rec(), petName: 'Coraje' }, ...transition })
+    await w.findAll('button').find((b) => b.text() === 'Confirmar').trigger('click'); await flushPromises()
+    expect(w.emitted('done')[0][0]).toContain('completado')
+  })
+
+  it('refugio: valida nombre y fecha, y agrega o edita con la RPC correcta', async () => {
+    const store = useHealthStore()
+    expect((await store.addRecord('a1', 'vacuna', ' ', '2026-12-01')).success).toBe(false)
+    expect((await store.addRecord('a1', 'vacuna', 'Rabia', '')).success).toBe(false)
+    expect(db.calls.filter((c) => c.rpc)).toHaveLength(0)
+
+    const reload = vi.fn()
+    const w = mount(HealthRecordModal, { props: { target: { applicationId: 'a1', petName: 'Coraje' }, reload }, ...transition })
+    const save = w.findAll('button').find((b) => b.text() === 'Guardar')
+    expect(save.attributes('disabled')).toBeDefined()
+    await w.find('#health-name').setValue('Vacuna múltiple')
+    await w.find('#health-due').setValue('2026-12-01')
+    await save.trigger('click'); await flushPromises()
+    expect(rpcCalls('add_health_record')[0].params).toEqual({ p_application_id: 'a1', p_kind: 'vacuna', p_name: 'Vacuna múltiple', p_due: '2026-12-01' })
+    expect(reload).toHaveBeenCalled()
+
+    await w.setProps({ target: { applicationId: 'a1', petName: 'Coraje', record: rec({ id: 'r9' }) } })
+    expect(w.find('#health-name').element.value).toBe('Antirrábica')
+    await w.findAll('button').find((b) => b.text() === 'Guardar').trigger('click'); await flushPromises()
+    expect(rpcCalls('update_health_record')[0].params.p_id).toBe('r9')
+  })
+
+  it('la vista del adoptante muestra el estado vacío', async () => {
+    const w = mount(HealthCalendarView, transition); await flushPromises()
+    expect(w.text()).toContain('Aún no tienes mascotas adoptadas con calendario de salud')
+  })
+
+  it('la vista ofrece "Marcar como completada" solo en los registros pendientes', async () => {
+    db.tables.adoption_applications = { error: null, data: [{ id: 'a1', pets: { name: 'Coraje' }, vaccination_records: [rec({ id: 'a' }), rec({ id: 'b', completed_at: '2026-10-01T00:00:00Z' })] }] }
+    const w = mount(HealthCalendarView, transition); await flushPromises()
+    expect(w.findAll('button').filter((b) => b.text() === 'Marcar como completada')).toHaveLength(1)
+    expect(w.text()).toContain('1 de 2 completados')
   })
 })

@@ -4,7 +4,7 @@
       <div class="mp-modal-panel w-full max-w-md rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-xl">
         <h2 id="delivery-title" class="font-display text-lg font-bold text-[#040404]">Registrar entrega</h2>
         <p class="mt-1 text-sm text-ink-soft">
-          Entrega formal de <strong>{{ application.pets?.name }}</strong> a {{ application.profiles?.full_name || 'el adoptante' }}. La mascota quedará como «adoptada».
+          Entrega formal de <strong>{{ application.pets?.name }}</strong> a {{ application.profiles?.full_name || 'el adoptante' }}. La mascota quedará como «adoptada». Se generará un calendario de salud inicial, que podrás ajustar en Seguimiento.
         </p>
 
         <label for="delivery-date" class="mp-label mt-4">Fecha de entrega *</label>

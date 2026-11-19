@@ -49,6 +49,12 @@ const routes = [
     meta: { requiresAuth: true, role: 'adoptante' }
   },
   {
+    path: '/adoptante/calendario-salud',
+    name: 'HealthCalendar',
+    component: () => import('../views/adoptante/HealthCalendarView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
     path: '/favoritos',
     name: 'Favorites',
     component: () => import('../views/FavoritesView.vue'),

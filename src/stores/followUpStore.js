@@ -43,6 +43,7 @@ export const useFollowUpStore = defineStore('followUp', () => {
   function sortChildren(rows) {
     rows.forEach((r) => {
       r.follow_up_notes?.sort(byDateDesc)
+      r.vaccination_records?.sort((a, b) => a.due_date.localeCompare(b.due_date))
       r.post_adoption_reports?.sort((a, b) => b.created_at.localeCompare(a.created_at))
     })
     return rows
@@ -91,7 +92,7 @@ export const useFollowUpStore = defineStore('followUp', () => {
       }
       const { data, error: queryError } = await supabase
         .from('adoption_applications')
-        .select(`id, resolved_at, pets!inner(${PET_SELECT}, shelter_id), profiles!user_id(full_name), adoption_deliveries(delivered_at), follow_up_notes(*), post_adoption_reports(id, status)`)
+        .select(`id, resolved_at, pets!inner(${PET_SELECT}, shelter_id), profiles!user_id(full_name), adoption_deliveries(delivered_at), follow_up_notes(*), post_adoption_reports(id, status), vaccination_records(*)`)
         .eq('pets.shelter_id', shelterId)
         .eq('status', 'completada')
         .order('resolved_at', { ascending: false })
