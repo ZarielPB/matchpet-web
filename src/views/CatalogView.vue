@@ -330,7 +330,7 @@ const PublicShell = {
             ])
           ])
         ),
-        h('div', { class: 'mx-auto max-w-7xl px-4 py-8' }, [
+        h('main', { class: 'mx-auto max-w-7xl px-4 py-8' }, [
           h(
             'h1',
             { class: 'mb-6 font-display text-2xl font-black tracking-tight text-[#040404] sm:text-3xl' },
@@ -343,7 +343,7 @@ const PublicShell = {
 }
 
 onMounted(async () => {
-  await petStore.fetchShelterCities()
+  petStore.fetchShelterCities() // en paralelo: sin conexión no debe retrasar el listado
   await refreshList()
   if (authStore.isAuthenticated) {
     await petStore.loadFavorites()

@@ -43,7 +43,7 @@ test.describe('refugio', () => {
   test('calendario de salud: agregar un registro, editarlo y quitarlo', async ({ page }) => {
     acceptDialogs(page)
     await login(page, 'refugio'); await nav(page, '/refugio/seguimiento')
-    const card = page.locator('ul > li', { hasText: 'Wally' }).first()
+    const card = page.locator('ul > li', { hasText: 'Adoptante:' }).first()
     await expect(card).toBeVisible()
     await card.getByRole('button', { name: '+ Agregar' }).click()
     await page.locator('#health-name').fill('Vacuna E2E')

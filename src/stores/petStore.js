@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { enqueueFavorite, flushQueue, isOffline } from '../services/offlineQueue'
 import { ref, computed } from 'vue'
 import { supabase } from '../services/supabaseClient'
 import { useAuthStore } from './authStore'
@@ -689,7 +690,38 @@ export const usePetStore = defineStore('pets', () => {
     }
   }
 
+  // HU-55 CA#4: sin conexión el favorito se aplica en pantalla y queda en cola para enviarse al reconectar.
+  async function queueFavoriteOffline(petId) {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.user) {
+      error.value = 'Debes iniciar sesión para guardar favoritos.'
+      return { success: false, error: error.value }
+    }
+    const add = !favoriteIds.value.includes(petId)
+    enqueueFavorite({ userId: session.user.id, petId, add })
+    favoriteIds.value = add ? [...favoriteIds.value, petId] : favoriteIds.value.filter((id) => id !== petId)
+    return { success: true, queued: true }
+  }
+
+  // Envía los favoritos en cola. Devuelve cuántos se aplicaron.
+  async function syncPendingFavorites() {
+    const userId = useAuthStore().user?.id
+    if (!userId) return 0
+    return flushQueue(userId, async (a) => {
+      if (a.type !== 'favorite') return true
+      if (a.add) {
+        const { error: e } = await supabase.from('favorites').insert({ user_id: a.userId, pet_id: a.petId })
+        if (e && e.code !== '23505') throw e
+      } else {
+        const { error: e } = await supabase.from('favorites').delete().eq('user_id', a.userId).eq('pet_id', a.petId)
+        if (e) throw e
+      }
+      return true
+    })
+  }
+
   async function toggleFavorite(petId) {
+    if (isOffline()) return queueFavoriteOffline(petId)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       error.value = 'Debes iniciar sesión para guardar favoritos.'
@@ -845,7 +877,7 @@ export const usePetStore = defineStore('pets', () => {
     addPet, updatePet, addPetImages, deletePetImage, setPrimaryImage,
     updatePetStatus, fetchMyPets, deletePet,
     // HU-28/29 favoritos
-    loadFavorites, toggleFavorite, fetchFavoritePets,
+    loadFavorites, toggleFavorite, syncPendingFavorites, fetchFavoritePets,
     // HU-14/15 perfil de refugio
     getMyShelter, invalidateShelter, fetchShelterCities
   }

@@ -64,6 +64,7 @@ test.describe('adoptante', () => {
 
   test('solicitud: enviar, ver "pendiente" y cancelar; el refugio recibe ambos avisos', async ({ page }) => {
     acceptDialogs(page)
+    const startedAt = new Date().toISOString() // los avisos de corridas anteriores no cuentan
     const shelter = await api('refugio')
     const { data: { user: shUser } } = await shelter.auth.getUser()
     const { data: sh } = await shelter.from('shelters').select('id').eq('user_id', shUser.id).single()
@@ -84,7 +85,7 @@ test.describe('adoptante', () => {
       await page.getByRole('button', { name: 'Sí, cancelar' }).click()
       await expect(li).toContainText('Cancelada')
 
-      const { data: notifs } = await shelter.from('notifications').select('title, body').eq('user_id', shUser.id).ilike('body', '%E2E Cancelar%')
+      const { data: notifs } = await shelter.from('notifications').select('title, body').eq('user_id', shUser.id).ilike('body', '%E2E Cancelar%').gte('created_at', startedAt)
       expect(notifs.map((n) => n.title).sort()).toEqual(['Nueva solicitud de adopción', 'Solicitud cancelada'])
     } finally {
       await shelter.from('notifications').delete().ilike('body', '%E2E Cancelar%')

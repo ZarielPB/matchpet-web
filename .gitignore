@@ -46,3 +46,9 @@ e2e/credentials.json
 e2e/.artifacts/
 test-results/
 playwright-report/
+
+# secretos de las Edge Functions
+supabase/functions/.env
+
+# capturas temporales para la documentación (no se suben)
+docs/caps/

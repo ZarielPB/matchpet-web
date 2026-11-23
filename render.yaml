@@ -1,0 +1,22 @@
+# Blueprint de Render para el microservicio de IA (HU-66).
+# Los valores con sync:false se piden en el panel de Render; nunca van al repositorio.
+services:
+  - type: web
+    name: matchpet-ai
+    runtime: docker
+    plan: free
+    region: virginia
+    rootDir: ai-service
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      # HU-66 CA#3: solo la PWA en Firebase Hosting (y el servidor local de desarrollo) puede llamar al servicio.
+      - key: ALLOWED_ORIGINS
+        value: https://matchpet-univalle.web.app,https://matchpet-univalle.firebaseapp.com,http://localhost:5173

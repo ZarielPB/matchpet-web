@@ -25,6 +25,33 @@
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     line-height: 1;
   }
+  /* HU-57 CA#3: área de toque mínima de 44x44 px en pantallas pequeñas. */
+  @media (max-width: 1023px) {
+    button,
+    [role='button'],
+    select,
+    input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+    a[class*='rounded'] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    a[class*='rounded']:not([class*='flex']):not([class*='block']):not([class*='grid']) {
+      display: inline-flex;
+      align-items: center;
+    }
+    /* Enlaces de texto: el relleno amplía la zona tocable sin mover el diseño. */
+    a:not([class*='rounded']):not([class*='absolute']):not([class*='fixed']),
+    button[class*='underline'] {
+      padding-block: 1rem;
+      margin-block: -1rem;
+    }
+    label:has(> input[type='checkbox']),
+    label:has(> input[type='radio']) {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+  }
   /* Foco visible consistente (accesibilidad) */
   :focus-visible {
     @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-white;

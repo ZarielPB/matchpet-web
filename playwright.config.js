@@ -23,5 +23,5 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure'
   },
-  webServer: { command: 'pnpm dev --port 5173 --strictPort', url: 'http://localhost:5173', reuseExistingServer: true, timeout: 60_000 }
+  webServer: { command: 'pnpm dev --port 5173 --strictPort', env: { VITE_AI_API_URL: process.env.VITE_AI_API_URL || 'http://localhost:8000' }, url: 'http://localhost:5173', reuseExistingServer: true, timeout: 60_000 }
 })

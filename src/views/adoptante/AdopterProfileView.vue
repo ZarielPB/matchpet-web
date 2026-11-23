@@ -205,6 +205,7 @@
           </form>
         </div>
       </div>
+      <PushToggle class="mt-6" />
     </div>
   </DashboardLayout>
 </template>
@@ -216,6 +217,7 @@ import { useAuthStore } from '../../stores/authStore'
 import { supabase } from '../../services/supabaseClient'
 import { translateDbError } from '../../utils/errorMessages'
 import DashboardLayout from '../../components/layout/DashboardLayout.vue'
+import PushToggle from '../../components/ui/PushToggle.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()

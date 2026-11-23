@@ -1,0 +1,19 @@
+name: AI Keep Alive
+
+# El plan gratuito de Render duerme el servicio tras 15 min sin uso. Este ping lo mantiene despierto
+# (cabe en las 750 horas gratuitas al mes). Requiere el secreto AI_HEALTH_URL = https://TU-SERVICIO.onrender.com/api/v1/health
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping al servicio de IA
+        env:
+          AI_HEALTH_URL: ${{ secrets.AI_HEALTH_URL }}
+        run: |
+          if [ -z "$AI_HEALTH_URL" ]; then echo "AI_HEALTH_URL no configurado; nada que hacer."; exit 0; fi
+          curl -fsS --max-time 90 "$AI_HEALTH_URL"

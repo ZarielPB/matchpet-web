@@ -1,0 +1,78 @@
+name: CI/CD
+
+# HU-60: instala, revisa (lint), prueba y compila en cada push o PR a la rama principal.
+# Si todo pasa y es un push a la rama principal, despliega a Firebase Hosting.
+# Si algo falla, GitHub avisa por correo a quien hizo el push y, si existe el secreto DISCORD_WEBHOOK_URL, también a Discord.
+on:
+  push:
+    branches: [main, feature/HU-01-HU-03-auth-registers]
+  pull_request:
+    branches: [main, feature/HU-01-HU-03-auth-registers]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint, pruebas y build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_AI_API_URL: ${{ secrets.VITE_AI_API_URL }}
+          VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    name: Desplegar a Firebase Hosting
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MATCHPET_UNIVALLE }}
+          projectId: matchpet-univalle
+          channelId: live
+
+  notify:
+    name: Avisar al equipo si falla
+    needs: [build, deploy]
+    if: ${{ always() && (needs.build.result == 'failure' || needs.deploy.result == 'failure') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Aviso a Discord (opcional)
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          WHO: ${{ github.actor }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then echo "Sin DISCORD_WEBHOOK_URL: solo llega el correo de GitHub."; exit 0; fi
+          curl -fsS -H "Content-Type: application/json" \
+            -d "{\"content\": \"❌ Falló el pipeline de MatchPet en \`$BRANCH\` (push de $WHO): $RUN_URL\"}" "$WEBHOOK"

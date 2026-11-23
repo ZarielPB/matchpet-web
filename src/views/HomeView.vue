@@ -140,6 +140,7 @@
       </Transition>
     </header>
 
+    <main>
     <!-- ══════════ HERO ══════════ -->
     <section id="hero" class="mp-section-top relative overflow-hidden pt-28 pb-20 hero-glow">
       <div class="absolute inset-0 paw-pattern pointer-events-none" aria-hidden="true"></div>
@@ -766,6 +767,8 @@
         </div>
       </div>
     </section>
+
+    </main>
 
     <!-- ══════════ FOOTER ══════════ -->
     <footer class="bg-brand-bg-soft/60 border-t border-brand-primary/15 pt-16 pb-12 text-ink-soft">

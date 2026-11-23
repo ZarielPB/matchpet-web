@@ -135,6 +135,8 @@
       </main>
     </div>
 
+    <ChatWidget v-if="props.role === 'adoptante'" />
+
     <!-- Notificaciones (HU-41): dropdown simple -->
     <div v-if="showBell && showNotifs" class="fixed inset-0 z-[65]" aria-hidden="true" @click="showNotifs = false"></div>
     <Transition name="mp-modal">
@@ -175,6 +177,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/authStore'
 import { useNotificationStore } from '../../stores/notificationStore'
+import ChatWidget from '../ui/ChatWidget.vue'
 
 const NAV_BY_ROLE = {
   adoptante: [

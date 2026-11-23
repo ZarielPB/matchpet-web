@@ -8,6 +8,7 @@
 | Integración / seguridad (API) | Qué puede leer y hacer cada rol (RLS, funciones, almacenamiento) | Playwright (sin navegador) | `pnpm test:e2e e2e/seguridad.spec.js` |
 | Sistema (extremo a extremo) | Flujos reales en el navegador: autenticación, adoptante, refugio, ciclo completo de adopción con avisos en tiempo real, registro de personas nuevas | Playwright + Chromium | `pnpm test:e2e` |
 | Accesibilidad | Reglas WCAG 2 A/AA en las pantallas principales de cada rol | axe-core | `pnpm test:e2e e2e/accesibilidad.spec.js` |
+| Asistente de IA y modo offline | Chat con el servicio simulado, mensajes de error amables, aviso sin conexión y cola de favoritos | Playwright | `pnpm test:e2e e2e/chat.spec.js e2e/offline.spec.js` |
 | Exploratorio | Recorre todas las rutas y reporta errores de consola, HTTP y desbordes (opción móvil) | Playwright | `EXPLORE=1 pnpm test:e2e e2e/explore.spec.js` · `EXPLORE_MOBILE=1` para celular |
 
 ## Preparación de las pruebas E2E
