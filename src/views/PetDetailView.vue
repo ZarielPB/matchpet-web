@@ -3,7 +3,7 @@
     <div class="max-w-5xl mx-auto px-4 py-8">
       <button
         type="button"
-        class="text-sm text-[#A3AEB9] hover:text-[#040404] flex items-center gap-1 mb-4 transition-colors"
+        class="text-sm text-ink-soft hover:text-[#040404] flex items-center gap-1 mb-4 transition-colors"
         @click="router.back()"
       >
         ← Volver
@@ -50,7 +50,7 @@
             class="photocard max-w-md mx-auto lg:mx-0 flex items-center justify-center aspect-[4/5]"
             :style="{ '--tilt': `${mainTilt}deg` }"
           >
-            <span class="text-6xl text-[#A3AEB9]">🐾</span>
+            <span class="text-6xl text-ink-soft">🐾</span>
           </div>
 
           <!-- Miniaturas -->
@@ -100,7 +100,7 @@
                 @click="handleToggleFavorite"
               >
                 <svg
-                  :class="isFav ? 'fill-[#E1A16C] text-[#E1A16C]' : 'fill-transparent text-[#A3AEB9]'"
+                  :class="isFav ? 'fill-[#E1A16C] text-[#E1A16C]' : 'fill-transparent text-ink-soft'"
                   class="h-5 w-5 transition-colors"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

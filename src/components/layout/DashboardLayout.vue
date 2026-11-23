@@ -25,13 +25,13 @@
             <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
           </span>
           <span class="font-display text-xl font-black tracking-tight text-[#040404]">
-            Match<span class="text-[#BA8C71]">Pet</span>
+            Match<span class="text-[#8F6349]">Pet</span>
           </span>
         </RouterLink>
         <button
           v-if="showBell"
           type="button"
-          class="relative hidden h-9 w-9 items-center justify-center rounded-lg text-[#BA8C71] hover:bg-[#FCD8B8]/50 lg:flex"
+          class="relative hidden h-9 w-9 items-center justify-center rounded-lg text-[#8F6349] hover:bg-[#FCD8B8]/50 lg:flex"
           :aria-label="bellLabel"
           :aria-expanded="showNotifs"
           @click="showNotifs = !showNotifs"
@@ -41,7 +41,7 @@
         </button>
         <button
           type="button"
-          class="flex h-9 w-9 items-center justify-center rounded-lg text-[#A3AEB9] hover:bg-[#FCD8B8]/50 hover:text-[#040404] lg:hidden"
+          class="flex h-11 w-11 items-center justify-center rounded-lg text-ink-soft hover:bg-[#FCD8B8]/50 hover:text-[#040404] lg:hidden"
           aria-label="Cerrar menú"
           @click="closeMobile"
         >
@@ -56,7 +56,7 @@
           :to="item.to"
           class="group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors duration-200"
           :class="isActive(item)
-            ? 'bg-[#E1A16C]/15 text-[#E1A16C]'
+            ? 'bg-[#E1A16C]/15 text-[#8F6349]'
             : 'text-[#040404] hover:bg-[#FCD8B8]/50'"
           :aria-current="isActive(item) ? 'page' : undefined"
           @click="closeMobile"
@@ -68,7 +68,7 @@
           />
           <span
             class="material-symbols-outlined text-[21px] transition-colors duration-200"
-            :class="isActive(item) ? 'text-[#E1A16C]' : 'text-[#BA8C71] group-hover:text-[#E1A16C]'"
+            :class="isActive(item) ? 'text-[#E1A16C]' : 'text-[#8F6349] group-hover:text-[#E1A16C]'"
             style="font-variation-settings: 'FILL' 1"
             aria-hidden="true"
           >
@@ -85,7 +85,7 @@
           </span>
           <div class="min-w-0">
             <p class="truncate text-sm font-bold text-[#040404]">{{ displayName }}</p>
-            <p class="truncate text-xs text-[#A3AEB9]">{{ roleLabel }}</p>
+            <p class="truncate text-xs text-ink-soft">{{ roleLabel }}</p>
           </div>
         </div>
         <button
@@ -93,7 +93,7 @@
           class="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#040404] transition-colors duration-200 hover:bg-[#FCD8B8]/50 hover:text-[#E1A16C]"
           @click="handleLogout"
         >
-          <span class="material-symbols-outlined text-[21px] text-[#BA8C71]" aria-hidden="true">logout</span>
+          <span class="material-symbols-outlined text-[21px] text-[#8F6349]" aria-hidden="true">logout</span>
           <span>Cerrar sesión</span>
         </button>
       </div>
@@ -112,12 +112,12 @@
           <span class="material-symbols-outlined text-[24px]" aria-hidden="true">menu</span>
         </button>
         <span class="font-display text-lg font-black tracking-tight text-[#040404]">
-          Match<span class="text-[#BA8C71]">Pet</span>
+          Match<span class="text-[#8F6349]">Pet</span>
         </span>
         <button
           v-if="showBell"
           type="button"
-          class="relative ml-auto flex h-10 w-10 items-center justify-center rounded-xl text-[#BA8C71] hover:bg-[#FCD8B8]/50"
+          class="relative ml-auto flex h-10 w-10 items-center justify-center rounded-xl text-[#8F6349] hover:bg-[#FCD8B8]/50"
           :aria-label="bellLabel"
           :aria-expanded="showNotifs"
           @click="showNotifs = !showNotifs"
@@ -146,7 +146,7 @@
       >
         <div class="flex items-center justify-between border-b border-[#A3AEB9]/20 px-4 py-3">
           <p class="font-display font-bold text-[#040404]">Notificaciones</p>
-          <button v-if="notificationStore.hasUnread" type="button" class="text-xs font-semibold text-[#BA8C71] hover:underline" @click="notificationStore.markAllAsRead()">Marcar todas como leídas</button>
+          <button v-if="notificationStore.hasUnread" type="button" class="text-xs font-semibold text-[#8F6349] hover:underline" @click="notificationStore.markAllAsRead()">Marcar todas como leídas</button>
         </div>
         <p v-if="!notificationStore.notifications.length" class="px-4 py-8 text-center text-sm text-ink-soft">No tienes notificaciones.</p>
         <ul v-else>

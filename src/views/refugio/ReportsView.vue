@@ -27,7 +27,7 @@
       <div v-else-if="store.error && !store.reports.length" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ store.error }}</div>
 
       <div v-else-if="!filtered.length" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">inbox</span>
+        <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">inbox</span>
         <p class="mt-3 font-medium text-[#040404]">{{ filter === 'todos' ? 'Aún no has recibido reportes.' : 'No hay reportes con este estado.' }}</p>
       </div>
 

@@ -12,7 +12,7 @@
         class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         loading="lazy"
       />
-      <div v-else class="flex h-full w-full items-center justify-center text-4xl text-[#A3AEB9]">🐾</div>
+      <div v-else class="flex h-full w-full items-center justify-center text-4xl text-ink-soft">🐾</div>
 
       <!-- Estado (visible para el panel del refugio) -->
       <span
@@ -33,7 +33,7 @@
         @click.stop="onToggleFavorite"
       >
         <svg
-          :class="isFavorite ? 'fill-[#E1A16C] text-[#E1A16C]' : 'fill-transparent text-[#A3AEB9] group-hover:text-[#E1A16C]'"
+          :class="isFavorite ? 'fill-[#E1A16C] text-[#E1A16C]' : 'fill-transparent text-ink-soft group-hover:text-[#E1A16C]'"
           class="h-5 w-5 transition-colors"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -50,16 +50,16 @@
     <div class="flex flex-1 flex-col p-4">
       <div class="flex items-start justify-between gap-2">
         <h3 class="truncate font-display text-lg font-bold text-[#040404]">{{ pet.name }}</h3>
-        <span class="whitespace-nowrap text-xs font-medium text-[#A3AEB9]">{{ speciesLabel }}</span>
+        <span class="whitespace-nowrap text-xs font-medium text-ink-soft">{{ speciesLabel }}</span>
       </div>
 
-      <p class="mt-1 text-sm text-[#A3AEB9]">{{ subtitle }}</p>
+      <p class="mt-1 text-sm text-ink-soft">{{ subtitle }}</p>
 
-      <p class="mt-2 line-clamp-2 text-sm text-[#A3AEB9]">{{ pet.description || 'Sin descripción.' }}</p>
+      <p class="mt-2 line-clamp-2 text-sm text-ink-soft">{{ pet.description || 'Sin descripción.' }}</p>
 
       <div class="mt-3 flex flex-wrap gap-2 text-xs">
-        <span class="rounded-full bg-[#FCD8B8] px-2.5 py-1 font-semibold text-[#BA8C71]">{{ sizeLabel }}</span>
-        <span v-if="pet.shelters?.city" class="rounded-full bg-[#FCD8B8] px-2.5 py-1 font-semibold text-[#BA8C71]">
+        <span class="rounded-full bg-[#FCD8B8] px-2.5 py-1 font-semibold text-[#8F6349]">{{ sizeLabel }}</span>
+        <span v-if="pet.shelters?.city" class="rounded-full bg-[#FCD8B8] px-2.5 py-1 font-semibold text-[#8F6349]">
           📍 {{ pet.shelters.city }}
         </span>
       </div>
@@ -69,7 +69,7 @@
         <div class="flex items-center justify-between gap-2">
           <!-- @click.stop: sin él, el clic en la etiqueta burbujea a <article>
                y navega al detalle en lugar de abrir el select. -->
-          <label class="flex items-center gap-1 text-xs text-[#A3AEB9]">
+          <label class="flex items-center gap-1 text-xs text-ink-soft">
             Estado:
             <select
               :value="pet.status"
@@ -89,14 +89,14 @@
           <div class="flex items-center gap-1">
             <button
               type="button"
-              class="rounded-lg border border-[#A3AEB9]/40 px-2.5 py-1.5 text-xs font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40"
+              class="min-h-[44px] rounded-lg border border-[#A3AEB9]/40 px-3 py-1.5 text-xs font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 sm:min-h-0 sm:px-2.5"
               @click="onEdit"
             >
               Editar
             </button>
             <button
               type="button"
-              class="rounded-lg border border-[#BA8C71]/40 px-2.5 py-1.5 text-xs font-semibold text-[#BA8C71] transition hover:bg-[#FCD8B8]/40"
+              class="min-h-[44px] rounded-lg border border-[#BA8C71]/40 px-3 py-1.5 text-xs font-semibold text-[#8F6349] transition hover:bg-[#FCD8B8]/40 sm:min-h-0 sm:px-2.5"
               @click="onDelete"
             >
               Eliminar
@@ -105,7 +105,7 @@
         </div>
 
         <!-- HU-21: fecha de alta en el catálogo -->
-        <p class="mt-2 text-[11px] text-[#A3AEB9]">
+        <p class="mt-2 text-[11px] text-ink-soft">
           Registrada el {{ registeredAt }}
         </p>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-surface font-sans text-ink antialiased flex flex-col justify-center items-center">
+  <div class="min-h-screen overflow-x-hidden bg-surface font-sans text-ink antialiased flex flex-col justify-center items-center">
     <main class="w-full flex items-center justify-center p-4">
       <div class="flex flex-col w-full items-center justify-center py-6 px-4">
         <!-- Ambient background glow -->
@@ -63,7 +63,7 @@
                   <button
                     type="button"
                     aria-label="Alternar visibilidad de contraseña"
-                    class="absolute right-3.5 flex items-center justify-center p-1 text-outline hover:text-primary transition-colors"
+                    class="absolute right-0 flex min-h-[44px] min-w-[44px] items-center justify-center text-outline hover:text-primary transition-colors"
                     @click="showPassword = !showPassword"
                   >
                     <span class="material-symbols-outlined text-[20px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
@@ -90,7 +90,7 @@
                   <button
                     type="button"
                     aria-label="Alternar visibilidad de contraseña"
-                    class="absolute right-3.5 flex items-center justify-center p-1 text-outline hover:text-primary transition-colors"
+                    class="absolute right-0 flex min-h-[44px] min-w-[44px] items-center justify-center text-outline hover:text-primary transition-colors"
                     @click="showConfirm = !showConfirm"
                   >
                     <span class="material-symbols-outlined text-[20px]">{{ showConfirm ? 'visibility_off' : 'visibility' }}</span>

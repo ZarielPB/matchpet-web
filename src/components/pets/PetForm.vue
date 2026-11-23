@@ -205,14 +205,14 @@
               class="sr-only"
               @change="onFilesChange"
             />
-            <span class="material-symbols-outlined text-[40px] text-[#BA8C71]" aria-hidden="true">
+            <span class="material-symbols-outlined text-[40px] text-[#8F6349]" aria-hidden="true">
               add_photo_alternate
             </span>
             <span class="text-sm font-semibold text-[#040404]">
               Arrastra tus imágenes aquí o
-              <span class="text-[#BA8C71] underline">haz clic para elegir</span>
+              <span class="text-[#8F6349] underline">haz clic para elegir</span>
             </span>
-            <span class="text-xs text-[#A3AEB9]">
+            <span class="text-xs text-ink-soft">
               Hasta {{ MAX_IMAGES_PER_PET }} imágenes · máx. 2 MB cada una
             </span>
           </label>

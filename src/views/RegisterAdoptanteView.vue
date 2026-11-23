@@ -136,7 +136,7 @@
                     <button
                       type="button"
                       aria-label="Alternar visibilidad de contraseña"
-                      class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-ink focus:outline-none"
+                      class="absolute right-0 top-1/2 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-outline hover:text-ink focus:outline-none"
                       @click="showPassword = !showPassword"
                     >
                       <span class="material-symbols-outlined text-[20px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
@@ -164,7 +164,7 @@
                     <button
                       type="button"
                       aria-label="Alternar visibilidad de contraseña"
-                      class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-ink focus:outline-none"
+                      class="absolute right-0 top-1/2 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-outline hover:text-ink focus:outline-none"
                       @click="showConfirm = !showConfirm"
                     >
                       <span class="material-symbols-outlined text-[20px]">{{ showConfirm ? 'visibility_off' : 'visibility' }}</span>

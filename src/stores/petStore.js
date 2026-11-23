@@ -26,7 +26,7 @@ export const MAX_IMAGE_BYTES = 2 * 1024 * 1024
 export const MAX_IMAGES_PER_PET = 8
 
 // Selector base: mascota + ficha del refugio (HU-14/15) + galería (HU-17/27).
-export const PET_SELECT = '*, shelters(shelter_name, city, address, phone, cover_image_url), pet_images(image_url, is_primary)'
+export const PET_SELECT = '*, shelters(shelter_name, city, address, phone, cover_image_url), pet_images(id, image_url, storage_path, is_primary)'
 
 // Únicos campos escribibles en `pets`. Evita que un payload con una clave
 // inexistente provoque PGRST204 (bug que tumbó todo el Sprint 2) y aplica
@@ -455,6 +455,10 @@ export const usePetStore = defineStore('pets', () => {
   // Observación HU-19: si era la principal, se reasigna otra automáticamente.
   // -------------------------------------------------------------------------
   async function deletePetImage(petId, imageId) {
+    if (!petId || !imageId) {
+      error.value = 'No se pudo identificar la imagen. Recarga la página e intenta de nuevo.'
+      return { success: false, error: error.value }
+    }
     loading.value = true
     error.value = ''
     try {
@@ -508,6 +512,10 @@ export const usePetStore = defineStore('pets', () => {
   // HU-17 CA#6: designar una imagen como foto principal.
   // -------------------------------------------------------------------------
   async function setPrimaryImage(petId, imageId) {
+    if (!petId || !imageId) {
+      error.value = 'No se pudo identificar la imagen. Recarga la página e intenta de nuevo.'
+      return { success: false, error: error.value }
+    }
     loading.value = true
     error.value = ''
     try {

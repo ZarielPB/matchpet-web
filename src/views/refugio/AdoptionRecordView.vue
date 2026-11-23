@@ -2,7 +2,7 @@
   <DashboardLayout role="refugio" title="Expediente de adopción">
     <div class="mx-auto max-w-3xl">
       <div class="no-print mb-4 flex flex-wrap items-center justify-between gap-3">
-        <router-link to="/refugio/solicitudes" class="text-sm font-semibold text-[#BA8C71] hover:underline">← Volver a solicitudes</router-link>
+        <router-link to="/refugio/solicitudes" class="text-sm font-semibold text-[#8F6349] hover:underline">← Volver a solicitudes</router-link>
         <button v-if="record && delivery" type="button" class="mp-btn-primary !w-auto px-6" @click="printRecord">🖨️ Imprimir / Guardar como PDF</button>
       </div>
 
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="text-right">
-            <p class="font-display text-lg font-black">Match<span class="text-[#BA8C71]">Pet</span></p>
+            <p class="font-display text-lg font-black">Match<span class="text-[#8F6349]">Pet</span></p>
             <p class="text-xs">Expediente de adopción</p>
           </div>
         </header>

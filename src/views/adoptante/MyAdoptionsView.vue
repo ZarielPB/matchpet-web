@@ -12,7 +12,7 @@
       <div v-else-if="store.error && !store.adoptions.length" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ store.error }}</div>
 
       <div v-else-if="!store.adoptions.length" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
+        <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
         <p class="mt-3 font-medium text-[#040404]">Aún no tienes mascotas adoptadas.</p>
         <router-link to="/catalogo" class="mt-5 inline-block rounded-xl bg-[#BA8C71] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#E1A16C]">Explorar catálogo</router-link>
       </div>
@@ -26,7 +26,7 @@
         >
           <div class="flex gap-4">
             <img v-if="photo(a)" :src="photo(a)" :alt="`Foto de ${a.pets?.name || 'la mascota'}`" class="h-20 w-20 shrink-0 rounded-xl object-cover" loading="lazy" />
-            <div v-else class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-[#A3AEB9]">🐾</div>
+            <div v-else class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-ink-soft">🐾</div>
             <div class="min-w-0 flex-1">
               <p class="truncate font-display text-lg font-bold text-[#040404]">{{ a.pets?.name }}</p>
               <p class="text-sm text-ink-soft">{{ a.pets?.shelters?.shelter_name || 'Refugio' }}<span v-if="a.pets?.shelters?.city"> · {{ a.pets.shelters.city }}</span></p>

@@ -9,7 +9,7 @@
       @click.self="emit('close')"
     >
       <div class="modal-card relative w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
-        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FCD8B8] text-[#8F6349]">
           <span
             class="material-symbols-outlined text-[40px]"
             style="font-variation-settings: 'FILL' 1"
@@ -22,7 +22,7 @@
         <h2 id="welcome-modal-title" class="mt-5 font-display text-2xl font-black text-[#040404]">
           ¡Bienvenido/a, {{ displayName }}!
         </h2>
-        <p class="mx-auto mt-2 max-w-xs text-sm text-[#A3AEB9]">{{ message }}</p>
+        <p class="mx-auto mt-2 max-w-xs text-sm text-ink-soft">{{ message }}</p>
 
         <button
           type="button"

@@ -54,7 +54,7 @@
       <div v-if="mode !== 'list'" class="mx-auto max-w-5xl rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm sm:p-8">
         <button
           type="button"
-          class="mb-5 inline-flex items-center gap-1 text-sm text-[#A3AEB9] transition-colors hover:text-[#040404]"
+          class="mb-5 inline-flex items-center gap-1 text-sm text-ink-soft transition-colors hover:text-[#040404]"
           @click="cancelForm"
         >
           ← Volver al listado

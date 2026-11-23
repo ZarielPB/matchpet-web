@@ -9,10 +9,10 @@
       class="mp-fade-up relative pb-4 pl-6 last:pb-0"
       :style="{ animationDelay: `${Math.min(idx, 8) * 60}ms` }"
     >
-      <span class="absolute -left-[17px] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#FCD8B8] text-[#BA8C71] ring-4 ring-white">
+      <span class="absolute -left-[17px] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#FCD8B8] text-[#8F6349] ring-4 ring-white">
         <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">{{ meta(n.type).icon }}</span>
       </span>
-      <p class="text-xs font-semibold text-[#BA8C71]">
+      <p class="text-xs font-semibold text-[#8F6349]">
         {{ meta(n.type).label }} · {{ formatDate(n.noted_at) }}
         <span v-if="isFuture(n.noted_at)" class="ml-1 rounded-full bg-[#E1A16C] px-2 py-0.5 text-[10px] font-bold text-[#040404]">Agendada</span>
       </p>

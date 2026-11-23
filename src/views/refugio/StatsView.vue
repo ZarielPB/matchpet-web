@@ -33,7 +33,7 @@
         <div v-else-if="!store.charts" class="mt-4 h-64 animate-pulse rounded-xl bg-[#A3AEB9]/20"></div>
         <!-- HU-50 CA#5: empty state -->
         <div v-else-if="store.charts.total === 0" class="mt-4 rounded-xl border border-dashed border-[#A3AEB9]/40 bg-[#FCD8B8]/20 py-12 text-center">
-          <span class="material-symbols-outlined text-[48px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">bar_chart</span>
+          <span class="material-symbols-outlined text-[48px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">bar_chart</span>
           <p class="mt-2 text-sm font-medium text-[#040404]">No hay registros de adopciones en este período</p>
         </div>
         <div v-else class="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-5">
@@ -45,7 +45,7 @@
             <div class="mb-2 flex items-center justify-between gap-2">
               <p class="text-sm font-semibold text-[#040404]">Por {{ dim === 'by_species' ? 'especie' : 'tamaño' }}</p>
               <div class="flex gap-1" role="group" aria-label="Dimensión del gráfico">
-                <button v-for="d in DIMS" :key="d.value" type="button" class="rounded-full px-3 py-1 text-xs font-semibold transition" :class="dim === d.value ? 'bg-[#E1A16C] text-[#040404]' : 'border border-[#A3AEB9]/30 text-[#040404] hover:bg-[#FCD8B8]/40'" :aria-pressed="dim === d.value" @click="dim = d.value">{{ d.label }}</button>
+                <button v-for="d in DIMS" :key="d.value" type="button" class="min-h-[44px] rounded-full px-4 py-1 text-xs font-semibold transition sm:min-h-0 sm:px-3" :class="dim === d.value ? 'bg-[#E1A16C] text-[#040404]' : 'border border-[#A3AEB9]/30 text-[#040404] hover:bg-[#FCD8B8]/40'" :aria-pressed="dim === d.value" @click="dim = d.value">{{ d.label }}</button>
               </div>
             </div>
             <div class="h-64"><Doughnut :data="donutData" :options="donutOptions" aria-label="Adopciones por categoría" role="img" /></div>

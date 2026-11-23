@@ -59,67 +59,67 @@
         to="/refugio/solicitudes"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="relative flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="relative flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
           <span v-if="applicationStore.pendingCount" class="absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-alert px-1.5 text-xs font-bold text-white">{{ applicationStore.pendingCount }}</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Gestionar solicitudes</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Aprueba, rechaza y registra la entrega de tus adopciones.</p>
+        <p class="mt-1 text-sm text-ink-soft">Aprueba, rechaza y registra la entrega de tus adopciones.</p>
       </router-link>
 
       <router-link
         to="/refugio/seguimiento"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Seguimiento post-adopción</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Registra notas sobre cómo se adaptan tus mascotas adoptadas.</p>
+        <p class="mt-1 text-sm text-ink-soft">Registra notas sobre cómo se adaptan tus mascotas adoptadas.</p>
       </router-link>
 
       <router-link
         to="/refugio/reportes"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">report</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Reportes de adoptantes</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Responde las dudas y problemas de quienes adoptaron.</p>
+        <p class="mt-1 text-sm text-ink-soft">Responde las dudas y problemas de quienes adoptaron.</p>
       </router-link>
 
       <router-link
         to="/refugio/estadisticas"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">monitoring</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Estadísticas</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Gráficas de adopciones y efectividad del cuestionario.</p>
+        <p class="mt-1 text-sm text-ink-soft">Gráficas de adopciones y efectividad del cuestionario.</p>
       </router-link>
 
       <router-link
         to="/refugio/mascotas"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Gestionar mascotas</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Registra, edita y cambia el estado de tus animales.</p>
+        <p class="mt-1 text-sm text-ink-soft">Registra, edita y cambia el estado de tus animales.</p>
       </router-link>
 
       <router-link
         to="/refugio/perfil"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">home_work</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mi perfil de refugio</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">
+        <p class="mt-1 text-sm text-ink-soft">
           {{ shelter?.shelter_name ? 'Edita tus datos y tu foto de portada.' : 'Completa tus datos para que se muestren en el catálogo.' }}
         </p>
       </router-link>
@@ -128,11 +128,11 @@
         to="/catalogo"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">visibility</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Ver catálogo público</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Mira cómo ven tu refugio los adoptantes.</p>
+        <p class="mt-1 text-sm text-ink-soft">Mira cómo ven tu refugio los adoptantes.</p>
       </router-link>
     </div>
   </DashboardLayout>

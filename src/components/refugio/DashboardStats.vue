@@ -15,7 +15,7 @@
           class="mp-fade-up rounded-2xl border border-[#A3AEB9]/20 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
           :style="{ animationDelay: `${idx * 60}ms` }"
         >
-          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
             <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">{{ k.icon }}</span>
           </span>
           <p class="mt-3 font-display text-3xl font-black text-[#040404]">{{ k.value }}</p>

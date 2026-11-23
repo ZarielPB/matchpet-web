@@ -12,7 +12,7 @@
       <div v-else-if="store.error && !store.adoptions.length" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ store.error }}</div>
 
       <div v-else-if="!store.adoptions.length" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
+        <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
         <p class="mt-3 font-medium text-[#040404]">Aún no hay adopciones entregadas para hacer seguimiento.</p>
       </div>
 
@@ -25,7 +25,7 @@
         >
           <div class="flex gap-4">
             <img v-if="photo(a)" :src="photo(a)" :alt="`Foto de ${a.pets?.name || 'la mascota'}`" class="h-20 w-20 shrink-0 rounded-xl object-cover" loading="lazy" />
-            <div v-else class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-[#A3AEB9]">🐾</div>
+            <div v-else class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-ink-soft">🐾</div>
             <div class="min-w-0 flex-1">
               <p class="truncate font-display text-lg font-bold text-[#040404]">{{ a.pets?.name }}</p>
               <p class="text-sm text-[#040404]">Adoptante: {{ a.profiles?.full_name || '—' }}</p>
@@ -44,7 +44,7 @@
             <HealthRecordList :records="a.vaccination_records || []" empty-text="Sin registros. Agrega la primera vacuna o desparasitación.">
               <template #actions="{ record, status }">
                 <span v-if="status !== 'completada'" class="flex gap-1">
-                  <button type="button" class="min-h-[44px] rounded-lg px-2 text-xs font-semibold text-[#BA8C71] hover:bg-[#FCD8B8]/40 sm:min-h-0 sm:py-1" @click="toHealth = { applicationId: a.id, petName: a.pets?.name, record }">Editar</button>
+                  <button type="button" class="min-h-[44px] rounded-lg px-2 text-xs font-semibold text-[#8F6349] hover:bg-[#FCD8B8]/40 sm:min-h-0 sm:py-1" @click="toHealth = { applicationId: a.id, petName: a.pets?.name, record }">Editar</button>
                   <button type="button" class="min-h-[44px] rounded-lg px-2 text-xs font-semibold text-alert hover:bg-alert-container sm:min-h-0 sm:py-1" @click="removeRecord(record)">Quitar</button>
                 </span>
               </template>

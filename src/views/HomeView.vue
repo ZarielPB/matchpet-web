@@ -631,7 +631,7 @@
             v-reveal="i * 110"
             class="bg-white rounded-2xl border border-brand-primary/15 shadow-soft p-7 shadow-hover flex flex-col"
           >
-            <div class="flex items-center gap-0.5 text-brand-primary" :aria-label="`${t.rating} de 5 estrellas`">
+            <div class="flex items-center gap-0.5 text-brand-primary" role="img" aria-label="Calificación: 5 de 5 estrellas">
               <span v-for="n in 5" :key="n" class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">star</span>
             </div>
             <blockquote class="text-sm text-ink-soft leading-relaxed mt-4 flex-1">{{ t.text }}</blockquote>
@@ -934,7 +934,7 @@
               <h4 class="mt-6 mb-3 text-xs font-bold uppercase tracking-wider text-brand-primary">¿Qué establece?</h4>
               <ul class="space-y-3">
                 <li
-                  v-for="(item, i) in ley700Points"
+                  v-for="item in ley700Points"
                   :key="item.title"
                   class="flex gap-3 rounded-2xl border border-brand-primary/15 bg-brand-bg-soft/50 p-4"
                 >

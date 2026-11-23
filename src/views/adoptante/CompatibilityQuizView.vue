@@ -18,7 +18,7 @@
         class="mb-4 rounded-xl border border-[#E1A16C]/40 bg-[#E1A16C]/10 px-4 py-3 text-sm text-[#040404]"
       >
         Aún no completaste tu perfil de adoptante (niños, otras mascotas y experiencia también cuentan para el match).
-        <router-link to="/adoptante/perfil" class="font-semibold text-[#BA8C71] underline">Completar perfil</router-link>
+        <router-link to="/adoptante/perfil" class="font-semibold text-[#8F6349] underline">Completar perfil</router-link>
       </div>
 
       <!-- Barra de progreso (HU-30 CA#4) -->
@@ -29,7 +29,7 @@
         </div>
         <div
           class="h-2.5 overflow-hidden rounded-full bg-[#FCD8B8]/60"
-          role="progressbar"
+          role="progressbar" aria-label="Progreso del cuestionario"
           :aria-valuenow="answered"
           aria-valuemin="0"
           :aria-valuemax="TOTAL_QUESTIONS"
@@ -49,7 +49,7 @@
           <div v-if="step === 1" key="s1" class="space-y-6">
             <fieldset>
               <legend class="mb-2 flex items-center gap-2 font-semibold text-[#040404]">
-                <span class="material-symbols-outlined text-[22px] text-[#BA8C71]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">home</span>
+                <span class="material-symbols-outlined text-[22px] text-[#8F6349]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">home</span>
                 ¿Qué tipo de espacio tienes? *
               </legend>
               <div class="grid grid-cols-2 gap-3">
@@ -64,7 +64,7 @@
 
             <fieldset>
               <legend class="mb-2 flex items-center gap-2 font-semibold text-[#040404]">
-                <span class="material-symbols-outlined text-[22px] text-[#BA8C71]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
+                <span class="material-symbols-outlined text-[22px] text-[#8F6349]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
                 ¿Qué tamaño de mascota prefieres? *
               </legend>
               <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -81,7 +81,7 @@
           <div v-else key="s2" class="space-y-6">
             <fieldset>
               <legend class="mb-2 flex items-center gap-2 font-semibold text-[#040404]">
-                <span class="material-symbols-outlined text-[22px] text-[#BA8C71]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">schedule</span>
+                <span class="material-symbols-outlined text-[22px] text-[#8F6349]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">schedule</span>
                 ¿Cuántas horas al día estás en casa? *
               </legend>
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -95,7 +95,7 @@
 
             <fieldset>
               <legend class="mb-2 flex items-center gap-2 font-semibold text-[#040404]">
-                <span class="material-symbols-outlined text-[22px] text-[#BA8C71]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">directions_run</span>
+                <span class="material-symbols-outlined text-[22px] text-[#8F6349]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">directions_run</span>
                 ¿Qué tan activo eres? *
               </legend>
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">

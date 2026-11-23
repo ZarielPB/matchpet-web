@@ -10,7 +10,7 @@
       :class="status(r) === 'vencida' ? 'border-alert/40' : status(r) === 'proxima' ? 'border-[#E1A16C]/60' : 'border-[#A3AEB9]/20'"
       :style="{ animationDelay: `${Math.min(idx, 8) * 50}ms` }"
     >
-      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FCD8B8] text-[#BA8C71]">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FCD8B8] text-[#8F6349]">
         <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">{{ kind(r.kind).icon }}</span>
       </span>
       <div class="min-w-0 flex-1">
