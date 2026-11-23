@@ -34,7 +34,6 @@ vi.mock('../src/components/layout/DashboardLayout.vue', () => ({ default: { temp
 
 import { useAuthStore } from '../src/stores/authStore'
 import { useFollowUpStore } from '../src/stores/followUpStore'
-import { useStatsStore } from '../src/stores/statsStore'
 import FollowUpTimeline from '../src/components/ui/FollowUpTimeline.vue'
 import FollowUpNoteModal from '../src/components/refugio/FollowUpNoteModal.vue'
 import ReportModal from '../src/components/adoptante/ReportModal.vue'

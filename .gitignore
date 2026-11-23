@@ -40,3 +40,9 @@ dev-dist
 
 # respaldos con datos reales
 supabase/backups/
+
+# Pruebas E2E: credenciales locales y resultados
+e2e/credentials.json
+e2e/.artifacts/
+test-results/
+playwright-report/
