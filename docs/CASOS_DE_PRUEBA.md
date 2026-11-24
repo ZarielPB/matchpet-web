@@ -302,8 +302,43 @@ Severidad de defectos (HU-59): **Alta** (bloquea un flujo crítico o expone dato
 | HU-55, 57 | CP-PWA-01, CP-PWA-02 |
 | HU-56 | CP-PWA-03, CP-PWA-04 |
 
-## Registro de ejecución (se completa en HU-59)
+## Registro de ejecución (HU-59)
+
+Ejecución del 2026-11-24 contra el sitio publicado (`https://matchpet-univalle.web.app`): 36 pruebas e2e en verde, 48 pruebas unitarias en verde (el servicio de IA se probó antes con 22 pruebas propias; no se repitieron hoy). Los casos "Pendiente" los debe ejecutar una persona con dispositivo real. **Defectos encontrados en esta ejecución: ninguno abierto.**
 
 | Caso | Ejecutor | Fecha | Resultado | Bug / evidencia |
 |---|---|---|---|---|
-| CP-AUT-01 | | | | |
+| CP-AUT-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/registro.spec.js` |
+| CP-AUT-02 | Claude (automatizado) | 2026-11-24 | Exitoso | `tests/unit.test.js` (validadores), `e2e/auth.spec.js` |
+| CP-AUT-03 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/registro.spec.js` |
+| CP-AUT-04 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/auth.spec.js` |
+| CP-AUT-05 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/auth.spec.js` |
+| CP-AUT-06 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/auth.spec.js` |
+| CP-AUT-07 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/auth.spec.js` |
+| CP-AUT-08 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/auth.spec.js` |
+| CP-MAS-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/refugio-mascotas.spec.js` |
+| CP-MAS-02 | Claude (automatizado) | 2026-11-24 | Exitoso | e2e/casos-manuales.spec.js contra el sitio publicado; no se crea la mascota. |
+| CP-MAS-03 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/refugio-mascotas.spec.js`, `tests/unit.test.js` (galería) |
+| CP-MAS-04 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/seguridad.spec.js` |
+| CP-CAT-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/adoptante.spec.js` |
+| CP-CAT-02 | Claude (automatizado) | 2026-11-24 | Exitoso | e2e/casos-manuales.spec.js contra el sitio publicado. |
+| CP-CAT-03 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/adoptante.spec.js` |
+| CP-MAT-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/adoptante.spec.js` |
+| CP-MAT-02 | Claude (automatizado) | 2026-11-24 | Exitoso (parcial) | Camino sin cuestionario cubierto por e2e/ciclo-adopcion (adoptante nuevo); sin coincidencias sin ejecutar a mano. |
+| CP-SOL-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/adoptante.spec.js`, `e2e/ciclo-adopcion.spec.js` |
+| CP-SOL-02 | Claude (automatizado) | 2026-11-24 | Exitoso | `tests/unit.test.js`, `e2e/seguridad.spec.js` |
+| CP-SOL-03 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/adoptante.spec.js` |
+| CP-SOL-04 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/ciclo-adopcion.spec.js` |
+| CP-SOL-05 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/refugio.spec.js` |
+| CP-SEG-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/ciclo-adopcion.spec.js` |
+| CP-SEG-02 | Claude (automatizado) | 2026-11-24 | Exitoso | e2e/casos-manuales.spec.js: la entrega sobre solicitud no aprobada es rechazada. |
+| CP-SEG-03 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/ciclo-adopcion.spec.js`, `tests/sprint5.test.js` |
+| CP-SEG-04 | Claude (automatizado) | 2026-11-24 | Exitoso | `tests/sprint5.test.js` |
+| CP-EST-01 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/refugio.spec.js`, `tests/sprint5.test.js` |
+| CP-EST-02 | Claude (automatizado) | 2026-11-24 | Exitoso | `e2e/ciclo-adopcion.spec.js` (refugio nuevo) |
+| CP-IA-01 | Claude (automatizado) | 2026-11-24 | Exitoso | Chat real contra Render con sesión de adoptante: respuesta 200 en español. Prueba simulada en e2e/chat.spec.js. |
+| CP-IA-02 | Claude (automatizado) | 2026-11-24 | Exitoso (parcial) | (b) servicio caído y (c) sin sesión → 401 verificados; el límite de mensajes (a) solo en pruebas del servicio (pytest). |
+| CP-PWA-01 | Claude (automatizado) | 2026-11-24 | Exitoso (parcial) | Exploración móvil 375 px y auditoría de accesibilidad automatizadas; falta recorrido en celular real. |
+| CP-PWA-02 | Claude (automatizado) | 2026-11-24 | Exitoso (parcial) | Aviso sin conexión y cola de favoritos verificados contra el sitio publicado; caché de catálogo sin probar en dispositivo. |
+| CP-PWA-03 | Claude (automatizado) | 2026-11-24 | Pendiente (dispositivo real) | Servidor verificado: trigger, secreto, función y 0 suscripciones. Falta activar el interruptor en un celular. |
+| CP-PWA-04 | Claude (automatizado) | 2026-11-24 | Pendiente (dispositivo real) | Requiere bloquear el permiso y probar en iPhone. |
