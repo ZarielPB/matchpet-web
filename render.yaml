@@ -9,7 +9,7 @@ services:
     rootDir: ai-service
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/v1/health
-    autoDeploy: true
+    autoDeployTrigger: commit # reemplaza al campo antiguo autoDeploy
     envVars:
       - key: GEMINI_API_KEY
         sync: false
