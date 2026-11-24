@@ -94,6 +94,9 @@ test('ciclo: solicitud -> aviso al refugio -> aprobación -> entrega -> seguimie
     expect(errors).toEqual([])
   } finally {
     await shelterApi.from('pets').delete().eq('id', pet.id) // cascada: solicitud, entrega, notas, reportes, calendario
+    // Los avisos no cuelgan de la mascota: cada usuario borra los suyos.
+    await shelterApi.from('notifications').delete().ilike('body', '%E2E Ciclo%')
+    await (await api('adoptante')).from('notifications').delete().ilike('body', '%E2E Ciclo%')
     await refCtx.close(); await adoCtx.close()
   }
 })

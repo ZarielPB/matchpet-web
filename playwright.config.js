@@ -16,12 +16,12 @@ export default defineConfig({
   reporter: [['list']],
   outputDir: 'e2e/.artifacts',
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: process.env.BASE_URL || 'http://localhost:5173', // BASE_URL=https://matchpet-univalle.web.app prueba el sitio publicado
     headless: true,
     viewport: { width: 1280, height: 800 },
     launchOptions: executablePath ? { executablePath, args: ['--no-sandbox'] } : {},
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure'
   },
-  webServer: { command: 'pnpm dev --port 5173 --strictPort', env: { VITE_AI_API_URL: process.env.VITE_AI_API_URL || 'http://localhost:8000' }, url: 'http://localhost:5173', reuseExistingServer: true, timeout: 60_000 }
+  webServer: process.env.BASE_URL ? undefined : { command: 'pnpm dev --port 5173 --strictPort', env: { VITE_AI_API_URL: process.env.VITE_AI_API_URL || 'http://localhost:8000' }, url: 'http://localhost:5173', reuseExistingServer: true, timeout: 60_000 }
 })
