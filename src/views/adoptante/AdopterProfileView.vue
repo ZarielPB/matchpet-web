@@ -18,7 +18,7 @@
         <div class="relative px-6 pb-8 pt-16 sm:px-8 sm:pt-20">
           <!-- Avatar superpuesto -->
           <div
-            class="absolute -top-12 left-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#FCD8B8] text-3xl font-black text-[#BA8C71] shadow-md sm:-top-16 sm:left-8 sm:h-32 sm:w-32 sm:text-4xl"
+            class="absolute -top-12 left-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-[#FCD8B8] text-3xl font-black text-[#8F6349] shadow-md sm:-top-16 sm:left-8 sm:h-32 sm:w-32 sm:text-4xl"
           >
             {{ initials }}
           </div>
@@ -33,7 +33,7 @@
           <form class="mt-8 space-y-8" novalidate @submit.prevent="handleSave">
             <!-- Información Básica -->
             <section>
-              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Información Básica</h2>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#8F6349]">Información Básica</h2>
               <div class="space-y-5">
                 <div>
                   <label for="full-name" class="form-label">Nombre completo *</label>
@@ -66,7 +66,7 @@
 
             <!-- Ubicación y Contacto -->
             <section>
-              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Ubicación y Contacto</h2>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#8F6349]">Ubicación y Contacto</h2>
               <div>
                 <label for="city" class="form-label">Ciudad *</label>
                 <input
@@ -83,7 +83,7 @@
 
             <!-- Vivienda y Convivencia -->
             <section>
-              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#BA8C71]">Vivienda y Convivencia</h2>
+              <h2 class="mb-3 text-sm font-bold uppercase tracking-wide text-[#8F6349]">Vivienda y Convivencia</h2>
               <div class="space-y-5">
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
@@ -205,6 +205,7 @@
           </form>
         </div>
       </div>
+      <PushToggle class="mt-6" />
     </div>
   </DashboardLayout>
 </template>
@@ -216,6 +217,7 @@ import { useAuthStore } from '../../stores/authStore'
 import { supabase } from '../../services/supabaseClient'
 import { translateDbError } from '../../utils/errorMessages'
 import DashboardLayout from '../../components/layout/DashboardLayout.vue'
+import PushToggle from '../../components/ui/PushToggle.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()

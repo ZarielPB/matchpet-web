@@ -44,14 +44,14 @@
       class="rounded-2xl border border-[#A3AEB9]/20 bg-white px-6 py-20 text-center shadow-sm"
     >
       <span
-        class="material-symbols-outlined text-[80px] text-[#A3AEB9]"
+        class="material-symbols-outlined text-[80px] text-ink-soft"
         style="font-variation-settings: 'FILL' 1"
         aria-hidden="true"
       >
         favorite
       </span>
       <h2 class="mt-4 text-xl font-bold text-[#040404]">Aún no tienes mascotas favoritas. ¡Explora el catálogo!</h2>
-      <p class="mx-auto mt-2 max-w-md text-sm text-[#A3AEB9]">
+      <p class="mx-auto mt-2 max-w-md text-sm text-ink-soft">
         Explora el catálogo y guarda los perfiles de los animalitos que más te gusten.
       </p>
       <router-link

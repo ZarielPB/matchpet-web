@@ -43,6 +43,18 @@ const routes = [
     meta: { requiresAuth: true, role: 'adoptante' }
   },
   {
+    path: '/adoptante/mis-adopciones',
+    name: 'MyAdoptions',
+    component: () => import('../views/adoptante/MyAdoptionsView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
+    path: '/adoptante/calendario-salud',
+    name: 'HealthCalendar',
+    component: () => import('../views/adoptante/HealthCalendarView.vue'),
+    meta: { requiresAuth: true, role: 'adoptante' }
+  },
+  {
     path: '/favoritos',
     name: 'Favorites',
     component: () => import('../views/FavoritesView.vue'),
@@ -72,6 +84,24 @@ const routes = [
     path: '/refugio/expediente/:id',
     name: 'AdoptionRecord',
     component: () => import('../views/refugio/AdoptionRecordView.vue'),
+    meta: { requiresAuth: true, role: 'refugio' }
+  },
+  {
+    path: '/refugio/seguimiento',
+    name: 'FollowUp',
+    component: () => import('../views/refugio/FollowUpView.vue'),
+    meta: { requiresAuth: true, role: 'refugio' }
+  },
+  {
+    path: '/refugio/reportes',
+    name: 'ShelterReports',
+    component: () => import('../views/refugio/ReportsView.vue'),
+    meta: { requiresAuth: true, role: 'refugio' }
+  },
+  {
+    path: '/refugio/estadisticas',
+    name: 'ShelterStats',
+    component: () => import('../views/refugio/StatsView.vue'),
     meta: { requiresAuth: true, role: 'refugio' }
   },
   {

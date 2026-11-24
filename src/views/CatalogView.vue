@@ -4,7 +4,7 @@
       <!-- Barra de búsqueda (HU-25) -->
       <div class="relative mb-4">
         <span
-          class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-[#A3AEB9]"
+          class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-ink-soft"
           aria-hidden="true"
         >
           search
@@ -18,7 +18,7 @@
         <button
           v-if="searchTerm"
           type="button"
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-[#A3AEB9] transition hover:text-[#040404]"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-ink-soft transition hover:text-[#040404]"
           aria-label="Limpiar búsqueda"
           @click="searchTerm = ''"
         >
@@ -84,7 +84,7 @@
       </div>
 
       <!-- Contador de resultados -->
-      <p v-if="!petStore.loading" class="mb-4 text-sm text-[#A3AEB9]">
+      <p v-if="!petStore.loading" class="mb-4 text-sm text-ink-soft">
         <template v-if="petStore.catalogPets.length === 0">No se encontraron mascotas.</template>
         <template v-else>
           Mostrando {{ petStore.catalogPets.length }} de {{ petStore.total }}
@@ -130,14 +130,14 @@
         class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-20 text-center shadow-sm"
       >
         <span
-          class="material-symbols-outlined text-[64px] text-[#A3AEB9]"
+          class="material-symbols-outlined text-[64px] text-ink-soft"
           style="font-variation-settings: 'FILL' 1"
           aria-hidden="true"
         >
           pets
         </span>
         <p class="mt-4 font-medium text-[#040404]">No encontramos mascotas con esos filtros</p>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Prueba con otros filtros o vuelve más tarde.</p>
+        <p class="mt-1 text-sm text-ink-soft">Prueba con otros filtros o vuelve más tarde.</p>
       </div>
 
       <!-- Grilla -->
@@ -161,16 +161,16 @@
       >
         <button
           type="button"
-          class="rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
+          class="min-h-[44px] rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
           :disabled="page === 1 || petStore.loading"
           @click="goToPage(page - 1)"
         >
           Anterior
         </button>
-        <span class="text-sm text-[#A3AEB9]">Página {{ page }} de {{ totalPages }}</span>
+        <span class="text-sm text-ink-soft">Página {{ page }} de {{ totalPages }}</span>
         <button
           type="button"
-          class="rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
+          class="min-h-[44px] rounded-xl border border-[#A3AEB9]/40 bg-white px-3.5 py-2 text-sm font-semibold text-[#040404] transition hover:bg-[#FCD8B8]/40 disabled:cursor-not-allowed disabled:opacity-40"
           :disabled="page === totalPages || petStore.loading"
           @click="goToPage(page + 1)"
         >
@@ -307,7 +307,7 @@ const PublicShell = {
               ]),
               h('span', { class: 'font-display text-lg font-black tracking-tight text-[#040404]' }, [
                 'Match',
-                h('span', { class: 'text-[#BA8C71]' }, 'Pet')
+                h('span', { class: 'text-[#8F6349]' }, 'Pet')
               ])
             ]),
             h('div', { class: 'flex items-center gap-2' }, [
@@ -330,7 +330,7 @@ const PublicShell = {
             ])
           ])
         ),
-        h('div', { class: 'mx-auto max-w-7xl px-4 py-8' }, [
+        h('main', { class: 'mx-auto max-w-7xl px-4 py-8' }, [
           h(
             'h1',
             { class: 'mb-6 font-display text-2xl font-black tracking-tight text-[#040404] sm:text-3xl' },
@@ -343,7 +343,7 @@ const PublicShell = {
 }
 
 onMounted(async () => {
-  await petStore.fetchShelterCities()
+  petStore.fetchShelterCities() // en paralelo: sin conexión no debe retrasar el listado
   await refreshList()
   if (authStore.isAuthenticated) {
     await petStore.loadFavorites()

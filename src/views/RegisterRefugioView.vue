@@ -165,7 +165,7 @@
                           <button
                             type="button"
                             aria-label="Alternar visibilidad de contraseña"
-                            class="absolute right-3 text-primary p-1 rounded-lg hover:opacity-70"
+                            class="absolute right-0 flex min-h-[44px] min-w-[44px] items-center justify-center text-primary rounded-lg hover:opacity-70"
                             @click="showPassword = !showPassword"
                           >
                             <span class="material-symbols-outlined text-[18px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
@@ -192,7 +192,7 @@
                           <button
                             type="button"
                             aria-label="Alternar visibilidad de contraseña"
-                            class="absolute right-3 text-primary p-1 rounded-lg hover:opacity-70"
+                            class="absolute right-0 flex min-h-[44px] min-w-[44px] items-center justify-center text-primary rounded-lg hover:opacity-70"
                             @click="showConfirm = !showConfirm"
                           >
                             <span class="material-symbols-outlined text-[18px]">{{ showConfirm ? 'visibility_off' : 'visibility' }}</span>
@@ -206,8 +206,8 @@
 
                 <!-- Aceptación de condiciones (visual) -->
                 <div class="flex items-start gap-2 pt-1">
-                  <input type="checkbox" class="mt-1 w-4 h-4 rounded text-primary cursor-pointer accent-primary" />
-                  <label class="text-xs text-ink-soft cursor-pointer">
+                  <input id="accept-ethics" type="checkbox" class="mt-1 w-4 h-4 rounded text-primary cursor-pointer accent-primary" />
+                  <label for="accept-ethics" class="text-xs text-ink-soft cursor-pointer">
                     Declaro que los datos ingresados son fidedignos y acepto el código ético de bienestar animal de MatchPet, así como las directrices para la revisión de postulaciones responsables.
                   </label>
                 </div>

@@ -14,7 +14,7 @@
       <div v-else-if="loadError" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ loadError }}</div>
 
       <div v-else-if="store.applications.length === 0" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
+        <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
         <p class="mt-3 font-medium text-[#040404]">Aún no has enviado solicitudes.</p>
         <router-link to="/catalogo" class="mt-5 inline-block rounded-xl bg-[#BA8C71] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#E1A16C]">
           Explorar catálogo
@@ -35,7 +35,7 @@
             class="h-24 w-24 shrink-0 rounded-xl object-cover"
             loading="lazy"
           />
-          <div v-else class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-[#A3AEB9]">🐾</div>
+          <div v-else class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-ink-soft">🐾</div>
 
           <div class="min-w-0 flex-1">
             <div class="flex items-start justify-between gap-2">
@@ -92,11 +92,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import DashboardLayout from '../../components/layout/DashboardLayout.vue'
 import { useApplicationStore } from '../../stores/applicationStore'
 
-const router = useRouter()
 const route = useRoute()
 const store = useApplicationStore()
 

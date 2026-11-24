@@ -7,6 +7,10 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
+      injectManifest: { globPatterns: ['**/*.{js,css,html,svg,webmanifest}'] },
       includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'ilustracion-login.svg', 'ilustracion-registro.svg', 'ilustracion-refugio.svg'],
       devOptions: {
         enabled: false

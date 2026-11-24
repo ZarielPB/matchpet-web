@@ -5,7 +5,7 @@
         <h1 class="font-display text-2xl font-black text-[#040404]">Tus recomendaciones</h1>
         <p class="mb-6 mt-1 text-sm text-ink-soft">Mascotas ordenadas por compatibilidad con tu estilo de vida.</p>
       </div>
-      <router-link to="/adoptante/cuestionario" class="whitespace-nowrap text-sm font-semibold text-[#BA8C71] hover:underline">
+      <router-link to="/adoptante/cuestionario" class="whitespace-nowrap text-sm font-semibold text-[#8F6349] hover:underline">
         Editar mi cuestionario
       </router-link>
     </div>
@@ -17,7 +17,7 @@
     <div v-else-if="errorMsg" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ errorMsg }}</div>
 
     <div v-else-if="items.length === 0" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-      <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
+      <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">pets</span>
       <p class="mt-3 font-medium text-[#040404]">Por ahora no hay mascotas compatibles con tu perfil.</p>
       <p class="mt-1 text-sm text-ink-soft">Prueba ajustando tu cuestionario o vuelve más tarde.</p>
       <router-link to="/catalogo" class="mt-5 inline-block rounded-xl bg-[#BA8C71] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#E1A16C]">

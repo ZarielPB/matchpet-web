@@ -97,7 +97,7 @@
                     <button
                       type="button"
                       aria-label="Alternar visibilidad de contraseña"
-                      class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors flex items-center justify-center p-1"
+                      class="absolute right-0 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors flex min-h-[44px] min-w-[44px] items-center justify-center"
                       @click="showPassword = !showPassword"
                     >
                       <span class="material-symbols-outlined text-[20px]">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>

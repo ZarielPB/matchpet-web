@@ -29,7 +29,7 @@
       <div v-else-if="store.error && !store.receivedApplications.length" class="rounded-2xl border border-alert/30 bg-alert-container py-12 text-center text-alert" role="alert">{{ store.error }}</div>
 
       <div v-else-if="store.filteredApplications.length === 0" class="rounded-2xl border border-[#A3AEB9]/20 bg-white py-16 text-center shadow-sm">
-        <span class="material-symbols-outlined text-[64px] text-[#A3AEB9]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">inbox</span>
+        <span class="material-symbols-outlined text-[64px] text-ink-soft" style="font-variation-settings: 'FILL' 1" aria-hidden="true">inbox</span>
         <p class="mt-3 font-medium text-[#040404]">
           {{ store.filter === 'todas' ? 'Aún no has recibido solicitudes.' : 'No hay solicitudes con este estado.' }}
         </p>
@@ -44,7 +44,7 @@
           :style="{ animationDelay: `${Math.min(idx, 8) * 60}ms` }"
         >
           <img v-if="photo(a)" :src="photo(a)" :alt="`Foto de ${a.pets?.name || 'la mascota'}`" class="h-24 w-24 shrink-0 rounded-xl object-cover" loading="lazy" />
-          <div v-else class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-[#A3AEB9]">🐾</div>
+          <div v-else class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#FCD8B8]/40 text-3xl text-ink-soft">🐾</div>
 
           <div class="min-w-0 flex-1">
             <div class="flex items-start justify-between gap-2">

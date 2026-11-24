@@ -48,66 +48,88 @@
         to="/catalogo"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">travel_explore</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Explorar catálogo</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Encuentra a tu próxima mascota y guarda favoritos.</p>
+        <p class="mt-1 text-sm text-ink-soft">Encuentra a tu próxima mascota y guarda favoritos.</p>
       </router-link>
 
       <router-link
         to="/adoptante/perfil"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">account_circle</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mi perfil de adoptante</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Cuenta tus preferencias de vivienda y experiencia.</p>
+        <p class="mt-1 text-sm text-ink-soft">Cuenta tus preferencias de vivienda y experiencia.</p>
       </router-link>
 
       <router-link
         to="/adoptante/recomendaciones"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">auto_awesome</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mis recomendaciones</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Mascotas ordenadas por compatibilidad contigo.</p>
+        <p class="mt-1 text-sm text-ink-soft">Mascotas ordenadas por compatibilidad contigo.</p>
       </router-link>
 
       <router-link
         to="/adoptante/cuestionario"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">checklist</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mi cuestionario</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Cuéntanos tu estilo de vida (edítalo cuando cambie).</p>
+        <p class="mt-1 text-sm text-ink-soft">Cuéntanos tu estilo de vida (edítalo cuando cambie).</p>
       </router-link>
 
       <router-link
         to="/adoptante/solicitudes"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">mail</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mis solicitudes</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Sigue el estado de tus solicitudes de adopción.</p>
+        <p class="mt-1 text-sm text-ink-soft">Sigue el estado de tus solicitudes de adopción.</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/mis-adopciones"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">volunteer_activism</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Mis adopciones</h2>
+        <p class="mt-1 text-sm text-ink-soft">Seguimiento del refugio y canal para reportar dudas.</p>
+      </router-link>
+
+      <router-link
+        to="/adoptante/calendario-salud"
+        class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
+      >
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
+          <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">vaccines</span>
+        </span>
+        <h2 class="mt-4 font-bold text-[#040404]">Calendario de salud</h2>
+        <p class="mt-1 text-sm text-ink-soft">Vacunas y desparasitaciones de tu mascota, con recordatorios.</p>
       </router-link>
 
       <router-link
         to="/favoritos"
         class="group rounded-2xl border border-[#A3AEB9]/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#BA8C71] hover:shadow-lg"
       >
-        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#BA8C71]">
+        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-[#FCD8B8] text-[#8F6349]">
           <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1" aria-hidden="true">favorite</span>
         </span>
         <h2 class="mt-4 font-bold text-[#040404]">Mis favoritos</h2>
-        <p class="mt-1 text-sm text-[#A3AEB9]">Revisa las mascotas que guardaste para adoptar.</p>
+        <p class="mt-1 text-sm text-ink-soft">Revisa las mascotas que guardaste para adoptar.</p>
       </router-link>
     </div>
   </DashboardLayout>
