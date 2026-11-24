@@ -45,7 +45,7 @@ jobs:
   deploy:
     name: Desplegar a Firebase Hosting
     needs: build
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
