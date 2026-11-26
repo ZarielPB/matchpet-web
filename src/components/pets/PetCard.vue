@@ -177,9 +177,12 @@ const statusBadgeClass = computed(() => {
   return map[props.pet.status] || 'bg-[#FCD8B8] text-[#040404]'
 })
 
+import { petPhoto } from '../../utils/petPhotos'
+
 const primaryImage = computed(() => {
   const images = props.pet?.pet_images || []
-  return (images.find((img) => img.is_primary) || images[0])?.image_url || null
+  const dbImage = (images.find((img) => img.is_primary) || images[0])?.image_url || null
+  return petPhoto(props.pet, dbImage)
 })
 
 function onOpen() {

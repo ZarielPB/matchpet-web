@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 import { supabase } from '../services/supabaseClient'
 import { useAuthStore } from './authStore'
 import { translateDbError } from '../utils/errorMessages'
+import { localPetPhoto } from '../utils/petPhotos'
 
 // ---------------------------------------------------------------------------
 // Enums canónicos: deben coincidir EXACTAMENTE con docs/ModeloBD.sql
@@ -216,10 +217,12 @@ export const usePetStore = defineStore('pets', () => {
         .single()
       if (queryError) throw queryError
 
-      const images = (data?.pet_images || [])
+          const images = (data?.pet_images || [])
         .slice()
         .sort((a, b) => (a.is_primary === b.is_primary ? 0 : a.is_primary ? -1 : 1))
         .map((img) => img.image_url)
+
+      pet.value = data ? { ...data, images } : null
 
       pet.value = data ? { ...data, images } : null
       return { success: true, data: pet.value }

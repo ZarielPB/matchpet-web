@@ -277,6 +277,7 @@
 </template>
 
 <script setup>
+import { localPetPhoto } from '../utils/petPhotos'
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
@@ -296,9 +297,12 @@ const mainTilt = ref(-1)
 
 const pet = computed(() => petStore.pet)
 
-const images = computed(() => pet.value?.images ?? [])
+const images = computed(() => {
+  const local = localPetPhoto(pet.value)
+  return local ? [local] : (pet.value?.images ?? [])
+})
 
-const activeImage = computed(() => pet.value?.images?.[activeIndex.value] || pet.value?.images?.[0] || null)
+const activeImage = computed(() => images.value[activeIndex.value] || images.value[0] || null)
 
 const speciesLabel = computed(() => {
   const map = { perro: '🐶 Perro', gato: '🐱 Gato', otro: '🐾 Otro' }
